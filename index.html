@@ -394,13 +394,6 @@ function rbox(x0, y0, z0, x1, y1, z1, mat, r = .03) {
   m.position.copy(P((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2));
   return m;
 }
-// fat invisible strip along a dimension line: tapping it shows / hides that line's value
-const dimHitM = new THREE.MeshBasicMaterial({transparent:true, opacity:0, depthWrite:false});
-function dimHit(x0, y0, x1, y1, z, f, lbl) {
-  const vert = Math.abs(x1 - x0) < 1e-6, w = .32;
-  const o = box(vert ? x0 - w / 2 : x0, vert ? y0 : y0 - w / 2, z, vert ? x0 + w / 2 : x1, vert ? y1 : y0 + w / 2, z + .12, dimHitM);
-  return add(o, "dim", f, {kind:"dim", label:lbl});
-}
 const tubeCache = {};
 function seg(a, b, r, mat, layer, info) {
   // a,b plan coords [x,y,z]; vertical runs crossing floors are split at floor lines
@@ -1060,7 +1053,7 @@ function refresh() {
     const {layer, floor} = l.userData;
     let v = state.labels && (state.focus === "all" || floor === state.focus);
     if (layer === "arch") v = v && archMode && (state.focus !== "all" || floor === 1 || state.explode) && !(l.userData.room && state.dims && floor === state.focus);
-    else if (layer === "dim") v = !!state.dims && floor === state.focus && (!l.userData.tap || !!l.userData.shown);
+    else if (layer === "dim") v = !!state.dims && floor === state.focus;
     else if (layer === "rain") v = !!state.rain && (state.focus === "all" || floor === state.focus);
     else if (layer !== "site" && layer !== "duct" && layer !== "kit") v = v && (state.mode === layer || (state.mode === "all" && layer !== "str"));
     if (layer === "kit" && state.dims && floor === state.focus) v = false;   // keep the kitchen readable with dimensions on
@@ -1101,7 +1094,7 @@ clip.normal.set(0, 0, -1);
 
 document.getElementById("legBtn").onclick = () => { const l = document.getElementById("legend"); l.classList.toggle("open"); document.getElementById("legBtn").classList.toggle("on", l.classList.contains("open")); };
 document.getElementById("bRain").onclick = () => { state.rain = !state.rain; refresh(); };
-document.getElementById("bDims").onclick = () => { state.dims = !state.dims; labels.forEach(l => l.userData.shown = false); if (state.dims && state.focus === "all") state.focus = 1; refresh(); };
+document.getElementById("bDims").onclick = () => { state.dims = !state.dims; labels.forEach(l => { if (l.userData.full) l.element.textContent = l.userData.short; }); if (state.dims && state.focus === "all") state.focus = 1; refresh(); };
 document.getElementById("bExplode").onclick = () => { state.explode = !state.explode; refresh(); };
 document.getElementById("bCut").onclick = () => { state.cut = !state.cut; refresh(); };
 document.getElementById("bLabels").onclick = () => { state.labels = !state.labels; refresh(); };
@@ -1119,9 +1112,6 @@ renderer.domElement.addEventListener("pointerup", e => {
   ray.setFromCamera(mouse, camera);
   const hits = ray.intersectObjects(pickables.filter(o => o.visible && o.parent.visible), false)
     .filter(h => !state.cut || worldY(h.point) <= state.cutY);
-  // a tap on a dimension line toggles its value
-  const dh = hits.find(h => h.object.userData.info.kind === "dim");
-  if (dh) { const l = dh.object.userData.info.label; l.userData.shown = !l.userData.shown; infoEl.style.display = "none"; refresh(); return; }
   // prefer system items over room slabs
   const hit = hits.find(h => h.object.userData.info.kind !== "room") || hits[0];
   if (!hit) { infoEl.style.display = "none"; return; }
@@ -2028,8 +2018,7 @@ function showChange(i) {
     const segs = vert ? [[x0 - t, y0, x0 + t, y1], [x0 - .08, y0 - t, x0 + .08, y0 + t], [x0 - .08, y1 - t, x0 + .08, y1 + t]]
                       : [[x0, y0 - t, x1, y0 + t], [x0 - t, y0 - .08, x0 + t, y0 + .08], [x1 - t, y0 - .08, x1 + t, y0 + .08]];
     segs.forEach(([a, b, c, d]) => { const o = box(a, b, L + z, c, d, L + z + .012, red); o.userData.variant = "after"; add(o, "dim", f); });
-    const l = label(txt, (x0 + x1) / 2, (y0 + y1) / 2, L + z + .05, "dim", f); l.userData.variant = "after"; l.element.classList.add("dimL"); l.userData.tap = true;
-    dimHit(x0, y0, x1, y1, L + z, f, l).userData.variant = "after";
+    const l = label(txt, (x0 + x1) / 2, (y0 + y1) / 2, L + z + .05, "dim", f); l.userData.variant = "after"; l.element.classList.add("dimL");
   };
   const area = (txt, x, y) => { const l = label(txt, x, y, L + .35, "dim", f); l.userData.variant = "after"; l.element.classList.add("areaL"); };
   dim(.299, 7.30, 2.795, 7.30, "2.50"); dim(2.0, 7.010, 2.0, 9.008, "2.00"); area("غرفة العاملة 4.99 م²", 1.75, 8.3);
@@ -2052,12 +2041,21 @@ function showChange(i) {
     const seg = (a, b, c, e) => add(box(a, b, L + z, c, e, L + z + .012, red), "dim", f);
     seg(x0, y0 + oy - t, x1, y0 + oy + t); seg(x0 - t + .001, y0 + oy - .08, x0 + t, y0 + oy + .08); seg(x1 - t, y0 + oy - .08, x1 - .001 + t, y0 + oy + .08);
     seg(x0 + ox - t, y0, x0 + ox + t, y1); seg(x0 + ox - .08, y0 - t + .001, x0 + ox + .08, y0 + t); seg(x0 + ox - .08, y1 - t, x0 + ox + .08, y1 - .001 + t);
-    const lw = label(w.toFixed(2), (x0 + x1) / 2, y0 + oy, L + z + .05, "dim", f); lw.element.classList.add("dimL"); lw.userData.tap = true;
-    const ld = label(d.toFixed(2), x0 + ox, (y0 + y1) / 2, L + z + .05, "dim", f); ld.element.classList.add("dimL"); ld.userData.tap = true;
-    dimHit(x0, y0 + oy, x1, y0 + oy, L + z, f, lw); dimHit(x0 + ox, y0, x0 + ox, y1, L + z, f, ld);
+    const lw = label(w.toFixed(2), (x0 + x1) / 2, y0 + oy, L + z + .05, "dim", f); lw.element.classList.add("dimL");
+    const ld = label(d.toFixed(2), x0 + ox, (y0 + y1) / 2, L + z + .05, "dim", f); ld.element.classList.add("dimL");
     const la = label(name + "  " + (w * d).toFixed(2) + " م²", (x0 + x1) / 2, (y0 + y1) / 2, L + .35, "dim", f); la.element.classList.add("areaL");
   }));
 }
+
+// dimension mode: show only the numbers; tapping a number reveals what it belongs to (and taps again to hide)
+labels.filter(l => l.element.classList.contains("dimL") || l.element.classList.contains("areaL")).forEach(l => {
+  const full = l.element.textContent, m = full.match(/[\d.]+[^\d]*$/), short = m ? full.slice(m.index) : full;
+  if (short === full) return;
+  Object.assign(l.userData, {full, short}); l.element.textContent = short;
+  Object.assign(l.element.style, {pointerEvents:"auto", cursor:"pointer"});
+  l.element.addEventListener("pointerdown", e => e.stopPropagation());
+  l.element.addEventListener("click", e => { e.stopPropagation(); l.element.textContent = l.element.textContent === short ? full : short; });
+});
 
 /* ---------- loop ---------- */
 addEventListener("resize", () => {
