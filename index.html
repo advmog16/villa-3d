@@ -22,7 +22,9 @@ button.on{background:#f5f4f0;color:#111;font-weight:600}
 #tools button{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);min-width:64px}
 #tools button.on{background:#f5f4f0;color:#111}
 #tabs{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;gap:2px;padding:5px;z-index:5;max-width:calc(100vw - 24px);overflow-x:auto}
-#legend{position:fixed;bottom:calc(76px + env(safe-area-inset-bottom,0px));left:calc(12px + env(safe-area-inset-left,0px));padding:10px 12px;font-size:12.5px;z-index:5;min-width:150px}
+#legend{position:fixed;bottom:calc(122px + env(safe-area-inset-bottom,0px));left:calc(12px + env(safe-area-inset-left,0px));padding:10px 12px;font-size:12.5px;z-index:5;min-width:150px;display:none}
+#legend.open{display:block}
+#legBtn{position:fixed;bottom:calc(76px + env(safe-area-inset-bottom,0px));left:calc(12px + env(safe-area-inset-left,0px));width:38px;height:38px;padding:0;border-radius:10px;z-index:6;font-size:17px;line-height:38px;text-align:center}
 #legend div{display:flex;align-items:center;gap:8px;margin:3px 0}
 #legend i{width:11px;height:11px;border-radius:3px;display:inline-block;flex-shrink:0}
 #badge{position:fixed;top:calc(62px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:rgba(110,70,190,.85);border:1px solid rgba(255,255,255,.2);padding:5px 14px;border-radius:999px;font-size:13px;z-index:5;display:none;white-space:nowrap}
@@ -67,11 +69,11 @@ a.back{color:var(--muted);font-size:12px;text-decoration:none}
 #wHelp{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);font-size:12px;color:var(--muted);padding:7px 12px;z-index:8;white-space:nowrap}
 #joy{position:fixed;left:calc(28px + env(safe-area-inset-left,0px));bottom:calc(60px + env(safe-area-inset-bottom,0px));width:120px;height:120px;border-radius:50%;background:rgba(20,22,28,.45);border:1px solid rgba(255,255,255,.25);z-index:8;touch-action:none}
 #joy i{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.85);pointer-events:none}
-body.walking #top,body.walking #title,body.walking #help,body.walking #legend,body.walking #badge,body.walking #cut{display:none!important}
+body.walking #top,body.walking #title,body.walking #help,body.walking #legend,body.walking #legBtn,body.walking #badge,body.walking #cut{display:none!important}
 #joy{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 #wHelp{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 body.walking canvas{touch-action:none}
-.lbl.dimL{background:#d0302a;color:#fff;font-size:11.5px;padding:1px 6px}.lbl.areaL{background:#fff;color:#1d1d1f;font-weight:700;border:1.5px solid #d0302a}
+.lbl.dimL{background:#d0302a;color:#fff;font-size:11px;padding:1px 5px}.lbl.areaL{background:rgba(255,255,255,.88);color:#1d1d1f;font-weight:600;font-size:10px;padding:1px 5px;border:1px solid #d0302a}
 #cmp{position:fixed;top:calc(64px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));width:310px;max-height:calc(100% - 170px);overflow-y:auto;padding:12px 14px;z-index:6;display:none;font-size:13px;line-height:1.6}
 #cmp .seg{display:flex;gap:4px;margin:8px 0 10px}#cmp .seg button{flex:1;border:1px solid var(--line)}
 #cmp .chg{border-top:1px solid var(--line);padding:8px 0}#cmp .chg .w{color:var(--muted);font-size:12px}
@@ -88,7 +90,7 @@ body.walking #cmp{display:none!important}
 #rBar>div{display:flex;gap:2px;overflow-x:auto;align-items:center}
 #rBar small{color:var(--muted);font-size:11.5px;padding:0 6px;white-space:nowrap}
 body.rendering #rBar{display:flex}
-body.rendering #tabs,body.rendering #top,body.rendering #legend,body.rendering #badge,body.rendering #help,body.rendering #cut,body.rendering #bSim,body.rendering #bExplode,body.rendering #bCut,body.rendering #bLabels{display:none!important}
+body.rendering #tabs,body.rendering #top,body.rendering #legend,body.rendering #legBtn,body.rendering #badge,body.rendering #help,body.rendering #cut,body.rendering #bSim,body.rendering #bExplode,body.rendering #bCut,body.rendering #bLabels{display:none!important}
 body.rendering.walking #rBar{display:none}
 #shot{position:fixed;inset:0;z-index:30;background:rgba(5,6,8,.92);display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px}
 #shot img{max-width:100%;max-height:calc(100% - 70px);border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
@@ -101,7 +103,8 @@ body.rendering.walking #rBar{display:none}
   #top{top:calc(10px + env(safe-area-inset-top,0px));left:auto;right:calc(10px + env(safe-area-inset-right,0px));transform:none;max-width:calc(100vw - 104px);overflow-x:auto}
   #badge{top:calc(60px + env(safe-area-inset-top,0px));font-size:11.5px;max-width:calc(100vw - 110px);white-space:normal;text-align:center;left:auto;right:calc(10px + env(safe-area-inset-right,0px));transform:none}
   #cut{left:calc(90px + env(safe-area-inset-left,0px));width:auto;right:calc(12px + env(safe-area-inset-right,0px))}
-  #legend{bottom:calc(118px + env(safe-area-inset-bottom,0px));font-size:11.5px}
+  #legend{bottom:calc(164px + env(safe-area-inset-bottom,0px));font-size:11.5px}
+  #legBtn{bottom:calc(118px + env(safe-area-inset-bottom,0px))}
   #help{display:none}
   #info,#sim{right:calc(8px + env(safe-area-inset-right,0px));left:calc(8px + env(safe-area-inset-left,0px));width:auto;top:calc(104px + env(safe-area-inset-top,0px));max-height:calc(100% - 200px)}
 }
@@ -135,6 +138,7 @@ body.rendering.walking #rBar{display:none}
 <div id="cut" class="pill">موضع القص (من الأمام للخلف)<input id="cutR" type="range" min="0" max="25" step="0.1" value="12"></div>
 <div id="badge"></div>
 <div id="legend" class="pill"></div>
+<button id="legBtn" class="pill" title="دليل الألوان">🎨</button>
 <div id="info" class="pill"><button class="x" id="infoX">✕</button><div id="infoB"></div></div>
 <div id="sim" class="pill"></div>
 <div id="help" class="pill">اسحب للتدوير · عجلة/قرص للتكبير · اضغط على أي عنصر لتفاصيله</div>
@@ -389,6 +393,13 @@ function rbox(x0, y0, z0, x1, y1, z1, mat, r = .03) {
   const m = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, Math.min(r, w / 2.2, d / 2.2, h / 2.2)), mat);
   m.position.copy(P((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2));
   return m;
+}
+// fat invisible strip along a dimension line: tapping it shows / hides that line's value
+const dimHitM = new THREE.MeshBasicMaterial({transparent:true, opacity:0, depthWrite:false});
+function dimHit(x0, y0, x1, y1, z, f, lbl) {
+  const vert = Math.abs(x1 - x0) < 1e-6, w = .32;
+  const o = box(vert ? x0 - w / 2 : x0, vert ? y0 : y0 - w / 2, z, vert ? x0 + w / 2 : x1, vert ? y1 : y0 + w / 2, z + .12, dimHitM);
+  return add(o, "dim", f, {kind:"dim", label:lbl});
 }
 const tubeCache = {};
 function seg(a, b, r, mat, layer, info) {
@@ -1049,7 +1060,7 @@ function refresh() {
     const {layer, floor} = l.userData;
     let v = state.labels && (state.focus === "all" || floor === state.focus);
     if (layer === "arch") v = v && archMode && (state.focus !== "all" || floor === 1 || state.explode) && !(l.userData.room && state.dims && floor === state.focus);
-    else if (layer === "dim") v = !!state.dims && floor === state.focus;
+    else if (layer === "dim") v = !!state.dims && floor === state.focus && (!l.userData.tap || !!l.userData.shown);
     else if (layer === "rain") v = !!state.rain && (state.focus === "all" || floor === state.focus);
     else if (layer !== "site" && layer !== "duct" && layer !== "kit") v = v && (state.mode === layer || (state.mode === "all" && layer !== "str"));
     if (layer === "kit" && state.dims && floor === state.focus) v = false;   // keep the kitchen readable with dimensions on
@@ -1088,8 +1099,9 @@ const clip = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 // keep points where z_world >= 12.5 - cutY  → hides everything in front of the cut (towards the street)
 clip.normal.set(0, 0, -1);
 
+document.getElementById("legBtn").onclick = () => { const l = document.getElementById("legend"); l.classList.toggle("open"); document.getElementById("legBtn").classList.toggle("on", l.classList.contains("open")); };
 document.getElementById("bRain").onclick = () => { state.rain = !state.rain; refresh(); };
-document.getElementById("bDims").onclick = () => { state.dims = !state.dims; if (state.dims && state.focus === "all") state.focus = 1; refresh(); };
+document.getElementById("bDims").onclick = () => { state.dims = !state.dims; labels.forEach(l => l.userData.shown = false); if (state.dims && state.focus === "all") state.focus = 1; refresh(); };
 document.getElementById("bExplode").onclick = () => { state.explode = !state.explode; refresh(); };
 document.getElementById("bCut").onclick = () => { state.cut = !state.cut; refresh(); };
 document.getElementById("bLabels").onclick = () => { state.labels = !state.labels; refresh(); };
@@ -1107,6 +1119,9 @@ renderer.domElement.addEventListener("pointerup", e => {
   ray.setFromCamera(mouse, camera);
   const hits = ray.intersectObjects(pickables.filter(o => o.visible && o.parent.visible), false)
     .filter(h => !state.cut || worldY(h.point) <= state.cutY);
+  // a tap on a dimension line toggles its value
+  const dh = hits.find(h => h.object.userData.info.kind === "dim");
+  if (dh) { const l = dh.object.userData.info.label; l.userData.shown = !l.userData.shown; infoEl.style.display = "none"; refresh(); return; }
   // prefer system items over room slabs
   const hit = hits.find(h => h.object.userData.info.kind !== "room") || hits[0];
   if (!hit) { infoEl.style.display = "none"; return; }
@@ -2013,7 +2028,8 @@ function showChange(i) {
     const segs = vert ? [[x0 - t, y0, x0 + t, y1], [x0 - .08, y0 - t, x0 + .08, y0 + t], [x0 - .08, y1 - t, x0 + .08, y1 + t]]
                       : [[x0, y0 - t, x1, y0 + t], [x0 - t, y0 - .08, x0 + t, y0 + .08], [x1 - t, y0 - .08, x1 + t, y0 + .08]];
     segs.forEach(([a, b, c, d]) => { const o = box(a, b, L + z, c, d, L + z + .012, red); o.userData.variant = "after"; add(o, "dim", f); });
-    const l = label(txt, (x0 + x1) / 2, (y0 + y1) / 2, L + z + .05, "dim", f); l.userData.variant = "after"; l.element.classList.add("dimL");
+    const l = label(txt, (x0 + x1) / 2, (y0 + y1) / 2, L + z + .05, "dim", f); l.userData.variant = "after"; l.element.classList.add("dimL"); l.userData.tap = true;
+    dimHit(x0, y0, x1, y1, L + z, f, l).userData.variant = "after";
   };
   const area = (txt, x, y) => { const l = label(txt, x, y, L + .35, "dim", f); l.userData.variant = "after"; l.element.classList.add("areaL"); };
   dim(.299, 7.30, 2.795, 7.30, "2.50"); dim(2.0, 7.010, 2.0, 9.008, "2.00"); area("غرفة العاملة 4.99 م²", 1.75, 8.3);
@@ -2036,8 +2052,9 @@ function showChange(i) {
     const seg = (a, b, c, e) => add(box(a, b, L + z, c, e, L + z + .012, red), "dim", f);
     seg(x0, y0 + oy - t, x1, y0 + oy + t); seg(x0 - t + .001, y0 + oy - .08, x0 + t, y0 + oy + .08); seg(x1 - t, y0 + oy - .08, x1 - .001 + t, y0 + oy + .08);
     seg(x0 + ox - t, y0, x0 + ox + t, y1); seg(x0 + ox - .08, y0 - t + .001, x0 + ox + .08, y0 + t); seg(x0 + ox - .08, y1 - t, x0 + ox + .08, y1 - .001 + t);
-    const lw = label(w.toFixed(2), (x0 + x1) / 2, y0 + oy, L + z + .05, "dim", f); lw.element.classList.add("dimL");
-    const ld = label(d.toFixed(2), x0 + ox, (y0 + y1) / 2, L + z + .05, "dim", f); ld.element.classList.add("dimL");
+    const lw = label(w.toFixed(2), (x0 + x1) / 2, y0 + oy, L + z + .05, "dim", f); lw.element.classList.add("dimL"); lw.userData.tap = true;
+    const ld = label(d.toFixed(2), x0 + ox, (y0 + y1) / 2, L + z + .05, "dim", f); ld.element.classList.add("dimL"); ld.userData.tap = true;
+    dimHit(x0, y0 + oy, x1, y0 + oy, L + z, f, lw); dimHit(x0 + ox, y0, x0 + ox, y1, L + z, f, ld);
     const la = label(name + "  " + (w * d).toFixed(2) + " م²", (x0 + x1) / 2, (y0 + y1) / 2, L + .35, "dim", f); la.element.classList.add("areaL");
   }));
 }
