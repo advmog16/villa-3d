@@ -1,0 +1,2059 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>فيلا MM ثلاثي الأبعاد</title>
+<script>document.documentElement.dir="rtl";document.documentElement.lang="ar";</script>
+<meta name="referrer" content="no-referrer">
+<style>
+:root{color-scheme:dark;--bg:#0b0c0f;--glass:rgba(22,24,30,.78);--glass2:rgba(40,43,52,.85);--ink:#f2f1ee;--muted:#a6a39c;--line:rgba(255,255,255,.12);--accent:#fff;--R:#ff5252;--Y:#ffd23f;--B:#45a8ff}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:"Geeza Pro","SF Arabic",system-ui,sans-serif}
+#app{position:fixed;inset:0}
+canvas{display:block}
+.pill{background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px}
+button{font:inherit;color:var(--ink);background:transparent;border:0;border-radius:10px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+button:hover{background:rgba(255,255,255,.08)}
+button.on{background:#f5f4f0;color:#111;font-weight:600}
+#top{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:flex;gap:2px;padding:4px;z-index:5}
+#title{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));z-index:5;display:flex;align-items:baseline;gap:8px}
+#title b{font-size:16px}
+#title span{font-size:12px;color:var(--muted)}
+#tools{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:calc(12px + env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:8px;z-index:5}
+#tools button{background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);min-width:64px}
+#tools button.on{background:#f5f4f0;color:#111}
+#tabs{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;gap:2px;padding:5px;z-index:5;max-width:calc(100vw - 24px);overflow-x:auto}
+#legend{position:fixed;bottom:calc(76px + env(safe-area-inset-bottom,0px));left:calc(12px + env(safe-area-inset-left,0px));padding:10px 12px;font-size:12.5px;z-index:5;min-width:150px}
+#legend div{display:flex;align-items:center;gap:8px;margin:3px 0}
+#legend i{width:11px;height:11px;border-radius:3px;display:inline-block;flex-shrink:0}
+#badge{position:fixed;top:calc(62px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:rgba(110,70,190,.85);border:1px solid rgba(255,255,255,.2);padding:5px 14px;border-radius:999px;font-size:13px;z-index:5;display:none;white-space:nowrap}
+#cut{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:calc(96px + env(safe-area-inset-left,0px));padding:10px 12px;z-index:5;display:none;width:220px;font-size:12.5px}
+#cut input{width:100%}
+#info{position:fixed;top:calc(64px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));width:300px;padding:14px 16px;z-index:6;display:none;font-size:13.5px;line-height:1.6}
+#info h3{margin:0 0 6px;font-size:15px}
+#info .row{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:4px 0}
+#info .row span:first-child{color:var(--muted)}
+#info .x{position:absolute;top:8px;left:8px;padding:4px 9px}
+#sim{position:fixed;top:calc(64px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));width:360px;max-height:calc(100vh - 160px);overflow:auto;padding:16px;z-index:7;display:none}
+#sim h2{margin:0 0 2px;font-size:19px}
+#sim .sub{color:var(--muted);font-size:12px}
+#sim .kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+#sim .kpi{background:rgba(255,255,255,.05);border-radius:12px;padding:10px 12px}
+#sim .kpi b{font-size:22px;display:block;direction:ltr;text-align:right}
+#sim .kpi span{color:var(--muted);font-size:12px}
+#sim .bar{display:flex;align-items:center;gap:8px;margin:6px 0;direction:ltr;font-size:13px}
+#sim .bar .t{flex:1;height:7px;background:rgba(255,255,255,.08);border-radius:9px;overflow:hidden}
+#sim .bar .t i{display:block;height:100%;border-radius:9px}
+#sim .bar b{width:56px;text-align:left}
+#sim .bar span{width:14px}
+#sim select{font:inherit;width:100%;background:var(--glass2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:7px;margin-top:8px}
+#sim .btns{display:flex;gap:8px;margin:10px 0}
+#sim .btns button{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.05)}
+.ckt{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;margin:5px 0;background:rgba(255,255,255,.04);font-size:13px}
+.ckt.on{background:rgba(70,200,120,.12)}
+.ckt button{border:1px solid var(--line);padding:4px 10px;min-width:44px}
+.ckt.on button{background:#8fd0ff;color:#06263d}
+.ckt .nm{flex:1}
+.ckt .ld{direction:ltr;color:#7fdc9c;font-size:12px}
+.dot{width:9px;height:9px;border-radius:3px;display:inline-block}
+.warn{color:#ff7a7a;font-weight:600}
+.lbl{font:600 12px "Geeza Pro","SF Arabic",sans-serif;color:#fff;background:rgba(20,22,28,.82);border:1px solid rgba(255,255,255,.18);padding:3px 8px;border-radius:7px;white-space:nowrap;pointer-events:none;unicode-bidi:plaintext}
+.lbl.w{color:#ffb3b3;border-color:rgba(255,90,90,.5)}
+#loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--muted);z-index:20;background:#0b0c0f}
+#help{position:fixed;bottom:calc(76px + env(safe-area-inset-bottom,0px));right:calc(16px + env(safe-area-inset-right,0px));font-size:12px;color:var(--muted);padding:8px 12px;z-index:4}
+a.back{color:var(--muted);font-size:12px;text-decoration:none}
+#walk{display:none}
+#wBar{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:4px 4px 4px 10px;z-index:8;max-width:calc(100vw - 24px);overflow-x:auto}
+#wBar b{font-size:13px;padding:0 8px;white-space:nowrap}
+#wHelp{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);font-size:12px;color:var(--muted);padding:7px 12px;z-index:8;white-space:nowrap}
+#joy{position:fixed;left:calc(28px + env(safe-area-inset-left,0px));bottom:calc(60px + env(safe-area-inset-bottom,0px));width:120px;height:120px;border-radius:50%;background:rgba(20,22,28,.45);border:1px solid rgba(255,255,255,.25);z-index:8;touch-action:none}
+#joy i{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.85);pointer-events:none}
+body.walking #top,body.walking #title,body.walking #help,body.walking #legend,body.walking #badge,body.walking #cut{display:none!important}
+#joy{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+#wHelp{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+body.walking canvas{touch-action:none}
+.lbl.dimL{background:#d0302a;color:#fff;font-size:11.5px;padding:1px 6px}.lbl.areaL{background:#fff;color:#1d1d1f;font-weight:700;border:1.5px solid #d0302a}
+#cmp{position:fixed;top:calc(64px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px));width:310px;max-height:calc(100% - 170px);overflow-y:auto;padding:12px 14px;z-index:6;display:none;font-size:13px;line-height:1.6}
+#cmp .seg{display:flex;gap:4px;margin:8px 0 10px}#cmp .seg button{flex:1;border:1px solid var(--line)}
+#cmp .chg{border-top:1px solid var(--line);padding:8px 0}#cmp .chg .w{color:var(--muted);font-size:12px}
+#cmp .chg button{margin-top:6px;border:1px solid var(--line);font-size:12.5px;padding:5px 10px}
+#cmp .k{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:0 6px;margin-left:6px}
+#cmp .k.b{background:#b4542f;color:#fff}#cmp .k.a{background:#2f8a57;color:#fff}
+#cmpTag button{font-weight:700;padding:7px 16px}#cmpTag button.on[data-var=before]{background:#b4542f;color:#fff}#cmpTag button.on[data-var=after]{background:#2f8a57;color:#fff}
+#cmp .x{position:absolute;left:8px;top:6px;padding:2px 8px}#cmp small{color:var(--muted);font-size:11.5px;display:block;margin-top:6px}
+#cmpTag{position:fixed;top:calc(62px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:none;z-index:7;padding:4px;gap:2px;font-size:13px;white-space:nowrap}
+#cmpTag.show{display:flex}body.walking #cmpTag{top:calc(62px + env(safe-area-inset-top,0px))}
+body.walking #cmp{display:none!important}
+@media (max-width:760px){#cmp{left:calc(8px + env(safe-area-inset-left,0px));right:calc(8px + env(safe-area-inset-right,0px));width:auto;top:calc(104px + env(safe-area-inset-top,0px));max-height:calc(100% - 250px)}#cmpTag{top:auto;bottom:calc(68px + env(safe-area-inset-bottom,0px))}#cmpTag .l{display:none}body.rendering #cmpTag{bottom:auto;top:calc(12px + env(safe-area-inset-top,0px));left:auto;right:calc(10px + env(safe-area-inset-right,0px));transform:none}body.comparing #title{display:none}}
+#rBar{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:none;flex-direction:column;gap:4px;padding:5px;z-index:7;max-width:calc(100vw - 20px)}
+#rBar>div{display:flex;gap:2px;overflow-x:auto;align-items:center}
+#rBar small{color:var(--muted);font-size:11.5px;padding:0 6px;white-space:nowrap}
+body.rendering #rBar{display:flex}
+body.rendering #tabs,body.rendering #top,body.rendering #legend,body.rendering #badge,body.rendering #help,body.rendering #cut,body.rendering #bSim,body.rendering #bExplode,body.rendering #bCut,body.rendering #bLabels{display:none!important}
+body.rendering.walking #rBar{display:none}
+#shot{position:fixed;inset:0;z-index:30;background:rgba(5,6,8,.92);display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px}
+#shot img{max-width:100%;max-height:calc(100% - 70px);border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+#shot div{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);flex-wrap:wrap;justify-content:center}
+#shot a,#shot button{background:#f5f4f0;color:#111;border-radius:10px;padding:7px 14px;text-decoration:none;font-weight:600}
+@media (max-width:760px){
+  #wHelp{display:none}
+  #title{top:auto;bottom:calc(70px + env(safe-area-inset-bottom,0px));right:calc(12px + env(safe-area-inset-right,0px))}
+  #title span{display:none}
+  #top{top:calc(10px + env(safe-area-inset-top,0px));left:auto;right:calc(10px + env(safe-area-inset-right,0px));transform:none;max-width:calc(100vw - 104px);overflow-x:auto}
+  #badge{top:calc(60px + env(safe-area-inset-top,0px));font-size:11.5px;max-width:calc(100vw - 110px);white-space:normal;text-align:center;left:auto;right:calc(10px + env(safe-area-inset-right,0px));transform:none}
+  #cut{left:calc(90px + env(safe-area-inset-left,0px));width:auto;right:calc(12px + env(safe-area-inset-right,0px))}
+  #legend{bottom:calc(118px + env(safe-area-inset-bottom,0px));font-size:11.5px}
+  #help{display:none}
+  #info,#sim{right:calc(8px + env(safe-area-inset-right,0px));left:calc(8px + env(safe-area-inset-left,0px));width:auto;top:calc(104px + env(safe-area-inset-top,0px));max-height:calc(100% - 200px)}
+}
+</style>
+<div id="loading">جاري بناء النموذج…</div>
+<div id="app"></div>
+<div id="title"><b>فيلا MM</b><span>نموذج تفاعلي من مخططات DD-02</span></div>
+<div id="top" class="pill"></div>
+<div id="tools">
+  <button id="bSim">▶ شغّل</button>
+  <button id="bExplode">فكّك</button>
+  <button id="bCut">قص</button>
+  <button id="bLabels" class="on">الأسماء</button>
+  <button id="bWalk">🚶 ادخل</button>
+  <button id="bRender">✨ رندر</button>
+  <button id="bCmp">↔ قبل/بعد</button>
+  <button id="bDims">📏 المقاسات</button>
+  <button id="bRain">🌧 الأمطار</button>
+</div>
+<div id="cmpTag" class="pill"><button data-var="before">قبل<span class="l"> (المعماري)</span></button><button data-var="after">بعد<span class="l"> (المعدّل)</span></button><button id="cmpMenu" title="قائمة التعديلات">☰</button><button id="cmpOff" title="إنهاء المقارنة">✕</button></div>
+<div id="cmp" class="pill"><button class="x" id="cmpX">✕</button><b>مقارنة التعديلات</b>
+  <div class="seg"><button data-var="before">قبل (المعماري)</button><button data-var="after">بعد (المعدّل)</button></div>
+  <div id="cmpList"></div>
+  <small>قبل = مخطط المعماري DD-02 · بعد = التعديلات المعتمدة من المالك</small></div>
+<div id="rBar" class="pill">
+  <div id="rViews"><small>اللقطة</small></div>
+  <div><small>الوقت</small><span id="rTime"></span>
+    <button id="rShot">📸 صورة</button><button id="rExit">✕ خروج</button></div>
+</div>
+<div id="shot"><img id="shotImg" alt="رندر"><div><span>اضغط مطوّلًا على الصورة لحفظها</span><button id="shotX">إغلاق</button></div></div>
+<div id="cut" class="pill">موضع القص (من الأمام للخلف)<input id="cutR" type="range" min="0" max="25" step="0.1" value="12"></div>
+<div id="badge"></div>
+<div id="legend" class="pill"></div>
+<div id="info" class="pill"><button class="x" id="infoX">✕</button><div id="infoB"></div></div>
+<div id="sim" class="pill"></div>
+<div id="help" class="pill">اسحب للتدوير · عجلة/قرص للتكبير · اضغط على أي عنصر لتفاصيله</div>
+<div id="tabs" class="pill"></div>
+<div id="walk">
+  <div id="wBar" class="pill"><b id="wFloor"></b>
+    <button data-f="0">القبو</button><button data-f="1">المدخل</button><button data-f="2">الأول</button><button data-f="3">السطح</button>
+    <button id="wExit">✕ خروج</button></div>
+  <div id="wHelp" class="pill">امشِ بالعصا أو W A S D · اسحب الشاشة لتلتفت · الدرج يطلعك وينزلك · Shift للجري</div>
+  <div id="joy"><i></i></div>
+</div>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from "three";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
+import {CSS2DRenderer, CSS2DObject} from "three/addons/renderers/CSS2DRenderer.js";
+import {EffectComposer} from "three/addons/postprocessing/EffectComposer.js";
+import {RenderPass} from "three/addons/postprocessing/RenderPass.js";
+import {UnrealBloomPass} from "three/addons/postprocessing/UnrealBloomPass.js";
+import {OutputPass} from "three/addons/postprocessing/OutputPass.js";
+import {GTAOPass} from "three/addons/postprocessing/GTAOPass.js";
+import {Sky} from "three/addons/objects/Sky.js";
+import {RoundedBoxGeometry} from "three/addons/geometries/RoundedBoxGeometry.js";
+
+/* =====================================================================
+   DATA — read from the DD-02 drawing set.
+   Plan coordinates in metres: x from grid A (west) to F = 12.00,
+   y from grid 1 (street) to 10 = 25.00. Grid: A0 B2.15 C4.45 D6.35 E10.20 F12.00
+   / 1:0 2:2.50 3:4.20 4:6.17 5:10.85 6:17.10 7:19.10 8:21.20 9:22.85 10:25.00
+   Levels from SECTION 1-1: basement -3.55, ground +0.45, first +4.45, roof +8.45, top +12.45
+   ===================================================================== */
+const LEVELS = [-3.55, 0.45, 4.45, 8.45, 12.45];
+const FLOOR_NAMES = ["القبو", "الأرضي", "الأول", "السطح", "الأعلى"];
+const H = 4.0, SLAB = 0.32;
+
+// [name, x0, y0, x1, y1, type, svc?] — inner wall faces, measured from the drawing vectors (A-106…A-109)
+const ROOMS = [
+ [ // Basement −3.55
+  ["حمام",0.45,23.0,2.25,24.55,"wet"],["مغاسل",2.45,23.0,4.35,24.55,"wet"],
+  ["مخزن",0.45,20.0,1.95,22.7,"service"],["منور",0.45,19.2,1.95,19.8,"open"],
+  ["الدرج",2.15,18.6,4.35,21.73,"stair"],["المصعد",0.45,17.2,1.95,19.0,"lift",1],["ممر",2.15,17.2,4.35,18.6,"room"],
+  ["صالة المعيشة",4.55,17.3,11.55,24.55,"living"],["المطبخ",0.45,11.0,4.4,17.0,"kitchen"],
+  ["ممر خارجي",4.4,11.0,5.66,17.0,"open"],["الفناء",5.66,11.0,11.23,17.0,"open"],
+  ["درج الفناء",10.35,6.0,11.55,11.0,"stair"],["المسبح",0.45,0.45,4.55,10.7,"pool"],
+  ["سطح المسبح",4.55,4.3,8.15,10.7,"room"],["مسطح أخضر",8.15,4.3,10.35,10.7,"open"],
+  ["دورة مياه",5.85,2.72,7.85,4.05,"wet"],["غرفة المضخات",4.75,0.45,7.85,2.4,"service",1],
+  ["الخزان",8.15,0.45,11.55,4.0,"tank",1]
+ ],
+ [ // Ground +0.45
+  ["مسطح أخضر",0.3,0.3,2.9,2.3,"open"],["المدخل",3.1,0.3,5.3,2.3,"room"],
+  ["حمام",0.42,2.6,2.8,4.0,"wet"],["المغاسل",0.3,4.14,2.79,5.68,"wet"],["مطبخ تحضيري",0.3,6.1,2.9,6.61,"kitchen"],
+  ["ممر الاستقبال",3.1,2.3,5.3,10.7,"room"],["جلسة",0.3,6.95,3.1,10.7,"living"],["مجلس الرجال",5.3,6.95,10.05,10.7,"living"],
+  ["غرفة السائق",5.71,0.3,7.7,3.3,"bed",1],["مطبخ السائق",5.71,3.5,7.7,4.7,"kitchen",1],["حمام السائق",5.71,4.91,7.7,6.05,"wet",1],
+  ["الكراج",8.0,0.3,11.8,6.0,"garage",1],["درج الفناء",10.35,6.6,11.55,17.0,"void"],
+  ["صالة الطعام",0.3,11.0,5.65,17.0,"living"],["الفناء",5.95,11.0,11.55,17.0,"void"],
+  ["المصعد",0.45,17.2,1.55,19.0,"lift",1],["ممر",2.15,17.3,6.25,18.68,"room"],["ممر",4.42,18.68,6.25,22.7,"room"],
+  ["الدرج",2.15,18.68,4.42,21.71,"stair"],["مفتوح على القبو",6.45,17.31,11.55,20.81,"void"],
+  ["ممر علوي",6.45,20.81,11.55,21.71,"room"],["المكتب",6.5,21.71,9.85,24.55,"living"],
+  ["منور",0.3,23.01,5.65,24.7,"void"],["منور",0.3,19.21,1.95,22.71,"void"],["منور",9.85,21.71,11.55,24.7,"void"]
+ ],
+ [ // First +4.45
+  ["منور",0.3,19.18,1.95,22.68,"void"],["الدرج",2.15,18.66,4.4,22.33,"stair"],
+  ["ممر",2.15,17.27,5.45,18.66,"room"],["ممر",4.4,18.66,5.45,22.33,"room"],["المصعد",0.45,17.18,1.55,18.98,"lift",1],
+  ["خزانة",5.64,20.59,7.79,22.38,"room"],["حمام",7.99,20.59,9.69,22.38,"wet"],["غرفة نوم 1",6.29,17.78,9.69,20.48,"bed"],
+  ["تراس",6.39,17.28,7.99,17.62,"open"],["غسيل وكوي",0.3,12.79,1.95,16.98,"wet"],["جلسة",2.15,12.79,5.45,16.98,"living"],
+  ["تراس",5.64,12.78,6.29,16.98,"open"],["لوبي",0.3,10.99,2.79,12.59,"room"],
+  ["غرفة الخادمة",1.1,7.0,2.79,10.57,"bed"],["منور",0.3,9.29,1.1,10.86,"void"],["حمام الخادمة",0.3,5.3,2.79,6.79,"wet"],
+  ["ممر",3.0,5.3,4.2,12.14,"room"],["حمام",4.4,9.59,6.57,11.79,"wet"],["خزانة",4.4,7.29,6.57,9.39,"room"],
+  ["خزانة",4.4,5.3,6.69,7.1,"room"],["تراس",6.99,9.79,9.59,10.99,"open"],["غرفة نوم 2",6.99,5.2,9.69,9.69,"bed"],
+  ["غرفة النوم الرئيسية",0.3,1.3,4.2,5.0,"bed"],["تراس",0.3,0.3,2.0,1.3,"open"],
+  ["ملابس الرئيسية",4.4,3.0,6.69,5.0,"room"],["حمام الرئيسية",4.4,0.45,6.69,2.8,"wet"],["تراس",6.69,0.3,7.79,5.0,"open"]
+ ],
+ [ // Roof floor +8.45
+  ["منور",0.3,19.07,1.95,22.78,"void"],["الدرج",2.15,19.36,4.49,22.78,"stair"],["المصعد",0.6,17.26,1.55,19.07,"lift",1],
+  ["ممر",2.15,17.59,5.47,19.36,"room"],["سطح الخدمات",6.29,17.59,9.73,23.08,"open"],
+  ["ملابس",0.6,13.55,4.21,17.06,"room"],["حمام",0.3,11.36,2.81,13.35,"wet"],["جلسة",3.01,11.36,5.46,15.05,"living"],
+  ["تراس",1.3,6.5,4.31,10.57,"open"],["غرفة النوم",4.51,6.5,8.03,10.57,"bed"],
+  ["السطح",0.3,0.3,6.72,6.03,"open"]
+ ]
+];
+// floor plates: rectangles in, holes out (stair wells, voids, courtyard, skylights)
+const SLABS = [
+ {in:[[0,0,12,25]], out:[]},
+ {in:[[0,0,12,25]], out:[[5.95,11.0,11.55,17.0],[10.35,6.0,11.55,11.0],[6.45,17.31,11.55,20.81],[0.45,17.2,1.55,19.0],
+   [0.3,23.01,5.65,24.7],[0.3,19.21,1.95,22.71],[9.85,21.71,11.55,24.7]]},
+ {in:[[0,0,6.69,22.68],[6.69,0.3,7.79,5.0],[6.69,5.0,9.99,11.0],[6.29,15.98,7.99,22.68],[7.99,16.47,9.99,22.68],[6.29,22.68,9.85,24.71],[9.99,17.0,11.55,21.71]],
+  out:[[0.45,17.18,1.55,18.98],[0.3,19.18,1.95,22.68],[0.3,9.29,1.1,10.86]]},
+ {in:[[0,0,6.72,6.03],[0,6.03,9.73,11.04],[0,11.04,6.32,23.08],[6.32,16.47,10.03,23.08]],
+  out:[[0.6,17.26,1.55,19.07],[0.3,19.07,1.95,22.78],[0.3,9.34,1.0,10.74]]},
+ {in:[[0,6.03,9.73,11.04],[0,11.04,6.32,23.08]], out:[[0.3,6.33,4.31,10.74],[0.3,19.07,1.95,22.78],[4.42,15.35,6.02,16.48]]}
+];
+// glazing: [x0,y0,x1,y1,"full" sliding glass | "win" window]
+const GLASS = [
+ [[0.8,10.85,4.4,10.85,"full"],[4.4,11.0,4.4,17.0,"full"],[6.73,17.15,11.23,17.15,"full"]],
+ [[5.8,12.03,5.8,16.63,"full"],[6.45,17.16,11.55,17.16,"full"],[6.45,10.87,9.79,10.87,"full"],[9.85,21.71,9.85,24.55,"full"],[6.45,0.15,7.65,0.15,"win"]],
+ [[5.545,12.86,5.545,16.91,"full"],[6.39,17.7,7.89,17.7,"full"],[7.09,9.74,9.59,9.74,"full"],[0.45,1.25,1.85,1.25,"full"],[9.84,21.27,9.84,22.07,"win"],[6.84,1.09,6.84,1.89,"win"]],
+ [[5.63,11.04,5.63,15.05,"full"],[4.41,6.5,4.41,10.57,"full"]]
+];
+// extra openings not caught automatically (sliding doors, entrance, garage): lintel only
+const OPEN_X = [[[2.15,17.0,4.35,17.2]],[[2.15,17.0,5.65,17.3],[0.3,10.7,5.65,11.0],[3.1,2.0,5.3,2.3],[8.0,0.0,11.8,0.3]],[],[]];
+// horizontal skylight glass [x0,y0,x1,y1,z]
+const SKY = [[0.3,19.07,1.95,22.78,12.45],[0.3,22.68,5.65,24.7,8.45],[9.85,21.71,11.55,24.7,4.45]];
+// Wall pieces, columns and door gaps traced from the drawing vectors (metres, 1 mm precision)
+const PLAN = {W:[[[0.0,23.0,0.45,24.7],[0.302,22.4,0.45,23.0],[0.0,19.2,0.45,22.4],[0.0,17.2,0.45,19.0],[0.0,11.0,0.45,17.0],[0.302,10.2,0.45,11.0],[0.0,6.271,0.45,10.2],[0.302,5.672,0.45,6.271],[0.0,2.601,0.45,5.672],[0.302,2.0,0.45,2.601],[0.0,0.45,0.45,2.0],[6.5,24.7,11.502,25.0],[0.5,24.7,6.0,25.0],[0.45,24.551,12.002,24.7],[11.552,21.7,12.002,24.551],[11.552,17.601,12.002,21.101],[11.552,13.164,12.002,17.0],[11.575,11.0,12.002,13.164],[11.552,0.299,12.002,11.0],[11.552,-0.0,12.002,0.299],[0.0,0.299,8.151,0.45],[6.45,-0.0,8.151,0.299],[0.0,-0.0,5.651,0.299],[8.151,-0.0,11.552,0.299],[8.151,4.0,11.552,4.299],[0.601,19.0,1.552,19.2],[1.95,18.678,2.151,19.0],[1.95,17.2,2.151,17.279],[0.601,17.0,1.552,17.2],[4.25,16.869,4.552,17.0],[4.349,17.2,4.611,17.301],[6.45,17.039,6.726,17.301],[11.226,17.033,11.552,17.301],[4.349,17.0,4.611,17.2],[4.349,24.232,4.55,24.551],[4.349,23.976,4.55,24.232],[4.349,23.0,4.55,23.125],[4.349,19.279,4.55,22.7],[4.349,18.601,4.55,18.68],[4.349,17.535,4.55,18.581],[4.349,17.301,4.55,17.535],[4.179,17.101,4.349,17.2],[2.151,17.063,2.298,17.139],[4.179,17.0,4.349,17.101],[2.75,22.7,3.946,23.0],[0.45,22.7,2.151,23.0],[2.252,23.976,2.452,24.551],[2.252,23.0,2.452,23.115],[1.839,19.869,1.952,20.0],[1.28,19.869,1.821,20.0],[0.45,19.869,1.262,20.0],[0.45,19.799,1.25,19.869],[1.851,19.799,1.952,19.869],[3.262,18.65,3.488,18.801],[1.952,19.44,2.131,20.0],[1.952,19.2,2.151,19.44],[10.052,6.601,10.351,10.4],[10.052,4.299,10.351,6.0],[0.45,10.7,0.802,11.0],[1.952,20.813,2.151,21.734],[1.952,19.768,2.131,20.803],[3.262,18.821,3.462,19.2],[3.262,19.768,3.462,21.734],[3.262,19.2,3.462,19.768],[2.151,21.535,3.262,21.734],[4.552,2.5,4.827,2.599],[4.552,2.398,4.827,2.5],[4.552,0.45,4.752,2.398],[6.651,4.099,8.151,4.299],[7.851,4.0,8.151,4.099],[7.851,3.9,8.151,4.0],[7.853,3.5,8.151,3.9],[7.853,3.299,8.151,3.5],[7.853,2.599,8.151,3.299],[5.651,2.599,5.851,2.724],[6.351,2.5,8.151,2.599],[5.579,2.5,6.351,2.599],[6.351,2.398,8.151,2.5],[5.579,2.398,6.351,2.5],[6.452,2.275,6.653,2.398],[7.851,0.45,8.151,2.398],[5.653,3.476,5.851,4.049],[6.452,0.45,6.653,1.525]],[[-0.002,23.29,0.298,24.706],[-0.002,23.006,0.298,23.29],[-0.002,19.206,0.298,22.407],[-0.002,18.851,0.298,19.006],[[0.298,17.206],[-0.002,17.206],[-0.002,18.851]],[[-0.002,18.851],[0.298,18.851],[0.298,17.206]],[-0.002,11.004,0.298,17.006],[-0.002,6.276,0.298,10.204],[-0.002,2.603,0.298,5.677],[-0.002,0.002,0.298,2.004],[5.196,2.004,5.298,2.304],[0.298,2.004,3.196,2.304],[2.798,2.304,3.097,4.004],[0.298,10.817,2.359,10.893],[5.411,10.754,5.649,10.956],[9.788,10.738,10.048,11.004],[5.649,16.631,5.948,17.006],[5.649,11.75,5.948,12.028],[5.649,11.004,5.948,11.75],[10.048,6.605,10.349,10.405],[6.448,6.054,10.048,6.304],[5.298,6.054,5.649,6.304],[7.7,0.653,8.0,6.004],[7.7,0.304,8.0,0.653],[7.651,0.155,8.0,0.27],[5.298,0.155,5.649,0.304],[7.651,0.004,8.0,0.155],[5.298,0.004,5.649,0.155],[5.298,1.323,5.597,6.004],[5.298,0.304,5.597,0.385],[6.248,21.407,11.548,21.706],[5.998,22.7,6.298,24.706],[6.498,24.716,11.498,25.006],[0.498,24.706,5.998,25.006],[1.948,22.706,3.942,23.006],[0.298,22.706,0.55,23.006],[11.548,17.605,11.998,21.105],[11.798,11.004,11.998,17.006],[11.798,6.405,11.998,10.605],[11.798,0.405,11.998,6.004],[6.464,4.806,7.7,4.905],[5.597,4.806,5.712,4.905],[6.464,4.704,7.7,4.806],[5.597,4.704,5.712,4.806],[5.597,3.403,5.712,3.504],[6.464,3.304,7.7,3.504],[5.597,3.304,5.712,3.403],[1.274,3.804,2.798,4.004],[0.298,3.804,0.421,4.004],[2.897,6.103,3.097,6.954],[2.897,4.99,3.097,6.103],[2.897,4.004,3.097,4.137],[0.298,6.103,2.897,6.304],[2.147,17.067,2.417,17.145],[5.468,17.006,5.649,17.206],[0.597,17.006,1.548,17.206],[0.597,19.044,1.548,19.206],[1.948,19.5,2.103,20.008],[1.948,19.206,2.149,19.5],[1.948,18.851,2.149,19.006],[1.948,18.685,2.149,18.851],[1.948,17.206,2.149,17.284],[0.298,19.808,1.948,20.006],[11.698,22.401,11.998,24.706],[11.698,21.706,11.998,22.401]],[[-0.0,19.196,0.299,22.393],[-0.0,17.2,0.299,18.998],[-0.0,11.006,0.299,17.0],[-0.0,6.283,0.299,10.206],[-0.0,2.615,0.299,5.684],[-0.0,0.016,0.299,2.016],[6.442,0.018,6.992,0.315],[1.998,0.018,5.645,0.315],[1.998,0.315,2.297,1.416],[7.992,4.912,9.99,5.212],[7.992,5.843,8.291,6.012],[7.992,5.212,8.291,5.771],[9.69,6.611,9.99,10.406],[9.69,5.212,9.99,6.012],[6.692,9.281,6.992,12.504],[6.692,8.196,6.992,9.281],[6.692,7.035,6.992,7.398],[6.692,5.843,6.992,6.087],[6.692,2.813,6.992,5.771],[6.692,1.9,6.992,2.813],[6.692,0.464,6.992,1.103],[6.692,0.317,6.992,0.464],[5.645,12.504,6.992,12.799],[7.99,16.47,8.29,17.8],[9.69,22.083,9.99,22.393],[9.69,17.599,9.99,21.285],[9.69,16.47,9.99,17.0],[1.948,18.678,2.148,18.998],[1.948,17.2,2.148,17.279],[0.599,18.998,1.547,19.196],[7.893,17.631,7.992,17.797],[5.645,17.631,6.393,17.797],[5.446,19.613,5.645,22.692],[5.446,18.873,5.645,19.613],[5.446,16.926,5.645,17.92],[5.446,12.154,5.645,12.877],[6.293,11.954,6.692,12.154],[4.196,11.954,5.595,12.154],[6.569,9.51,6.692,9.609],[6.569,9.408,6.692,9.51],[4.396,9.408,5.718,9.609],[4.196,9.281,4.396,11.952],[4.196,6.998,4.396,9.281],[4.196,5.311,4.396,6.097],[2.795,12.081,2.996,12.803],[[2.795,11.129],[2.795,5.313],[2.996,5.313],[2.795,5.313],[2.996,5.313],[2.795,5.311]],[[2.795,11.129],[2.996,11.129],[2.996,5.313]],[6.371,7.111,6.692,7.309],[4.396,7.111,5.67,7.309],[1.299,12.603,2.795,12.803],[1.099,10.589,1.297,10.803],[1.099,9.307,1.297,9.476],[0.299,9.008,1.297,9.281],[0.299,6.91,1.871,7.01],[2.722,6.898,2.795,7.01],[2.722,6.809,2.795,6.898],[0.299,6.809,1.871,6.91],[4.071,5.212,6.692,5.311],[4.071,5.111,6.692,5.212],[0.299,5.111,3.121,5.311],[1.849,1.315,1.998,1.385],[1.849,1.216,1.998,1.315],[0.299,1.216,0.448,1.383],[4.196,5.018,4.396,5.111],[4.196,1.335,4.396,4.182],[4.196,0.319,4.396,1.335],[9.591,9.708,9.69,9.875],[6.992,9.708,7.091,9.809],[0.599,17.0,1.547,17.198],[0.299,19.795,2.103,19.996],[1.948,19.492,2.103,19.793],[1.948,19.196,2.148,19.492],[7.793,21.46,7.992,22.692],[7.793,20.494,7.992,20.609],[6.51,20.295,9.69,20.494],[4.539,22.692,9.69,22.992],[0.299,22.692,3.94,22.992],[5.994,17.299,6.293,17.597],[4.396,2.924,4.47,3.014],[6.371,2.815,6.692,3.014],[5.321,2.815,5.771,3.014],[4.396,2.813,4.47,2.924],[5.595,0.317,6.692,0.464],[4.396,11.803,6.692,11.952]],[[4.56,22.72,5.467,23.021],[2.758,22.72,3.957,23.021],[0.3,22.72,2.157,23.021],[-0.002,19.208,0.3,22.42],[-0.002,17.204,0.3,19.007],[-0.002,12.448,0.3,17.001],[-0.002,11.283,0.3,12.448],[5.467,18.626,5.768,23.021],[[5.526,17.527],[5.768,17.527],[5.768,17.481]],[0.602,17.001,1.554,17.202],[6.018,14.995,6.32,17.001],[[5.526,17.527],[5.467,17.527],[6.29,17.321],[5.467,17.527],[6.29,17.321],[5.467,17.321]],[5.467,17.231,5.667,17.303],[[5.443,17.237],[5.667,17.178],[5.443,17.178]],[5.443,17.001,5.667,17.178],[2.157,17.001,4.49,17.303],[0.602,19.007,1.554,19.208],[1.979,19.305,2.155,20.011],[1.979,19.208,2.155,19.305],[1.955,18.688,2.155,19.007],[[2.155,17.204],[1.955,17.204],[1.955,17.281]],[[1.955,17.281],[2.155,17.281],[2.155,17.204]],[0.3,19.809,1.953,20.011],[1.957,13.291,2.808,13.491],[0.3,13.291,1.102,13.491],[2.808,10.981,3.008,15.295],[1.002,6.265,1.304,10.646],[6.397,5.966,8.026,6.265],[1.605,5.966,5.796,6.265],[8.026,5.966,8.326,10.981],[8.326,10.759,9.431,10.981],[8.326,10.68,9.431,10.759],[9.73,4.86,10.032,10.68],[6.721,4.86,9.73,5.162],[6.721,0.045,7.022,4.86],[6.721,-0.054,7.022,0.045],[-0.002,-0.054,6.721,0.245],[-0.002,0.245,0.3,10.68],[5.445,15.031,6.018,15.295],[3.008,14.995,4.542,15.295],[4.215,16.422,4.415,17.001],[4.215,16.345,4.415,16.422],[4.215,15.295,4.415,15.39],[9.73,17.603,10.032,22.42],[9.73,16.47,10.03,17.0],[5.768,22.72,9.73,23.021],[1.937,10.856,4.522,10.981],[5.455,10.831,5.796,10.954],[0.3,10.68,1.334,10.981],[6.397,10.68,8.026,10.981],[5.455,10.68,5.796,10.831],[1.937,10.68,4.522,10.805],[0.3,8.976,1.002,9.275],[4.312,10.507,4.512,10.68],[4.312,6.265,4.512,6.438]]],C:[[[5.651,-0.0,6.45,0.299],[0.0,2.0,0.302,2.601],[5.651,4.049,6.651,4.299],[0.0,5.672,0.302,6.271],[10.052,6.0,10.351,6.601],[0.0,10.2,0.302,11.0],[10.052,10.4,10.351,11.0],[0.0,17.0,0.601,17.2],[1.552,17.0,2.151,17.2],[5.661,17.0,6.45,17.301],[11.552,17.0,12.002,17.601],[4.351,18.68,4.552,19.279],[0.0,19.0,0.601,19.2],[1.552,19.0,2.151,19.2],[11.552,21.101,12.002,21.7],[0.0,22.4,0.302,23.0],[2.151,22.7,2.75,23.0],[3.946,22.7,4.546,23.0],[0.0,24.7,0.5,25.0],[6.0,24.7,6.5,25.0],[11.502,24.7,12.002,25.0]],[[5.649,0.004,6.448,0.304],[11.746,0.004,11.998,0.506],[-0.002,2.004,0.298,2.603],[-0.002,5.677,0.298,6.276],[10.048,6.004,10.349,6.605],[11.798,6.004,11.998,6.405],[5.649,6.054,6.448,6.304],[-0.002,10.173,0.347,11.004],[10.048,10.405,10.349,11.004],[11.798,10.605,11.998,11.004],[5.649,10.704,6.448,11.036],[11.548,16.976,11.998,17.605],[-0.002,17.006,0.597,17.206],[1.548,17.006,2.147,17.206],[5.649,17.006,6.448,17.306],[-0.002,19.006,0.597,19.206],[1.548,19.006,2.147,19.206],[11.548,21.105,11.998,21.706],[-0.002,22.407,0.298,23.006],[2.149,22.706,2.748,23.006],[3.942,22.706,4.544,23.006],[-0.002,24.706,0.498,25.006],[5.998,24.706,6.498,25.006],[11.498,24.706,11.998,25.006]],[[5.645,0.003,6.442,0.302],[-0.0,2.001,0.299,2.6],[5.771,2.8,6.371,3.001],[-0.0,5.669,0.299,6.269],[9.69,5.997,9.99,6.596],[5.67,7.096,6.371,7.294],[0.325,10.058,0.986,10.719],[-0.0,10.191,0.299,10.991],[9.69,10.392,9.99,10.991],[5.595,11.939,6.293,12.14],[-0.0,16.985,0.599,17.185],[1.547,16.985,2.148,17.185],[5.645,16.985,6.293,17.284],[9.69,16.985,9.99,17.584],[-0.0,18.983,0.599,19.181],[1.547,18.983,2.148,19.181],[-0.0,22.334,0.349,22.977],[9.69,22.378,9.99,22.977],[2.148,22.677,2.748,22.977],[3.94,22.677,4.539,22.977]],[[5.796,6.025,6.397,6.325],[-0.002,10.739,0.35,11.362],[5.796,10.739,6.397,11.041],[9.431,10.739,10.032,11.041],[-0.002,17.061,0.602,17.261],[1.554,17.061,2.157,17.261],[5.667,17.061,6.32,17.362],[9.73,17.061,10.032,17.662],[-0.002,19.067,0.602,19.267],[1.554,19.067,2.157,19.267],[-0.002,22.479,0.3,23.081],[9.73,22.479,10.032,23.081],[2.157,22.779,2.758,23.081],[3.957,22.779,4.56,23.081]]],O:[[[1.839,19.2,1.952,19.869],[4.611,17.0,5.661,17.2],[4.611,17.2,5.661,17.301],[4.827,2.398,5.579,2.5],[4.827,2.5,5.579,2.599]],[[0.298,18.851,1.948,19.006],[5.712,3.304,6.464,3.403],[5.712,3.403,6.464,3.504],[5.712,4.704,6.464,4.806],[5.712,4.806,6.464,4.905],[6.448,0.004,7.651,0.155],[6.448,0.155,7.651,0.27]],[[0.299,10.856,1.099,10.991],[2.795,11.114,2.996,12.066],[3.121,5.096,4.071,5.197],[3.121,5.197,4.071,5.296],[4.196,6.082,4.396,6.983],[5.446,17.905,5.645,18.858],[5.718,9.394,6.569,9.495],[5.718,9.495,6.569,9.594],[6.692,1.088,6.992,1.886],[6.692,7.384,6.992,8.181],[6.992,5.828,7.992,5.997],[9.69,21.271,9.99,22.068]],[[1.102,13.351,1.957,13.551],[1.334,10.739,1.937,10.864],[1.334,10.916,1.937,11.041],[4.49,17.061,5.443,17.237],[4.522,10.739,5.455,10.864],[4.542,15.091,5.445,15.354]]]};
+
+// Columns — sheet S-09 (column layout). [x, y, type, orientation, planted]
+const COLS = [
+ [0.3,24.85,"C3","h"],[6.15,24.85,"C3","h"],[11.75,24.85,"C3","h"],
+ [0.15,22.6,"C4","v"],[2.45,22.85,"C4","h"],[4.3,22.85,"C4","h"],[6.0,21.3,"C4","h"],[10.0,22.85,"C4","v",1],
+ [11.8,21.2,"C6","v"],[11.8,17.1,"C6","v"],
+ [0.3,19.1,"C1","h"],[2.0,19.1,"C1","h"],[0.3,17.1,"C1","h"],[2.0,17.1,"C1","h"],
+ [6.0,17.1,"C5","h"],[10.0,17.1,"C4","v",1],
+ [0.15,10.6,"C5","v"],[5.97,12.2,"C2","h",1],[6.0,10.85,"C5","h"],[10.3,10.85,"C4","v"],[11.9,10.85,"C1","v"],
+ [0.15,6.17,"C4","v"],[5.97,7.3,"C2","h",1],[6.0,6.17,"C5","h"],[10.3,6.17,"C4","v"],[11.9,6.17,"C1","v"],
+ [0.15,2.5,"C4","v"],[5.97,2.9,"C2","h",1],[6.0,0.1,"C5","h"],[11.9,0.1,"C1","v"]
+];
+const COL_SIZE = {C1:[.3,.6],C2:[.25,.5],C3:[.3,.6],C4:[.3,.6],C5:[.3,.8],C6:[.4,.6]};
+
+// Electrical panels — sheet E-23 schedules (real values). Positions estimated from layout tags.
+// circuit: [ct, type, phase(R/Y/B/3), kVA, breakerA, cable]
+const DBS = {
+ "DB-B": {floor:0, pos:[4.6,17.35], cb:40, feeder:"(4x16+16) CU/XLPE/PVC", label:"القبو", circuits:[
+   [1,"L","R",.42,20,"3(1Cx2.5)"],[3,"L","Y",.09,20,"3(1Cx2.5)"],[5,"L","B",.06,20,"3(1Cx2.5)"],[7,"L","R",.11,20,"3(1Cx2.5)"],[9,"L","Y",.22,20,"3(1Cx2.5)"],
+   [2,"L","R",.19,20,"3(1Cx2.5)"],[4,"L","Y",.14,20,"3(1Cx2.5)"],[6,"L","B",.03,20,"3(1Cx2.5)"],[8,"L","R",.17,20,"3(1Cx2.5)"],
+   [11,"S","B",.8,20,"3(1Cx4)"],[10,"S","Y",1.4,20,"3(1Cx4)"],[12,"S","B",1.0,20,"3(1Cx4)"],
+   ["13-15-17","AC3","3",9.0,32,"4x6+6"],[14,"EWH","R",2.0,32,"3(1Cx6)"],[16,"EWH","Y",2.0,32,"3(1Cx6)"]]},
+ "DB-G": {floor:1, pos:[4.6,17.35], cb:80, feeder:"(4x35+16) CU/XLPE/PVC", label:"الأرضي", circuits:[
+   [1,"L","R",.36,20,"3(1Cx2.5)"],[3,"L","Y",.28,20,"3(1Cx2.5)"],[5,"L","B",.24,20,"3(1Cx2.5)"],[7,"L","R",.37,20,"3(1Cx2.5)"],[9,"L","Y",.33,20,"3(1Cx2.5)"],
+   [2,"L","R",.34,20,"3(1Cx2.5)"],[4,"L","Y",.44,20,"3(1Cx2.5)"],[6,"L","B",.08,20,"3(1Cx2.5)"],[8,"L","R",.06,20,"3(1Cx2.5)"],
+   [11,"S","B",.8,20,"3(1Cx4)"],[10,"S","Y",.8,20,"3(1Cx4)"],[12,"S","B",1.2,20,"3(1Cx4)"],
+   [13,"PS","R",1.5,32,"3(1Cx6)"],[15,"PS","Y",1.5,32,"3(1Cx6)"],[17,"PS","B",1.5,32,"3(1Cx6)"],[14,"PS","R",1.5,32,"3(1Cx6)"],[16,"PS","Y",1.5,32,"3(1Cx6)"],[18,"PS","B",1.5,32,"3(1Cx6)"],
+   [19,"AC","R",4.5,32,"3(1Cx6)"],[21,"AC","Y",5.5,32,"3(1Cx6)"],[20,"AC","R",4.5,32,"3(1Cx6)"],[22,"AC","Y",4.5,32,"3(1Cx6)"],
+   [23,"EWH","B",1.5,32,"3(1Cx6)"],[25,"EWH","R",2.0,32,"3(1Cx6)"],[24,"EWH","B",2.0,32,"3(1Cx6)"]]},
+ "DB-SER": {floor:1, pos:[8.15,5.9], cb:40, feeder:"(4x16+16) CU/XLPE/PVC", label:"الخدمات", circuits:[
+   [1,"L","R",.21,20,"3(1Cx2.5)"],[3,"L","Y",.03,20,"3(1Cx2.5)"],[2,"L","R",.13,20,"3(1Cx2.5)"],[4,"L","Y",.18,20,"3(1Cx2.5)"],
+   [5,"S","B",1.0,20,"3(1Cx4)"],[6,"PS","B",1.5,32,"3(1Cx6)"],[7,"AC","R",1.8,32,"3(1Cx6)"],[8,"EWH","R",2.0,32,"3(1Cx6)"],
+   [9,"PUMP","Y",2.25,32,"3(1Cx6)"],["13-15-17","ELEV","3",7.5,32,"4x10+6"]]},
+ "DB-F": {floor:2, pos:[3.0,12.65], cb:80, feeder:"(4x35+16) CU/XLPE/PVC", label:"الأول", circuits:[
+   [1,"L","R",.25,20,"3(1Cx2.5)"],[3,"L","Y",.11,20,"3(1Cx2.5)"],[5,"L","B",.14,20,"3(1Cx2.5)"],[7,"L","R",.11,20,"3(1Cx2.5)"],
+   [2,"L","R",.40,20,"3(1Cx2.5)"],[4,"L","Y",.09,20,"3(1Cx2.5)"],[6,"L","B",.08,20,"3(1Cx2.5)"],[8,"L","R",.14,20,"3(1Cx2.5)"],
+   [9,"S","Y",1.4,20,"3(1Cx4)"],[11,"S","B",.8,20,"3(1Cx4)"],[13,"S","R",.8,20,"3(1Cx4)"],[10,"S","Y",1.2,20,"3(1Cx4)"],[12,"S","B",1.6,20,"3(1Cx4)"],[14,"S","R",1.0,20,"3(1Cx4)"],
+   [15,"PS","Y",1.5,32,"3(1Cx6)"],[16,"PS","Y",1.5,32,"3(1Cx6)"],
+   [17,"AC","B",2.8,32,"3(1Cx6)"],[19,"AC","R",2.8,32,"3(1Cx6)"],[21,"AC","Y",2.8,32,"3(1Cx6)"],[23,"AC","B",2.0,32,"3(1Cx6)"],[18,"AC","B",1.8,32,"3(1Cx6)"],[20,"AC","R",1.8,32,"3(1Cx6)"],[22,"AC","Y",1.8,32,"3(1Cx6)"],
+   [25,"EWH","R",2.0,32,"3(1Cx6)"],[27,"EWH","Y",2.0,32,"3(1Cx6)"],[24,"EWH","B",2.0,32,"3(1Cx6)"],[26,"EWH","R",2.0,32,"3(1Cx6)"]]},
+ "DB-R": {floor:3, pos:[4.6,17.35], cb:40, feeder:"(4x16+16) CU/XLPE/PVC", label:"السطح", circuits:[
+   [1,"L","R",.12,20,"3(1Cx2.5)"],[3,"L","Y",.28,20,"3(1Cx2.5)"],[5,"L","B",.11,20,"3(1Cx2.5)"],[7,"L","R",.03,20,"3(1Cx2.5)"],
+   [2,"L","R",.09,20,"3(1Cx2.5)"],[4,"L","Y",.22,20,"3(1Cx2.5)"],[6,"L","B",.04,20,"3(1Cx2.5)"],[8,"L","R",.11,20,"3(1Cx2.5)"],
+   [9,"S","Y",1.0,20,"3(1Cx4)"],[11,"S","B",1.4,20,"3(1Cx4)"],[10,"S","Y",1.4,20,"3(1Cx4)"],[12,"S","B",1.4,20,"3(1Cx4)"],
+   [13,"AC","R",2.8,32,"3(1Cx6)"],[15,"AC","Y",2.0,32,"3(1Cx6)"],[14,"AC","R",2.8,32,"3(1Cx6)"]]}
+};
+const MDB = [11.4, 0.45]; // at the front facade by the garage
+const TYPE_AR = {L:"إنارة",S:"أفياش",PS:"أفياش قوى",AC:"مكيف",AC3:"مكيف 3 فاز",EWH:"سخان",PUMP:"مضخة",ELEV:"المصعد"};
+const DEMAND = {L:.9,S:.9,PS:.8,AC:1,AC3:1,EWH:.8,PUMP:.8,ELEV:.8};
+
+/* ===================================================================== */
+const P = (x, y, z) => new THREE.Vector3(x - 6, z, 12.5 - y);
+const app = document.getElementById("app");
+// phones: lower GPU memory (iOS kills WebGL pages that use too much)
+const MOBILE = matchMedia("(pointer: coarse)").matches || Math.min(screen.width, screen.height) < 820;
+const SHADOW = MOBILE ? 1024 : 2048;
+const renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:"high-performance"});
+renderer.setPixelRatio(Math.min(devicePixelRatio, MOBILE ? 1.5 : 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+app.appendChild(renderer.domElement);
+const labelR = new CSS2DRenderer();
+labelR.setSize(innerWidth, innerHeight);
+Object.assign(labelR.domElement.style, {position:"fixed", inset:"0", pointerEvents:"none", direction:"ltr"});
+app.appendChild(labelR.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 500);
+camera.position.set(-26, 24, 34);
+if (innerWidth / innerHeight < 0.8) camera.position.multiplyScalar(1.7);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 2, 0);
+controls.enableDamping = true;
+controls.maxPolarAngle = Math.PI * 0.495;
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.9, 0.5, 0.82);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+const hemi = new THREE.HemisphereLight(0xdfe8ff, 0x8a7350, 1.0); scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xfff1dc, 2.4);
+sun.position.set(-20, 35, 25); sun.castShadow = true;
+sun.shadow.mapSize.set(SHADOW, SHADOW);
+Object.assign(sun.shadow.camera, {left:-25, right:25, top:25, bottom:-25, near:1, far:90});
+scene.add(sun);
+const amb = new THREE.AmbientLight(0xffffff, 0.25); scene.add(amb);
+
+// floor groups (for explode / floor focus)
+const floors = LEVELS.map((_, i) => { const g = new THREE.Group(); g.userData.i = i; scene.add(g); return g; });
+const floorOf = z => z < LEVELS[1] - 0.01 ? 0 : z < LEVELS[2] - 0.01 ? 1 : z < LEVELS[3] - 0.01 ? 2 : z < LEVELS[4] - 0.01 ? 3 : 4;
+const items = [];      // every 3D object with userData {layer, floor}
+const labels = [];
+const pickables = [];
+
+function add(obj, layer, floor, info) {
+  obj.userData.layer = layer; obj.userData.floor = floor;
+  if (info) { obj.userData.info = info; pickables.push(obj); }
+  floors[floor].add(obj); items.push(obj); return obj;
+}
+function label(text, x, y, z, layer, floor, warn) {
+  const d = document.createElement("div"); d.className = "lbl" + (warn ? " w" : ""); d.textContent = text;
+  const o = new CSS2DObject(d); o.position.copy(P(x, y, z));
+  o.userData = {layer, floor, isLabel:true, y}; floors[floor].add(o); labels.push(o); return o;
+}
+
+/* ---------- materials ---------- */
+const M = {
+  wall: new THREE.MeshStandardMaterial({color:0xefe6d6, roughness:.9}),
+  wallGhost: new THREE.MeshStandardMaterial({color:0x6f8fd8, transparent:true, opacity:.10, depthWrite:false, roughness:.4}),
+  slab: new THREE.MeshStandardMaterial({color:0xdedbd4, roughness:.85}),
+  slabGhost: new THREE.MeshStandardMaterial({color:0x3a5aa8, transparent:true, opacity:.12, depthWrite:false}),
+  wet: new THREE.MeshStandardMaterial({color:0xcfd8de, roughness:.6}),
+  outdoor: new THREE.MeshStandardMaterial({color:0xc9b48c, roughness:.95}),
+  green: new THREE.MeshStandardMaterial({color:0x7d9b5c, roughness:1}),
+  water: new THREE.MeshStandardMaterial({color:0x39a0d6, transparent:true, opacity:.75, roughness:.1, metalness:.1}),
+  concrete: new THREE.MeshStandardMaterial({color:0xd9dde2, roughness:.8}),
+  pcc: new THREE.MeshStandardMaterial({color:0x9a9d9f, roughness:1}),
+  steel: new THREE.MeshStandardMaterial({color:0x8f99a3, roughness:.4, metalness:.6}),
+  sand: new THREE.MeshStandardMaterial({color:0xd8b685, roughness:1}),
+  street: new THREE.MeshStandardMaterial({color:0x3b3d42, roughness:.95}),
+  tank: new THREE.MeshStandardMaterial({color:0x5fb4e6, transparent:true, opacity:.35, depthWrite:false}),
+  glass: new THREE.MeshStandardMaterial({color:0x9fc3d6, transparent:true, opacity:.32, roughness:.05, metalness:.2, depthWrite:false}),
+  frame: new THREE.MeshStandardMaterial({color:0x3a3a3c, roughness:.5, metalness:.5}),
+};
+const emissive = (c, i = 1.6) => new THREE.MeshStandardMaterial({color:c, emissive:c, emissiveIntensity:i, roughness:.4});
+const PH = {R:0xff4d4d, Y:0xffcf33, B:0x3fa7ff, "3":0xff8a2a};
+
+/* ---------- geometry helpers ---------- */
+function box(x0, y0, z0, x1, y1, z1, mat) {
+  const w = Math.abs(x1 - x0), d = Math.abs(y1 - y0), h = Math.abs(z1 - z0);
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  m.position.copy(P((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2));
+  return m;
+}
+// box with soft edges (furniture, appliances) — r is clamped so thin panels still work
+function rbox(x0, y0, z0, x1, y1, z1, mat, r = .03) {
+  const w = Math.abs(x1 - x0), d = Math.abs(y1 - y0), h = Math.abs(z1 - z0);
+  const m = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, Math.min(r, w / 2.2, d / 2.2, h / 2.2)), mat);
+  m.position.copy(P((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2));
+  return m;
+}
+const tubeCache = {};
+function seg(a, b, r, mat, layer, info) {
+  // a,b plan coords [x,y,z]; vertical runs crossing floors are split at floor lines
+  const pts = [a];
+  if (Math.abs(a[0]-b[0]) < 1e-6 && Math.abs(a[1]-b[1]) < 1e-6) {
+    const lo = Math.min(a[2], b[2]), hi = Math.max(a[2], b[2]);
+    const cuts = LEVELS.filter(L => L > lo + 1e-3 && L < hi - 1e-3);
+    const ordered = a[2] < b[2] ? cuts : cuts.reverse();
+    ordered.forEach(L => pts.push([a[0], a[1], L]));
+  }
+  pts.push(b);
+  for (let i = 0; i < pts.length - 1; i++) {
+    const A = P(...pts[i]), B = P(...pts[i+1]);
+    const len = A.distanceTo(B); if (len < 1e-4) continue;
+    const g = new THREE.CylinderGeometry(r, r, len, 8, 1, true);
+    const m = new THREE.Mesh(g, mat);
+    m.position.copy(A).add(B).multiplyScalar(.5);
+    m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), B.clone().sub(A).normalize());
+    add(m, layer, floorOf((pts[i][2] + pts[i+1][2]) / 2 + .001), info);
+  }
+}
+function path(points, r, mat, layer, info) {
+  for (let i = 0; i < points.length - 1; i++) seg(points[i], points[i+1], r, mat, layer, info);
+}
+function manhattan(a, b, zc) { return [a, [a[0],a[1],zc], [b[0],a[1],zc], [b[0],b[1],zc], b]; }
+const sphereG = new THREE.SphereGeometry(1, 16, 12);
+function dot(x, y, z, r, mat, layer, info) {
+  const m = new THREE.Mesh(sphereG, mat); m.scale.setScalar(r); m.position.copy(P(x, y, z));
+  return add(m, layer, floorOf(z + .001), info);
+}
+function device(x, y, z, sx, sy, sz, mat, layer, info) {
+  const m = box(x - sx/2, y - sy/2, z - sz/2, x + sx/2, y + sy/2, z + sz/2, mat);
+  return add(m, layer, floorOf(z + .001), info);
+}
+const area = r => (r[3]-r[1]) * (r[4]-r[2]);
+const cx = r => (r[1]+r[3]) / 2, cy = r => (r[2]+r[4]) / 2;
+const enclosed = r => !["open","void","pool","tank"].includes(r[5]);
+
+/* ---------- site ---------- */
+{
+  // sand around the plot, leaving the 12×25 m basement footprint open
+  [[-14, 0, 0, 25], [12, 0, 26, 25], [-14, 25, 26, 40], [-14, -1.6, 26, 0]].forEach(([a, b, c, d]) => {
+    const g = box(a, b, -0.06, c, d, 0, M.sand); g.receiveShadow = true; add(g, "site", 1);
+  });
+  const street = box(-14, -9, 0, 26, -1.6, 0.02, M.street); street.receiveShadow = true;
+  add(street, "site", 1);
+  const walk = box(-14, -1.6, 0, 26, 0, 0.15, M.concrete); walk.receiveShadow = true;
+  add(walk, "site", 1);
+  label("الشارع", 6, -5, 0.3, "site", 1);
+}
+
+/* ---------- architecture ----------
+   Walls, columns and door openings are traced from the vector lines of the architectural
+   plans (A-106 basement … A-109 roof), so every wall sits exactly where the drawing puts it. */
+const isRect = w => typeof w[0] === "number";
+const bboxOf = pts => [Math.min(...pts.map(p => p[0])), Math.min(...pts.map(p => p[1])), Math.max(...pts.map(p => p[0])), Math.max(...pts.map(p => p[1]))];
+const inR = (r, x, y, e = 0) => x > r[0] - e && x < r[2] + e && y > r[1] - e && y < r[3] + e;
+function roomAt(f, x, y) {
+  const hits = ROOMS[f].filter(r => x > r[1] && x < r[3] && y > r[2] && y < r[4]);
+  return hits.find(enclosed) || hits[0] || null;
+}
+const stairRoom = f => ROOMS[f] && ROOMS[f].find(r => r[0] === "الدرج");
+function wallTop(f, bb) {
+  if (f === 3 && (bb[3] <= 6.1 || bb[0] >= 9.3)) return 1.2;           // roof parapets
+  if (f === 3 && bb[0] >= 6.25 && bb[1] >= 17.3) return 1.8;            // services-roof screen
+  return H - SLAB;
+}
+const WALLS = PLAN.W.map((list, f) => list.map(w => {
+  const tris = isRect(w) ? null : Array.from({length: w.length / 3}, (_, i) => w.slice(i * 3, i * 3 + 3));
+  return {rect: isRect(w) ? w : null, tris, bb: isRect(w) ? w : bboxOf(w)};
+}));
+PLAN.C.forEach((list, f) => list.forEach(c => WALLS[f].push({rect:c, bb:c, col:true})));
+function triPrism(tri, z0, h, mat) {
+  const s = new THREE.Shape(tri.map(([x, y]) => new THREE.Vector2(x - 6, y - 12.5)));
+  const g = new THREE.ExtrudeGeometry(s, {depth:h, bevelEnabled:false});
+  g.rotateX(-Math.PI / 2); g.translate(0, z0, 0);
+  return new THREE.Mesh(g, mat);
+}
+WALLS.forEach((list, f) => {
+  const L = LEVELS[f];
+  list.forEach(w => {
+    const st = stairRoom(f), inStair = st && f < 3 && w.bb[0] > st[1] && w.bb[2] < st[3] && w.bb[1] > st[2] - .3 && w.bb[3] < st[4] + .05;
+    const h = w.col ? H - SLAB : inStair ? H / 2 - .15 : wallTop(f, w.bb);
+    w.h = h;
+    const meshes = w.rect ? [box(w.rect[0], w.rect[1], L, w.rect[2], w.rect[3], L + h, M.wall)] : w.tris.map(t => triPrism(t, L, h, M.wall));
+    const roofScreen = f === 3 && w.bb[0] >= 6.25 && w.bb[1] >= 17.3 && !w.col;
+    meshes.forEach(m => { m.castShadow = true; m.receiveShadow = true; m.userData.wall = true; m.userData.roofScreen = roofScreen; add(m, "arch", f); });
+  });
+});
+// door heads over every opening (auto-detected gaps + sliding doors / entrance / garage)
+PLAN.O.forEach((list, f) => [...list, ...OPEN_X[f]].forEach(o => {
+  const L = LEVELS[f], head = f === 1 && o[1] < 0.5 && o[0] > 7.9 ? 2.6 : 2.3;
+  if (H - SLAB - head < .05) return;
+  const m = box(o[0], o[1], L + head, o[2], o[3], L + H - SLAB, M.wall); m.userData.wall = true; m.castShadow = true; add(m, "arch", f);
+}));
+// glazing — aluminium frames with glass (sliding doors full height, windows on a sill)
+function glazing(f, [x0, y0, x1, y1, kind]) {
+  const L = LEVELS[f], top = H - SLAB, vert = Math.abs(x1 - x0) < 1e-6;
+  const sill = kind === "win" ? .9 : 0, head = kind === "win" ? 2.3 : 2.7;
+  const slab = (a, b, t, mat) => vert ? box(x0 - t, y0, L + a, x0 + t, y1, L + b, mat) : box(x0, y0 - t, L + a, x1, y0 + t, L + b, mat);
+  const g = slab(sill, head, .02, M.glass); g.userData.glass = true; add(g, "arch", f, {kind:"glass", name: kind === "win" ? "نافذة ألمنيوم وزجاج" : "واجهة زجاج وألمنيوم (أبواب سحاب)", floor:f});
+  [[head, top, .1], ...(sill ? [[0, sill, .1]] : [])].forEach(([a, b, t]) => { const m = slab(a, b, t, M.wall); m.userData.wall = true; add(m, "arch", f); });
+  [[sill, sill + .05], [head - .05, head]].forEach(([a, b]) => { const m = slab(a, b, .04, M.frame); m.userData.glass = true; add(m, "arch", f); });
+  const len = Math.hypot(x1 - x0, y1 - y0), n = Math.max(1, Math.round(len / 1.2));
+  for (let i = 0; i <= n; i++) {
+    const t = i / n, px = x0 + (x1 - x0) * t, py = y0 + (y1 - y0) * t;
+    const m = box(px - .03, py - .03, L + sill, px + .03, py + .03, L + head, M.frame); m.userData.glass = true; add(m, "arch", f);
+  }
+}
+GLASS.forEach((list, f) => list.forEach(g => glazing(f, g)));
+SKY.forEach(([x0, y0, x1, y1, z]) => { const g = box(x0, y0, z - .04, x1, y1, z, M.glass); g.userData.glass = true; add(g, "arch", floorOf(z - .1)); });
+
+// floor plates: split the outline into rectangles around the holes, finish taken from the room on top
+function slabCells(ins, outs) {
+  const xs = [...new Set([...ins, ...outs].flatMap(r => [r[0], r[2]]))].sort((a, b) => a - b);
+  const ys = [...new Set([...ins, ...outs].flatMap(r => [r[1], r[3]]))].sort((a, b) => a - b);
+  const cells = [];
+  for (let j = 0; j < ys.length - 1; j++) {
+    let run = null;
+    for (let i = 0; i < xs.length - 1; i++) {
+      const c = [xs[i], ys[j], xs[i+1], ys[j+1]], mx = (c[0] + c[2]) / 2, my = (c[1] + c[3]) / 2;
+      const ok = ins.some(r => inR(r, mx, my)) && !outs.some(r => inR(r, mx, my));
+      if (ok && run && run[2] === c[0]) run[2] = c[2];
+      else { if (run) cells.push(run); run = ok ? c : null; }
+    }
+    if (run) cells.push(run);
+  }
+  return cells;
+}
+const FLOORCELLS = SLABS.map((s, f) => {
+  const outs = [...s.out];
+  if (f > 0 && f < 4) { const a = stairRoom(f - 1), b = stairRoom(f); [a, b].forEach(r => r && outs.push([r[1], r[2], r[3], r[4]])); }
+  if (f === 0) ROOMS[0].filter(r => r[5] === "pool").forEach(r => outs.push([r[1], r[2], r[3], r[4]]));
+  return slabCells(s.in, outs);
+});
+FLOORCELLS.forEach((cells, f) => {
+  const L = LEVELS[f];
+  cells.forEach(c => {
+    // sub-split by room so finishes and click-info follow the rooms
+    const xs = [c[0], c[2]], ys = [c[1], c[3]];
+    if (f < 4) ROOMS[f].forEach(r => { if (r[1] > c[0] && r[1] < c[2]) xs.push(r[1]); if (r[3] > c[0] && r[3] < c[2]) xs.push(r[3]); if (r[2] > c[1] && r[2] < c[3]) ys.push(r[2]); if (r[4] > c[1] && r[4] < c[3]) ys.push(r[4]); });
+    xs.sort((a, b) => a - b); ys.sort((a, b) => a - b);
+    for (let i = 0; i < xs.length - 1; i++) for (let j = 0; j < ys.length - 1; j++) {
+      const x0 = xs[i], x1 = xs[i+1], y0 = ys[j], y1 = ys[j+1]; if (x1 - x0 < .01 || y1 - y0 < .01) continue;
+      const r = f < 4 ? roomAt(f, (x0 + x1) / 2, (y0 + y1) / 2) : null;
+      const type = r ? r[5] : f === 4 ? "roof" : "room";
+      const mat = type === "open" ? (r[0].includes("أخضر") ? M.green : M.outdoor) : type === "wet" ? M.wet : M.slab;
+      const s = add(box(x0, y0, L - SLAB, x1, y1, L, mat), "arch", f, r && enclosed(r) ? {kind:"room", name:r[0], floor:f, type, w:r[3]-r[1], d:r[4]-r[2]} : undefined);
+      s.receiveShadow = true; s.castShadow = f === 4; s.userData.slab = true; s.userData.solidMat = mat;
+      s.userData.deck = !!(r && f === 0 && /سطح المسبح|الفناء|ممر خارجي/.test(r[0]));
+      s.userData.rtype = f === 4 ? "roof" : type === "open" && r && r[0].includes("أخضر") ? "green" : type;
+    }
+  });
+});
+ROOMS.forEach((rooms, f) => {
+  const L = LEVELS[f];
+  rooms.forEach(r => {
+    const [name, x0, y0, x1, y1, type] = r;
+    if (type === "pool") {
+      add(box(x0 + .35, y0 + .35, L - 2.0, x1 - .35, y1 - .35, L - 0.25, M.water), "arch", f);
+      add(box(x0, y0, L - 2.1, x1, y1, L - 2.0, M.concrete), "arch", f);
+    }
+    if (type === "tank") add(box(x0+.1, y0+.1, L, x1-.1, y1-.1, L + 3.2, M.tank), "plumb", f,
+      {kind:"plumb", name:"الخزان الأرضي", note:"موقعه ومقاسه من المخطط المعماري (القبو): 3.40 × 3.70 م. السعة غير مذكورة."});
+    if (type === "stair") stairs(r, f);
+    if (enclosed(r)) label(name, cx(r), cy(r), L + 0.3, "arch", f).userData.room = true;
+  });
+});
+
+/* stairs — U-shaped main stair (24 risers per storey) and the straight courtyard stair */
+function midOf(r, f) { return f === 0 ? 3.36 : (r[1] + r[3]) / 2; }   // basement flights split by the 20 cm wall at x 3.26–3.46
+function stairRamp(r, f, x, y) {
+  // height of the main-stair walking surface at (x,y) for the flight that starts on floor f
+  const [, x0, y0, x1, y1] = r, L = LEVELS[f], mid = midOf(r, f), land = y1 - 1.1, a = y0 + .2;
+  if (y >= land) return L + H / 2;
+  const t = Math.min(1, Math.max(0, (y - a) / (land - a)));
+  return x < mid ? L + t * H / 2 : L + H / 2 + (1 - t) * H / 2;
+}
+function stairs(r, f) {
+  const [, x0, y0, x1, y1] = r, L = LEVELS[f];
+  if (f >= 3 && r[0] === "الدرج") return;           // stair stops at the roof floor
+  const mat = M.slab, steps = 12, rise = H / 24;
+  if (r[0] === "الدرج") {
+    const mid = midOf(r, f), land = y1 - 1.1, run = (land - y0 - .2) / steps;
+    for (let i = 0; i < steps; i++) {
+      const s = box(x0 + .05, y0 + .2 + i * run, L, mid - .05, y0 + .2 + (i + 1) * run, L + (i + 1) * rise, mat);
+      s.userData.slab = true; s.userData.solidMat = mat; add(s, "arch", f);
+    }
+    const ld = box(x0 + .05, land, L + 12 * rise - .15, x1 - .05, y1 - .05, L + 12 * rise, mat);
+    ld.userData.slab = true; ld.userData.solidMat = mat; add(ld, "arch", f);
+    for (let i = 0; i < steps; i++) {
+      const yA = land - (i + 1) * run, yB = land - i * run;
+      const s = box(mid + .05, yA, L + 12 * rise + i * rise, x1 - .05, yB, L + 12 * rise + (i + 1) * rise, mat);
+      s.userData.slab = true; s.userData.solidMat = mat; add(s, "arch", f);
+    }
+    // handrail between the flights
+    const rail = box(mid - .03, y0 + .2, L, mid + .03, land, L + H / 2 + 1.0, M.frame); rail.userData.glass = true; add(rail, "arch", f);
+  } else if (f === 0) {
+    // courtyard stair: from the basement courtyard up to the ground floor
+    const n = 18, run = (y1 - y0 - .3) / n, rr = H / n;
+    for (let i = 0; i < n; i++) {
+      const s = box(x0 + .05, y1 - .15 - (i + 1) * run, L, x1 - .05, y1 - .15 - i * run, L + (i + 1) * rr, mat);
+      s.userData.slab = true; s.userData.solidMat = mat; add(s, "arch", f);
+    }
+  }
+}
+
+/* ---------- structure ---------- */
+const inRoofFootprint = (x, y) => ROOMS[3].some(r => enclosed(r) && x > r[1]-.6 && x < r[3]+.6 && y > r[2]-.6 && y < r[4]+.6);
+const colData = COLS.map(([x, y, t, o, planted]) => {
+  const [a, b] = COL_SIZE[t]; const [w, d] = o === "h" ? [b, a] : [a, b];
+  const bottom = planted ? LEVELS[1] : LEVELS[0] - 0.6;
+  const top = inRoofFootprint(x, y) ? LEVELS[4] : LEVELS[3];
+  return {x, y, t, w, d, bottom, top, planted};
+});
+colData.forEach(c => {
+  // column split per floor so explode keeps it attached to its storey
+  for (let f = 0; f < 4; f++) {
+    const z0 = Math.max(c.bottom, f === 0 ? -4.2 : LEVELS[f]), z1 = Math.min(c.top, LEVELS[f+1]);
+    if (z1 <= z0) continue;
+    const m = box(c.x - c.w/2, c.y - c.d/2, z0, c.x + c.w/2, c.y + c.d/2, z1, M.concrete);
+    m.castShadow = true;
+    add(m, "str", f, {kind:"col", name:"عمود " + c.t, t:c.t, size:`${Math.round(c.w*100)}×${Math.round(c.d*100)} سم (تقريبي)`, planted:c.planted, top:c.top});
+  }
+  if (!c.planted) {
+    const fw = c.t === "C5" || c.t === "C6" ? 2.0 : 1.6;
+    add(box(c.x - fw/2, c.y - fw/2, LEVELS[0] - 1.3, c.x + fw/2, c.y + fw/2, LEVELS[0] - 0.6, M.concrete), "str", 0,
+      {kind:"footing", name:"قاعدة " + c.t, note:"قاعدة منفصلة تحت العمود — الأبعاد تقديرية"});
+    add(box(c.x - fw/2 - .1, c.y - fw/2 - .1, LEVELS[0] - 1.4, c.x + fw/2 + .1, c.y + fw/2 + .1, LEVELS[0] - 1.3, M.pcc), "str", 0);
+  }
+  label(c.t, c.x, c.y, Math.min(c.top, LEVELS[1]) + 0.1, "str", c.planted ? 1 : 0);
+});
+// beams on grid alignments at each slab level
+[LEVELS[1], LEVELS[2], LEVELS[3], LEVELS[4]].forEach(L => {
+  const cs = colData.filter(c => c.bottom < L - .01 && c.top >= L - .01);
+  const done = new Set();
+  cs.forEach((a, i) => cs.forEach((b, j) => {
+    if (j <= i) return;
+    const sameX = Math.abs(a.x - b.x) < .4, sameY = Math.abs(a.y - b.y) < .4;
+    if (!sameX && !sameY) return;
+    const dist = Math.hypot(a.x - b.x, a.y - b.y); if (dist > 7.2) return;
+    const between = cs.some(c => c !== a && c !== b &&
+      (sameX ? Math.abs(c.x - a.x) < .4 && (c.y - a.y) * (c.y - b.y) < 0 : Math.abs(c.y - a.y) < .4 && (c.x - a.x) * (c.x - b.x) < 0));
+    if (between) return;
+    const k = i + "-" + j; if (done.has(k)) return; done.add(k);
+    const bm = sameX ? box(a.x - .15, Math.min(a.y, b.y), L - .6, a.x + .15, Math.max(a.y, b.y), L - SLAB, M.concrete)
+                     : box(Math.min(a.x, b.x), a.y - .15, L - .6, Math.max(a.x, b.x), a.y + .15, L - SLAB, M.concrete);
+    add(bm, "str", floorOf(L - .3), {kind:"beam", name:"جسر", note:"جسر خرساني بين عمودين — المقاس تقديري (30×60 سم)"});
+  }));
+});
+// basement retaining wall, pool and tank walls — sheet S-03
+[[0,0,12,.3],[0,24.7,12,25],[0,0,.3,25],[11.7,0,12,25]].forEach(([a,b,c,d]) =>
+  add(box(a, b, LEVELS[0] - 0.6, c, d, LEVELS[1] - SLAB, M.concrete), "str", 0, {kind:"wall", name:"جدار استنادي للقبو", note:"من مخطط الأساسات S-03"}));
+[[0.3,0.3,4.45,10.4],[8.3,0.3,11.7,4.0]].forEach(([a,b,c,d]) => {
+  [[a,b,c,b+.25],[a,d-.25,c,d],[a,b,a+.25,d],[c-.25,b,c,d]].forEach(([p,q,r,s]) =>
+    add(box(p, q, LEVELS[0] - 2.1, r, s, LEVELS[0], M.concrete), "str", 0));
+});
+
+/* ---------- electrical ---------- */
+const circuits = [];   // {id, db, ct, type, ph, kva, cb, cable, on, meshes:[], lights:[]}
+const dbObjs = {};
+const mats = {};
+const lineMat = ph => mats["l" + ph] || (mats["l" + ph] = emissive(PH[ph], 1.3));
+const bulbOn = new THREE.MeshStandardMaterial({color:0xffffff, emissive:0xfff2d0, emissiveIntensity:3});
+const bulbOff = new THREE.MeshStandardMaterial({color:0x666666, emissive:0x000000});
+const socketMat = new THREE.MeshStandardMaterial({color:0xf3f3f3, emissive:0xff9d9d, emissiveIntensity:.6});
+const dbMat = new THREE.MeshStandardMaterial({color:0xdfe3ea, roughness:.5, metalness:.3});
+const acMat = new THREE.MeshStandardMaterial({color:0xf5f7fa, emissive:0x9fd7ff, emissiveIntensity:.35});
+const ewhMat = new THREE.MeshStandardMaterial({color:0xf0f0f0, emissive:0xff8a5a, emissiveIntensity:.35});
+
+const roomsForDB = {};
+ROOMS.forEach((rooms, f) => rooms.forEach(r => {
+  const db = r[6] ? "DB-SER" : f === 0 ? "DB-B" : f === 1 ? "DB-G" : f === 2 ? "DB-F" : "DB-R";
+  (roomsForDB[db] = roomsForDB[db] || []).push({r, f});
+}));
+
+function zc(f) { return LEVELS[f] + H - SLAB - 0.15; }
+
+function lightPoints(r, f) {
+  const [, x0, y0, x1, y1] = r, sp = 1.9;
+  const nx = Math.max(1, Math.round((x1 - x0) / sp)), ny = Math.max(1, Math.round((y1 - y0) / sp));
+  const pts = [];
+  for (let j = 0; j < ny; j++) {
+    const row = [];
+    for (let i = 0; i < nx; i++) row.push([x0 + (i + .5) * (x1 - x0) / nx, y0 + (j + .5) * (y1 - y0) / ny, zc(f)]);
+    pts.push(...(j % 2 ? row.reverse() : row));
+  }
+  return pts.slice(0, 16);
+}
+function socketPoints(r, f) {
+  const [, x0, y0, x1, y1] = r, z = LEVELS[f] + .4, i = .12, pts = [];
+  const ring = [[x0+i,y0+i],[x1-i,y0+i],[x1-i,y1-i],[x0+i,y1-i]];
+  for (let e = 0; e < 4; e++) {
+    const [a, b] = [ring[e], ring[(e+1)%4]]; const len = Math.hypot(b[0]-a[0], b[1]-a[1]);
+    const n = Math.max(1, Math.floor(len / 2.6));
+    for (let k = 0; k < n; k++) { const t = (k + .5) / n; pts.push([a[0] + (b[0]-a[0]) * t, a[1] + (b[1]-a[1]) * t, z]); }
+  }
+  return pts.slice(0, 10);
+}
+
+Object.entries(DBS).forEach(([dbName, db]) => {
+  const f = db.floor, [x, y] = db.pos, z = LEVELS[f] + 1.6;
+  const m = device(x, y, z, .55, .2, .8, dbMat, "elec",
+    {kind:"db", name:dbName, db:dbName});
+  dbObjs[dbName] = {x, y, z, f};
+  label(dbName, x, y, z + .7, "elec", f);
+
+  const pool = roomsForDB[dbName] || [];
+  const lightRooms = pool.filter(o => o.r[5] !== "void" && o.r[5] !== "tank");
+  const sockRooms = pool.filter(o => enclosed(o.r) && !["stair","lift"].includes(o.r[5]));
+  const psRooms = pool.filter(o => ["kitchen","wet","garage"].includes(o.r[5]));
+  const acRooms = pool.filter(o => ["bed","living","room"].includes(o.r[5]) && area(o.r) > 6).sort((a, b) => area(b.r) - area(a.r));
+  const ewhRooms = pool.filter(o => ["wet","kitchen"].includes(o.r[5]));
+  const byType = {L:lightRooms, S:sockRooms, PS:psRooms.length ? psRooms : sockRooms, AC:acRooms, AC3:acRooms, EWH:ewhRooms,
+                  PUMP:pool.filter(o => o.r[0] === "غرفة المضخات"), ELEV:pool.filter(o => o.r[5] === "lift")};
+  const counters = {};
+  const groups = {};
+  db.circuits.forEach(c => (groups[c[1]] = groups[c[1]] || []).push(c));
+  Object.entries(groups).forEach(([type, list]) => {
+    const rooms = byType[type] || [];
+    if (!rooms.length) return;
+    // split rooms among this type's circuits in contiguous chunks (sorted by position)
+    const sorted = [...rooms].sort((a, b) => (a.f - b.f) || (cy(a.r) - cy(b.r)) || (cx(a.r) - cx(b.r)));
+    list.forEach((c, k) => {
+      const [ct, , ph, kva, cb, cable] = c;
+      let mine;
+      if (type === "AC" || type === "AC3") mine = [sorted.length ? (type === "AC3" ? sorted[0] : sorted[k % sorted.length]) : null].filter(Boolean);
+      else if (type === "EWH") mine = [sorted[k % sorted.length]];
+      else { const per = Math.ceil(sorted.length / list.length); mine = sorted.slice(k * per, (k + 1) * per); if (!mine.length) mine = [sorted[k % sorted.length]]; }
+      const id = `${ph === "3" ? "RYB" : ph}${ct}/${dbName}`;
+      const circ = {id, db:dbName, ct, type, ph, kva, cb, cable, on:true, meshes:[], lights:[], rooms:mine.map(o => o.r[0] + " (" + FLOOR_NAMES[o.f] + ")")};
+      circuits.push(circ);
+      const lm = lineMat(ph);
+      const info = {kind:"ckt", circ};
+      const before = items.length;
+      mine.forEach(({r, f: rf}, ri) => {
+        const off = (k % 5) * .07 - .14;  // fan home-runs apart
+        const start = [x, y, z + .4];
+        if (type === "L") {
+          const pts = lightPoints(r, rf);
+          path([start, ...manhattan([x + off, y, z + .4], pts[0], zc(rf) + .08).slice(1), pts[0]], .022, lm, "elec", info);
+          for (let i = 0; i < pts.length; i++) {
+            if (i) seg(pts[i-1], pts[i], .018, lm, "elec", info);
+            const b = dot(pts[i][0], pts[i][1], pts[i][2] - .05, .09, bulbOn, "elec", info);
+            circ.lights.push(b);
+          }
+        } else if (type === "S" || type === "PS") {
+          const pts = socketPoints(r, rf); if (type === "PS") pts.splice(3);
+          const p0 = pts[0];
+          path([start, ...manhattan([x + off, y, z + .4], [p0[0], p0[1], zc(rf)], zc(rf) - .1 - (type === "PS" ? .1 : 0)).slice(1), p0], .02, lm, "elec", info);
+          for (let i = 0; i < pts.length; i++) {
+            if (i) path([[pts[i-1][0], pts[i-1][1], pts[i-1][2] - .05], [pts[i][0], pts[i][1], pts[i][2] - .05]], .016, lm, "elec", info);
+            device(pts[i][0], pts[i][1], pts[i][2], .14, .14, .14, socketMat, "elec", info);
+          }
+        } else {
+          // single appliance: AC indoor unit, heater, pump, lift motor
+          const ax = type === "AC" || type === "AC3" ? r[1] + .35 : r[3] - .35;
+          const ay = cy(r), az = type === "AC" || type === "AC3" ? zc(rf) - .3 : type === "EWH" ? zc(rf) - .5 : LEVELS[rf] + .5;
+          path([start, ...manhattan([x + off, y, z + .4], [ax, ay, zc(rf)], zc(rf) - .2).slice(1), [ax, ay, az]], .026, lm, "elec", info);
+          const mat = type === "EWH" ? ewhMat : acMat;
+          const sz = type === "AC3" ? [.4, 1.6, .5] : type === "EWH" ? [.45, .45, .7] : type === "ELEV" ? [.6, .6, .5] : [.3, 1.0, .3];
+          device(ax, ay, az, ...sz, mat, "elec", info);
+        }
+      });
+      circ.meshes = items.slice(before);
+    });
+  });
+});
+
+// feeders: MDB → each DB through the stair riser
+{
+  const [mx, my] = MDB, mz = LEVELS[1] + 1.0;
+  device(mx, my, mz, .9, .3, 1.4, dbMat, "elec", {kind:"mdb", name:"MDB — اللوحة الرئيسية"});
+  label("MDB / العداد", mx, my, mz + 1.0, "elec", 1);
+  const fm = emissive(0xff8a2a, 1.6), riser = [4.95, 17.6];
+  Object.entries(DBS).forEach(([n, db]) => {
+    const d = dbObjs[n], info = {kind:"feeder", name:"تغذية " + n + " من MDB", cable:db.feeder, cb:db.cb};
+    if (n === "DB-SER") { path(manhattan([mx, my, mz + .7], [d.x, d.y, d.z + .4], zc(1) - .35), .045, fm, "elec", info); return; }
+    const pts = [[mx, my, mz + .7], [mx, my, zc(1) - .35], [mx, riser[1], zc(1) - .35], [riser[0], riser[1], zc(1) - .35]];
+    const zf = d.f === 0 ? zc(0) - .35 : zc(d.f) - .35;
+    pts.push([riser[0], riser[1], zf], [riser[0], d.y, zf], [d.x, d.y, zf], [d.x, d.y, d.z + .4]);
+    path(pts, .045, fm, "elec", info);
+  });
+}
+
+/* ---------- plumbing (estimated) ---------- */
+{
+  const cold = emissive(0x4fd0ff, 1.4), hot = emissive(0xff6a3d, 1.4), drain = emissive(0xb08d6a, .5);
+  const pump = [6.2, 1.4];
+  device(pump[0], pump[1], LEVELS[0] + .4, .7, .5, .6, new THREE.MeshStandardMaterial({color:0x4b8fd6, emissive:0x1f6fb5, emissiveIntensity:.6}), "plumb",
+    {kind:"plumb", name:"مضخة المياه", note:"في غرفة المضخات (القبو). تغذيتها الكهربائية Y9/DB-SER — 2.25 kVA"});
+  label("المضخات", pump[0], pump[1], LEVELS[0] + 1.1, "plumb", 0);
+  label("الخزان", 10.0, 2.1, LEVELS[0] + 3.5, "plumb", 0);
+  // city water → tank → pump
+  path([[9.5, -0.8, 0.0], [9.5, -0.8, LEVELS[0] + 3.4], [9.5, 1.0, LEVELS[0] + 3.4]], .05, cold, "plumb", {kind:"plumb", name:"خط تغذية البلدية إلى الخزان", note:"تقديري"});
+  path([[8.4, 1.4, LEVELS[0] + .4], [pump[0], pump[1], LEVELS[0] + .4]], .05, cold, "plumb", {kind:"plumb", name:"سحب المضخة من الخزان", note:"تقديري"});
+  const risers = [[5.45, 4.35], [4.75, 19.3], [0.5, 10.7]];
+  const top = LEVELS[4] - .5;
+  risers.forEach(([rx, ry], i) => {
+    path([[pump[0], pump[1], LEVELS[0] + .4], [pump[0], pump[1], zc(0) - .5], [rx, pump[1], zc(0) - .5], [rx, ry, zc(0) - .5], [rx, ry, top]], .045, cold, "plumb",
+      {kind:"plumb", name:"صاعد مياه باردة " + (i + 1), note:"المسار تقديري — مأخوذ من أماكن الحمامات والمطابخ"});
+    path([[rx + .25, ry, top], [rx + .25, ry, LEVELS[0] - .5]], .06, drain, "plumb", {kind:"plumb", name:"عمود صرف " + (i + 1), note:"تقديري"});
+  });
+  const mh = [6.35, -1.0];
+  device(mh[0], mh[1], -0.4, .9, .9, .8, new THREE.MeshStandardMaterial({color:0x7a6450}), "plumb", {kind:"plumb", name:"غرفة تفتيش الصرف", note:"تقديري — عند الرصيف"});
+  label("غرفة تفتيش", mh[0], mh[1], 0.4, "plumb", 1);
+  path([[risers[0][0] + .25, risers[0][1], LEVELS[0] - .5], [risers[0][0] + .25, mh[1], LEVELS[0] - .5], [mh[0], mh[1], LEVELS[0] - .5], [mh[0], mh[1], -0.6]], .07, drain, "plumb", {kind:"plumb", name:"خط الصرف الرئيسي", note:"تقديري"});
+  path([[risers[1][0] + .25, risers[1][1], LEVELS[0] - .5], [risers[1][0] + .25, risers[0][1], LEVELS[0] - .5]], .07, drain, "plumb", {kind:"plumb", name:"مجمع صرف", note:"تقديري"});
+  path([[risers[2][0] + .25, risers[2][1], LEVELS[0] - .5], [risers[0][0] + .25, risers[2][1], LEVELS[0] - .5]], .07, drain, "plumb", {kind:"plumb", name:"مجمع صرف", note:"تقديري"});
+  ROOMS.forEach((rooms, f) => rooms.filter(r => ["wet","kitchen"].includes(r[5])).forEach(r => {
+    const near = risers.reduce((a, b) => Math.hypot(b[0]-cx(r), b[1]-cy(r)) < Math.hypot(a[0]-cx(r), a[1]-cy(r)) ? b : a);
+    const z = zc(f) - .45, fx = r[3] - .3, fy = cy(r);
+    path(manhattan([near[0], near[1], z], [fx, fy, LEVELS[f] + 1.0], z), .03, cold, "plumb", {kind:"plumb", name:"تغذية " + r[0], note:"تقديري"});
+    path([[fx - .15, fy, LEVELS[f] + 1.0], [fx - .15, fy, z - .1], [cx(r), fy, z - .1], [cx(r), fy, LEVELS[f] + 1.0]], .025, hot, "plumb", {kind:"plumb", name:"ماء حار — " + r[0], note:"من السخان — تقديري"});
+    dot(cx(r), cy(r), LEVELS[f] + .02, .1, drain, "plumb", {kind:"plumb", name:"صفاية أرضية — " + r[0], note:"تقديري"});
+    path([[cx(r), cy(r), LEVELS[f] - .2], [near[0] + .25, cy(r), LEVELS[f] - .2], [near[0] + .25, near[1], LEVELS[f] - .2]], .04, drain, "plumb", {kind:"plumb", name:"صرف " + r[0], note:"تقديري"});
+  }));
+}
+
+/* ---------- kitchen exhaust riser (owner's line: kitchen centre − 25 cm) ---------- */
+{
+  const steel = new THREE.MeshStandardMaterial({color:0xc4ccd4, roughness:.35, metalness:.75});
+  const ins = new THREE.MeshStandardMaterial({color:0xe8b04a, transparent:true, opacity:.35, roughness:.9, depthWrite:false});
+  const hoodM = new THREE.MeshStandardMaterial({color:0xd6dbe0, roughness:.25, metalness:.8});
+  const fanM = new THREE.MeshStandardMaterial({color:0x4a4f55, roughness:.5, metalness:.5});
+  // kitchen 0.45–4.40 × 11.00–17.00 → centre of the west wall y 14.00; riser 25 cm to the left (south) → y 13.75
+  // owner's choice: fully buried in the 30 cm block wall (axis x 0.15) — crosses the perimeter beam at every slab
+  const rx = .15, ry = 13.75, R = .084, RI = .105, top = LEVELS[4] + 1.5;
+  const KX = [.45, 4.4], KY = [11.0, 17.0], hx = .75, hy = (KY[0] + KY[1]) / 2;
+  const note = "ماسورة 6 بوصة (Ø168 مم) بعزل 2 سم، مدفونة كاملة وسط البلكة 30 سم (محورها 15 سم من حد الأرض، و25 سم يسار منتصف المطبخ y 13.75). تطلع رأسي مستقيم للسطح، وما يطلع منها شي داخل الغرف. ⚠️ تخترق الجسر المحيطي (0–0.30) في 4 سقوف وجدار القبو الاستنادي، ولازم الإنشائي يصمم الفتحات والجلب (sleeves) ويعتمدها قبل الصب.";
+  const info = {kind:"duct", name:"ماسورة شفاط المطبخ 6\" — رأسي", note};
+  device(hx, hy, LEVELS[0] + 1.8, .6, .9, .12, hoodM, "duct", {kind:"duct", name:"شفاط المطبخ", note:"في منتصف الجدار الغربي للمطبخ (y 14.00). " + note});
+  // hood outlet goes straight back into the wall, then the pipe rises in the block
+  path([[hx, ry, LEVELS[0] + 1.86], [hx, ry, LEVELS[0] + 2.05], [rx, ry, LEVELS[0] + 2.05]], R, steel, "duct", info);
+  const zs = [LEVELS[0] + 2.05, LEVELS[1], LEVELS[2], LEVELS[3], LEVELS[4], top];
+  path(zs.map(z => [rx, ry, z]), R, steel, "duct", info);
+  path(zs.map(z => [rx, ry, z]), RI, ins, "duct", info);
+  // beam / slab crossings that need a structural sleeve
+  const warn = new THREE.MeshStandardMaterial({color:0xff3b30, transparent:true, opacity:.55, depthWrite:false});
+  [LEVELS[1], LEVELS[2], LEVELS[3], LEVELS[4]].forEach((z, i) => add(new THREE.Mesh(new THREE.CylinderGeometry(.14, .14, .62, 24), warn).translateX(rx - 6).translateY(z - .29).translateZ(12.5 - ry), "duct", i,
+    {kind:"duct", name:"اختراق الجسر المحيطي — سقف " + FLOOR_NAMES[i + 1], note:"فتحة Ø 22 سم تقريبًا في جسر عرضه 30 سم. تحتاج جلبة (sleeve) وتصميم من المهندس الإنشائي قبل الصب."}));
+  device(rx, ry, top + .12, .5, .5, .24, fanM, "duct", {kind:"duct", name:"مروحة الشفط على السطح", note:"مخرج رأسي بغطاء، أعلى من السطح 1.5 م. لأن الماسورة على حد الجار، وجّه المخرج لفوق وبعيد عن نوافذ الجيران."});
+  device(rx, ry, top + .3, .65, .65, .06, fanM, "duct", info);
+  label("الشفاط", hx + .2, hy, LEVELS[0] + 2.3, "duct", 0);
+  label("ماسورة الشفاط 6\"", rx + .3, ry, LEVELS[4] + 2.0, "duct", 4);
+}
+
+/* ---------- low current / telecom (estimated) ---------- */
+{
+  const tm = emissive(0xb07cff, 1.4), wifi = emissive(0x5ef2d0, 1.6);
+  const mh = [3.2, -1.0], cab = [3.35, 2.7, LEVELS[1] + 1.2], riser = [5.15, 17.6];
+  device(mh[0], mh[1], -0.35, .8, .8, .7, new THREE.MeshStandardMaterial({color:0x7a5fb0, emissive:0x50308f, emissiveIntensity:.7}), "tel", {kind:"tel", name:"غرفة اتصالات MH", note:"تقديري — عند الرصيف"});
+  label("MH اتصالات", mh[0], mh[1], 0.5, "tel", 1);
+  device(...cab, .5, .25, .7, new THREE.MeshStandardMaterial({color:0xddd6f3, emissive:0x6b4bc4, emissiveIntensity:.5}), "tel", {kind:"tel", name:"كبينة الاتصالات", note:"تقديري — مدخل الفيلا"});
+  label("كبينة الاتصالات", cab[0], cab[1], cab[2] + .6, "tel", 1);
+  path([[mh[0], mh[1], -0.35], [mh[0], mh[1], -0.5], [mh[0], cab[1], -0.5], [cab[0], cab[1], -0.5], [cab[0], cab[1], cab[2]]], .04, tm, "tel", {kind:"tel", name:"تمديد ألياف من الشارع", note:"تقديري"});
+  path([[cab[0], cab[1], cab[2] + .3], [cab[0], cab[1], zc(1) - .6], [cab[0], riser[1], zc(1) - .6], [riser[0], riser[1], zc(1) - .6]], .035, tm, "tel", {kind:"tel", name:"مسار الاتصالات للصاعد", note:"تقديري"});
+  path([[riser[0], riser[1], zc(0) - .6], [riser[0], riser[1], zc(3) - .6]], .035, tm, "tel", {kind:"tel", name:"صاعد الاتصالات", note:"تقديري"});
+  ROOMS.forEach((rooms, f) => rooms.forEach(r => {
+    if (["bed","living"].includes(r[5])) {
+      const p = [r[1] + .15, cy(r), LEVELS[f] + .4];
+      path([[riser[0], riser[1], zc(f) - .6], [riser[0], p[1], zc(f) - .6], [p[0], p[1], zc(f) - .6], p], .02, tm, "tel", {kind:"tel", name:"نقطة بيانات/تلفزيون — " + r[0], note:"تقديري"});
+      device(...p, .14, .14, .14, tm, "tel", {kind:"tel", name:"نقطة بيانات/تلفزيون — " + r[0], note:"تقديري"});
+    }
+    if (r[0].includes("ممر") && area(r) > 4) {
+      dot(cx(r), cy(r), zc(f), .14, wifi, "tel", {kind:"tel", name:"نقطة واي فاي — " + r[0] + " (" + FLOOR_NAMES[f] + ")", note:"تقديري"});
+    }
+  }));
+  [[0.4, 0.4], [11.6, 0.4]].forEach(([x, y]) => device(x, y, LEVELS[1] + 3.2, .2, .3, .2, wifi, "tel", {kind:"tel", name:"كاميرا مراقبة", note:"تقديري"}));
+}
+
+/* ---------- fire & life safety (estimated) ---------- */
+{
+  const red = emissive(0xff3b3b, 1.6), exitM = emissive(0x39ff8a, 1.8), white = new THREE.MeshStandardMaterial({color:0xffffff, emissive:0xff2a2a, emissiveIntensity:.5});
+  const panel = [3.3, 0.45, LEVELS[1] + 1.4], riser = [4.25, 17.6];
+  device(...panel, .45, .15, .55, red, "safe", {kind:"safe", name:"لوحة إنذار الحريق", note:"تقديري — عند المدخل"});
+  label("لوحة الإنذار", panel[0], panel[1], panel[2] + .6, "safe", 1);
+  path([[panel[0], panel[1], panel[2]], [panel[0], panel[1], zc(1) - .7], [panel[0], riser[1], zc(1) - .7], [riser[0], riser[1], zc(1) - .7]], .025, red, "safe", {kind:"safe", name:"حلقة الإنذار", note:"تقديري"});
+  path([[riser[0], riser[1], zc(0) - .7], [riser[0], riser[1], zc(3) - .7]], .025, red, "safe", {kind:"safe", name:"صاعد الإنذار", note:"تقديري"});
+  ROOMS.forEach((rooms, f) => {
+    const det = rooms.filter(r => enclosed(r) && r[5] !== "wet" && r[5] !== "lift");
+    let prev = [riser[0], riser[1], zc(f) - .7];
+    det.sort((a, b) => cy(a) - cy(b)).forEach(r => {
+      const p = [cx(r), cy(r), zc(f) + .05];
+      seg(prev, [p[0], prev[1], prev[2]], .015, red, "safe");
+      seg([p[0], prev[1], prev[2]], [p[0], p[1], prev[2]], .015, red, "safe");
+      prev = [p[0], p[1], prev[2]];
+      const kind = r[5] === "kitchen" ? "كاشف حرارة" : "كاشف دخان";
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(.13, .13, .06, 20), white);
+      m.position.copy(P(...p)); add(m, "safe", f, {kind:"safe", name:kind + " — " + r[0], note:"تقديري"});
+    });
+    const st = rooms.find(r => r[5] === "stair" && r[0] === "الدرج");
+    if (st) {
+      device(st[3] + .15, st[2] + .3, LEVELS[f] + .6, .2, .2, .55, red, "safe", {kind:"safe", name:"طفاية حريق — " + FLOOR_NAMES[f], note:"تقديري"});
+      device(st[3] + .1, st[2] + .1, LEVELS[f] + 2.4, .05, .35, .15, exitM, "safe", {kind:"safe", name:"لوحة مخرج طوارئ — " + FLOOR_NAMES[f], note:"تقديري"});
+    }
+  });
+}
+
+/* ---------- rainwater drainage — from the mechanical set (sheets T3.2: top roof, roof floor, first floor, ground) ---------- */
+{
+  const pipeM = emissive(0x2ec4b6, 1.3), fallM = emissive(0xff5a3c, 1.2), grateM = emissive(0xffffff, .9);
+  const at = (mesh, f, info) => add(mesh, "rain", f, info);
+  const line = (a, b, r, mat, f, info) => {          // straight piece with an explicit floor (keeps roof items on their floor tab)
+    const A = P(...a), B = P(...b), m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, A.distanceTo(B), 10, 1, true), mat);
+    m.position.copy(A).add(B).multiplyScalar(.5); m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), B.clone().sub(A).normalize());
+    return at(m, f, info);
+  };
+  const GND = 0.25;   // free-discharge spout height (outside ground ≈ 0.00)
+  // [id, roof name, roof level, floor tab, drain xy, pipe xy (inside the wall), spout direction, discharge z, discharge note, fall-line corners]
+  const RD = [
+    ["T", "السطح الأعلى (+12.45)", LEVELS[4], 3, [.30, 14.09], [.15, 14.09], [-1, 0], GND,
+     "تنزل داخل الجدار الغربي (غرفة الملابس ← الغسيل ← صالة الطعام) وتصرّف حر عند منسوب الأرضي — غير مربوطة بالصرف الصحي.", [[5.46, 22.69], [8.02, 6.33]]],
+    ["F", "سطح الدور الأول الأمامي (+8.45)", LEVELS[3], 3, [.35, 3.07], [.15, 3.07], [-1, 0], GND,
+     "تنزل داخل الجدار الغربي (غرفة النوم الرئيسية ← الأرضي) وتصرّف حر عند منسوب الأرضي — غير مربوطة بالصرف الصحي.", [[8.29, 5.95], [6.72, .31]]],
+    ["S", "سطح الخدمات (+8.45)", LEVELS[3], 3, [9.69, 19.46], [9.85, 19.46], [1, 0], LEVELS[2] + .12,
+     "مخطط الميكانيكا يوقفها عند سطح الخدمات بدون مسار تحت؛ المرجّح إنها تصب على سطح الأرضي الشرقي (+4.45) وتتصرف من مصرفه. تأكد من المصمم.", [[5.78, 22.65], [6.30, 17.33]]],
+    ["N", "سطح الأرضي الخلفي (+4.45)", LEVELS[2], 2, [6.57, 24.62], [6.57, 24.86], [0, 1], GND,
+     "تنزل داخل الجدار الشمالي وتصرّف حر عند منسوب الأرضي — غير مربوطة بالصرف الصحي.", [[6.40, 23.10], [9.60, 23.10]]],
+    ["E", "سطح الأرضي الشرقي (+4.45)", LEVELS[2], 2, [11.40, 17.68], [11.77, 17.68], [1, 0], GND,
+     "تنزل داخل الجدار الشرقي وتصرّف حر عند منسوب الأرضي — غير مربوطة بالصرف الصحي.", [[9.98, 23.03], [10.02, 17.33]]],
+  ];
+  RD.forEach(([id, roof, z, f, [dx, dy], [px, py], [sx, sy], zEnd, where, corners]) => {
+    const n0 = items.length, l0 = labels.length; let n1 = n0;
+    const info = {kind:"rain", name:"ماسورة مطر Ø110 — " + roof, note:"Ø110 مم (RP)، من مخطط الميكانيكا. " + where};
+    const g = new THREE.Mesh(new THREE.CylinderGeometry(.12, .12, .03, 20), grateM); g.position.copy(P(dx, dy, z + .03));
+    at(g, f, {kind:"rain", name:"مصرف مطر — " + roof, note:"مصرف سطح بشبك، كل ميول السطح تتجه له (الخطوط الحمراء). " + where});
+    corners.forEach(c => line([c[0], c[1], z + .03], [dx, dy, z + .03], .015, fallM, f, {kind:"rain", name:"خط ميول — " + roof, note:"اتجاه الميول للمصرف حسب مخطط الميكانيكا."}));
+    n1 = items.length;
+    line([dx, dy, z + .02], [px, py, z - .15], .055, pipeM, f, info);
+    path([[px, py, z - .15], [px, py, zEnd]], .055, pipeM, "rain", info);
+    line([px, py, zEnd], [px + sx * .35, py + sy * .35, zEnd - .05], .055, pipeM, floorOf(zEnd + .01), {kind:"rain", name:"تصريف حر — " + roof, note:where});
+    label("مصرف مطر", dx, dy, z + .5, "rain", f);
+    // designer's layout = "before": T and F move entirely, N and E keep their drains but get new pipes, S stays
+    if (id === "T" || id === "F") { items.slice(n0).forEach(o => o.userData.variant = "before"); labels.slice(l0).forEach(o => o.userData.variant = "before"); }
+    else if (id === "N" || id === "E") items.slice(n1).forEach(o => o.userData.variant = "before");
+  });
+  /* ----- proposed edit ("after"): every roof drains to the street by gravity, nothing spills at the neighbours ----- */
+  {
+    const n = items.length, l = labels.length, T = LEVELS[4], R = LEVELS[3], D = LEVELS[2], ST = -.7;
+    const I = (name, note) => ({kind:"rain", name, note:"تعديل مقترح — " + note});
+    const drain = (x, y, z, f, roof) => { const g = new THREE.Mesh(new THREE.CylinderGeometry(.12, .12, .03, 20), grateM); g.position.copy(P(x, y, z + .03));
+      at(g, f, I("مصرف مطر — " + roof, "مصرف بشبك مقبب، وجنبه فتحة طوارئ في الدروة أعلى من البلاط بـ 5 سم.")); label("مصرف مطر", x, y, z + .5, "rain", f); };
+    const fall = (c, d, z, f) => line([c[0], c[1], z + .03], [d[0], d[1], z + .03], .015, fallM, f, I("خط ميول", "الميول تتجه للمصرف الجديد، 1–1.5%."));
+    const pp = (pts, r, name, note) => path(pts, r, pipeM, "rain", I(name, note));
+    // 1) top roof (+12.45): drain moved to the south edge, spills onto the front roof instead of running down the west wall
+    drain(5.2, 6.5, T, 3, "السطح الأعلى (+12.45)"); [[5.46, 22.69], [.6, 14.0], [7.9, 6.6]].forEach(c => fall(c, [5.2, 6.5], T, 3));
+    line([5.2, 6.5, T + .02], [5.2, 6.12, T - .15], .055, pipeM, 3, I("ماسورة السطح الأعلى Ø110", "تنزل دور واحد بس وتصب على السطح الأمامي."));
+    pp([[5.2, 6.12, T - .15], [5.2, 6.12, R + .22]], .055, "ماسورة السطح الأعلى Ø110", "تنزل دور واحد بس (4 م) وتصب على السطح الأمامي، بدال ما تنزل 12 م داخل الجدار الغربي جنب ماسورة الشفاط.");
+    line([5.2, 6.12, R + .22], [5.2, 5.7, R + .08], .055, pipeM, 3, I("مصب على السطح الأمامي", "على بلاطة حماية عشان ما تحفر العزل."));
+    // 2) front roof (+8.45): two Ø110 at the street parapet (one is the spare), straight down the façade and out at the kerb
+    [[.45, .45, .15, .45, [[.5, 5.9], [3.0, 3.0]]], [5.5, .45, 5.5, .15, [[6.6, 5.9], [3.0, 3.0]]]].forEach(([dx, dy, px, py, cs], i) => {
+      drain(dx, dy, R, 3, "السطح الأمامي (+8.45)"); cs.forEach(c => fall(c, [dx, dy], R, 3));
+      line([dx, dy, R + .02], [px, py, R - .15], .055, pipeM, 3, I("ماسورة السطح الأمامي " + (i + 1), "من المصرف للنازل."));
+      pp([[px, py, R - .15], [px, py, .15], [px, ST, .10]], .055, "ماسورة السطح الأمامي Ø110 — " + (i + 1) + " ← الشارع",
+         "تاخذ مطر السطح الأعلى والأمامي مع بعض. ماسورتين: كل وحدة تكفي لحالها، والثانية احتياط لو انسدت الأولى. تطلع عند حافة الرصيف.");
+      label("مخرج للشارع", px, ST, .7, "rain", 1);
+    });
+    // 3) garage / driver's roof (+4.45): no drain on the mechanical sheets — added
+    drain(11.5, .6, D, 2, "سطح الكراج وغرفة السائق (+4.45)"); [[8.2, 4.7], [8.2, .5]].forEach(c => fall(c, [11.5, .6], D, 2));
+    line([11.5, .6, D + .02], [11.9, .6, D - .2], .055, pipeM, 2, I("ماسورة سطح الكراج", "من المصرف للنازل."));
+    pp([[11.9, .6, D - .2], [11.9, .6, .15], [11.9, ST, .10]], .075, "نازل الواجهة الشرقية Ø160 ← الشارع", "ياخذ سطح الكراج + الخط المجمّع من الأسطح الخلفية، ويطلع عند حافة الرصيف.");
+    label("مخرج للشارع", 11.9, ST, .7, "rain", 1);
+    // 4) back roofs: collector under the ground-floor ceiling along the east wall, 1% fall to the front
+    const zc0 = D - SLAB - .25;
+    pp([[6.57, 24.4, D + .02], [6.57, 24.4, zc0], [11.45, 24.4, zc0 - .05], [11.45, 17.68, zc0 - .12]], .055, "الخط المجمّع Ø110 (سطح الأرضي الخلفي)", "داخل السقف المستعار للأرضي، ميول 1%.");
+    pp([[11.40, 17.68, D + .02], [11.45, 17.68, zc0 - .12]], .055, "نازل سطح الأرضي الشرقي", "ينزل على الخط المجمّع مباشرة (ومعه مطر سطح الخدمات).");
+    pp([[11.45, 17.68, zc0 - .12], [11.45, .6, zc0 - .29], [11.9, .6, zc0 - .32]], .075, "الخط المجمّع Ø160 على الجدار الشرقي",
+       "يمشي 17 م للواجهة بميول 1% (ينزل 17 سم). ظاهر فوق درج الفناء (يتغطى بتكسية) وداخل سقف الكراج. بدال التصريف الحر عند الجيران.");
+    items.slice(n).forEach(o => o.userData.variant = "after"); labels.slice(l).forEach(o => o.userData.variant = "after");
+  }
+  // basement courtyard (open to the sky): 2 floor drains → Ø75 WP → Ø160 SP sewer main → sump in the pump room → pumped to the street IC
+  const sewM = emissive(0xd9534f, 1.2), L0 = LEVELS[0], zu = L0 - .35;
+  const sew = (pts, r, name, note) => path(pts, r, sewM, "rain", {kind:"rain", name, note});
+  const NOTE = "من مخطط الميكانيكا (القبو): مطر الفناء يدخل شبكة الصرف الصحي، مو منفصل.";
+  [[7.35, 15.74], [8.81, 13.13]].forEach(([x, y], i) => {
+    const g = new THREE.Mesh(new THREE.CylinderGeometry(.1, .1, .03, 16), grateM); g.position.copy(P(x, y, L0 + .14));
+    at(g, 0, {kind:"rain", name:"صفاية أرضية — الفناء " + (i + 1), note:"تستقبل مطر الفناء المفتوح للسما. " + NOTE + " لازم يكون فيها سيفون (P-trap) عشان ما تطلع روائح."});
+    sew([[x, y, L0 + .12], [x, y, zu], [4.79, y, zu]], .04, "ماسورة Ø75 WP — صفاية الفناء " + (i + 1), NOTE + " ميول 1%.");
+    label("صفاية مطر " + (i + 1), x, y, L0 + .7, "rain", 0);
+  });
+  sew([[4.79, 17.1, zu], [4.79, 2.77, zu - .1], [7.05, 2.77, zu - .1], [7.05, 2.13, zu - .1], [7.14, .85, L0 - .6]], .08,
+      "الخط الرئيسي Ø160 SP (صرف صحي)", NOTE + " يجمع صرف القبو كله مع مطر الفناء، ميول 1% للغرفة المضخات.");
+  device(7.14, .85, L0 - .9, .9, .9, .6, emissive(0x8a3a36, .6), "rain",
+         {kind:"rain", name:"بيارة + مضختين غاطسة (Q=12 L/s, H=15m)", note:"في غرفة المضخات. القبو أوطى من الشارع، فكل صرف القبو ومعه مطر الفناء يتجمع هنا وينضخ للشارع في خط واحد. فيه مضختين (شغالة + احتياط)؛ خلهم يتبادلون تلقائي مع إنذار مستوى عالي."});
+  label("بيارة + مضخة", 7.14, .85, L0 + .6, "rain", 0);
+  sew([[8.03, .46, L0 - .6], [8.03, .46, -.3], [7.85, -.9, -.4]], .08, "خط الضخ Ø160 للشارع", "من المضخة يطلع داخل الجدار للشارع. " + NOTE);
+  device(7.85, -.9, -.6, .9, .6, .4, emissive(0x8a3a36, .6), "rain", {kind:"rain", name:"غرفة التفتيش IC 90×60 — الشبكة العامة", note:"نقطة الربط مع شبكة الصرف الصحي في الشارع."});
+  label("غرفة تفتيش الشارع", 7.85, -.9, .5, "rain", 1);
+  [[.0, 14.09], [.0, 3.07], [6.57, 25.1], [12.1, 17.68]].forEach(([x, y]) => label("تصريف حر عند الجار", x, y, 1.0, "rain", 1).userData.variant = "before");
+  // seen through walls and slabs, so the routes read with the architecture on
+  items.filter(o => o.userData.layer === "rain").forEach(o => { o.renderOrder = 10; const ms = Array.isArray(o.material) ? o.material : [o.material];
+    ms.forEach(m => { m.depthTest = false; m.transparent = true; m.opacity = .95; }); });
+}
+
+/* =====================================================================
+   UI / state
+   ===================================================================== */
+const MODES = [
+  ["arch","المعماري"], ["str","الإنشائي"], ["elec","الكهرباء"], ["plumb","الماي والصرف"],
+  ["tel","الاتصالات"], ["safe","السلامة"], ["all","كل شي"]
+];
+const FOCUS = [["all","الفيلا كاملة"], [3,"السطح"], [2,"الأول"], [1,"الأرضي"], [0,"القبو"]];
+const state = {mode:"arch", focus:"all", explode:false, cut:false, cutY:12, labels:true};
+const LEGENDS = {
+  arch:[["#efe6d6","جدران (من المخطط)"],["#9fc3d6","زجاج وألمنيوم"],["#dedbd4","أرضيات"],["#cfd8de","حمامات ومطابخ"],["#c9b48c","تراسات وفناء"],["#39a0d6","المسبح"],["#e0a060","دكت شفاط المطبخ (مقترح)"]],
+  str:[["#d9dde2","خرسانة (أعمدة، جسور، قواعد)"],["#9a9d9f","خرسانة عادية (PCC)"],["#6f8fd8","المبنى (شفاف)"]],
+  elec:[["#ff4d4d","طور R"],["#ffcf33","طور Y"],["#3fa7ff","طور B"],["#ff8a2a","تغذية من MDB / 3 فاز"],["#fff2d0","إنارة"],["#ff9d9d","أفياش"]],
+  plumb:[["#4fd0ff","ماء بارد"],["#ff6a3d","ماء حار"],["#b08d6a","صرف"],["#5fb4e6","الخزان"]],
+  rain:[["#2ec4b6","مطر الأسطح (منفصل عن الصرف الصحي)"],["#d9534f","مطر الفناء — داخل الصرف الصحي"],["#ff5a3c","خطوط الميول للمصرف"],["#ffffff","مصرف / صفاية"]],
+  tel:[["#b07cff","اتصالات وبيانات"],["#5ef2d0","واي فاي وكاميرات"]],
+  safe:[["#ff3b3b","إنذار حريق وطفايات"],["#ffffff","كواشف"],["#39ff8a","مخارج الطوارئ"]],
+};
+const BADGES = {
+  elec:"ⓘ الأحمال والقواطع من جداول اللوحات · أماكن النقاط تقديرية",
+  plumb:"ⓘ مسارات الماء والصرف تقديرية",
+  rain:"ⓘ بعد = التعديل المقترح (كل الأسطح للشارع) · قبل = مخطط الميكانيكا · الفناء على مضخات القبو",
+  tel:"ⓘ الاتصالات تقديرية", safe:"ⓘ السلامة تقديرية",
+  all:"ⓘ الكهرباء من الجداول · بقية الأنظمة تقديرية", str:"ⓘ أماكن الأعمدة من S-09 · المقاسات والقواعد تقديرية"
+};
+
+function build(el, list, key, cb) {
+  el.innerHTML = "";
+  list.forEach(([v, t]) => {
+    const b = document.createElement("button"); b.textContent = t; b.dataset.v = v;
+    b.onclick = () => { state[key] = typeof list[0][0] === "number" || /^\d$/.test(v) ? (v === "all" ? "all" : +v) : v; cb(); refresh(); };
+    el.appendChild(b);
+  });
+}
+const tabs = document.getElementById("tabs"), top = document.getElementById("top");
+build(tabs, [...MODES].reverse(), "mode", () => {});
+build(top, FOCUS, "focus", () => {});
+
+function visible(o) {
+  const {layer, floor} = o.userData;
+  if (state.focus !== "all" && floor > state.focus) return false;
+  if (layer === "site") return true;
+  if (layer === "dim") return !!state.dims && floor === state.focus;
+  if (layer === "rain") return !!state.rain;          // overlay: works on top of any mode
+  if (layer === "arch" || layer === "duct") return true;
+  if (state.mode === "all") return true;
+  if (state.mode === "arch") return false;
+  return layer === state.mode;
+}
+function refresh() {
+  [...tabs.children].forEach(b => b.classList.toggle("on", b.dataset.v === state.mode));
+  [...top.children].forEach(b => b.classList.toggle("on", String(b.dataset.v) === String(state.focus)));
+  const archMode = state.mode === "arch";
+  items.forEach(o => {
+    o.visible = visible(o);
+    if (o.userData.wall) o.material = archMode ? M.wall : M.wallGhost;
+    if (o.userData.glass) { if (!o.userData.glassMat) o.userData.glassMat = o.material; o.material = archMode ? o.userData.glassMat : M.wallGhost; }
+    if (o.userData.slab) o.material = archMode ? o.userData.solidMat : M.slabGhost;
+    if (o.userData.wall || o.userData.slab) { o.castShadow = archMode; }
+  });
+  labels.forEach(l => {
+    const {layer, floor} = l.userData;
+    let v = state.labels && (state.focus === "all" || floor === state.focus);
+    if (layer === "arch") v = v && archMode && (state.focus !== "all" || floor === 1 || state.explode) && !(l.userData.room && state.dims && floor === state.focus);
+    else if (layer === "dim") v = !!state.dims && floor === state.focus;
+    else if (layer === "rain") v = !!state.rain && (state.focus === "all" || floor === state.focus);
+    else if (layer !== "site" && layer !== "duct" && layer !== "kit") v = v && (state.mode === layer || (state.mode === "all" && layer !== "str"));
+    if (layer === "kit" && state.dims && floor === state.focus) v = false;   // keep the kitchen readable with dimensions on
+    if (state.cut && l.userData.y > state.cutY) v = false;
+    l.visible = v;
+  });
+  floors.forEach((g, i) => g.position.y = state.explode ? i * 3.2 : 0);
+  // look & feel
+  const dark = !archMode;
+  scene.background = new THREE.Color(dark ? 0x07080b : 0xbfd4e6);
+  scene.fog = dark ? null : new THREE.Fog(0xbfd4e6, 60, 140);
+  M.sand.color.set(dark ? 0x101114 : 0xd8b685);
+  M.street.color.set(dark ? 0x0c0d10 : 0x3b3d42);
+  M.concrete.color.set(state.mode === "str" ? 0xe9edf2 : 0xd9dde2);
+  hemi.intensity = dark ? .55 : 1.0; sun.intensity = dark ? .6 : 2.4;
+  bloom.strength = dark ? .95 : 0; bloom.enabled = dark;
+  renderer.clippingPlanes = state.cut ? [clip] : [];
+  clip.constant = 12.5 - state.cutY;
+  // legend + badge
+  const leg = document.getElementById("legend");
+  const L = [...(state.mode === "all" ? [...LEGENDS.elec.slice(0, 4), ...LEGENDS.plumb.slice(0, 3), LEGENDS.tel[0], LEGENDS.safe[0]] : LEGENDS[state.mode]), ...(state.rain ? LEGENDS.rain : [])];
+  leg.innerHTML = L.map(([c, t]) => `<div><i style="background:${c}"></i>${t}</div>`).join("");
+  const bd = document.getElementById("badge");
+  const bt = state.rain ? BADGES.rain : BADGES[state.mode];
+  bd.textContent = bt || ""; bd.style.display = bt ? "block" : "none";
+  document.getElementById("bExplode").classList.toggle("on", state.explode);
+  document.getElementById("bCut").classList.toggle("on", state.cut);
+  document.getElementById("bLabels").classList.toggle("on", state.labels);
+  document.getElementById("bDims").classList.toggle("on", !!state.dims);
+  document.getElementById("bRain").classList.toggle("on", !!state.rain);
+  document.getElementById("cut").style.display = state.cut ? "block" : "none";
+  applyRender();
+  applyVariant();
+}
+const clip = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+// keep points where z_world >= 12.5 - cutY  → hides everything in front of the cut (towards the street)
+clip.normal.set(0, 0, -1);
+
+document.getElementById("bRain").onclick = () => { state.rain = !state.rain; refresh(); };
+document.getElementById("bDims").onclick = () => { state.dims = !state.dims; if (state.dims && state.focus === "all") state.focus = 1; refresh(); };
+document.getElementById("bExplode").onclick = () => { state.explode = !state.explode; refresh(); };
+document.getElementById("bCut").onclick = () => { state.cut = !state.cut; refresh(); };
+document.getElementById("bLabels").onclick = () => { state.labels = !state.labels; refresh(); };
+document.getElementById("cutR").oninput = e => { state.cutY = +e.target.value; refresh(); };
+
+/* ---------- picking / info ---------- */
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+const infoEl = document.getElementById("info"), infoB = document.getElementById("infoB");
+document.getElementById("infoX").onclick = () => infoEl.style.display = "none";
+let downAt = null;
+renderer.domElement.addEventListener("pointerdown", e => downAt = [e.clientX, e.clientY]);
+renderer.domElement.addEventListener("pointerup", e => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 5) return;
+  mouse.set(e.clientX / innerWidth * 2 - 1, -e.clientY / innerHeight * 2 + 1);
+  ray.setFromCamera(mouse, camera);
+  const hits = ray.intersectObjects(pickables.filter(o => o.visible && o.parent.visible), false)
+    .filter(h => !state.cut || worldY(h.point) <= state.cutY);
+  // prefer system items over room slabs
+  const hit = hits.find(h => h.object.userData.info.kind !== "room") || hits[0];
+  if (!hit) { infoEl.style.display = "none"; return; }
+  showInfo(hit.object.userData.info);
+});
+const worldY = v => 12.5 - v.z;
+const row = (a, b) => `<div class="row"><span>${a}</span><span>${b}</span></div>`;
+function showInfo(i) {
+  let h = "";
+  if (i.kind === "room") h = `<h3>${i.name}</h3>${row("الدور", FLOOR_NAMES[i.floor])}${row("المقاس التقريبي", `${i.w.toFixed(2)} × ${i.d.toFixed(2)} م`)}${row("المساحة", (i.w * i.d).toFixed(1) + " م²")}`;
+  else if (i.kind === "ckt") {
+    const c = i.circ;
+    h = `<h3>${TYPE_AR[c.type]} — ${c.id}</h3>${row("اللوحة", c.db)}${row("رقم الدائرة", c.ct)}${row("الطور", c.ph === "3" ? "ثلاثي R-Y-B" : c.ph)}
+      ${row("الحمل", c.kva + " kVA")}${row("القاطع", c.cb + " A")}${row("الكيبل", c.cable)}${row("يغذي", c.rooms.join("، "))}${row("الحالة", c.on ? "شغّال" : "مطفأ")}
+      <div class="sub" style="margin-top:6px;color:var(--muted);font-size:12px">الحمل والقاطع والكيبل من جدول اللوحة. مكان النقاط في الغرفة تقديري.</div>`;
+  }
+  else if (i.kind === "db") {
+    const d = DBS[i.db];
+    const tot = sumDB(i.db);
+    h = `<h3>${i.name}</h3>${row("الموقع", d.label)}${row("التغذية من", "MDB")}${row("كيبل التغذية", d.feeder)}${row("القاطع الرئيسي", d.cb + " A")}
+      ${row("عدد الدوائر", d.circuits.length)}${row("الحمل الحالي (بعد معامل الطلب)", tot.kva.toFixed(2) + " kVA")}`;
+  }
+  else if (i.kind === "feeder") h = `<h3>${i.name}</h3>${row("الكيبل", i.cable)}${row("قاطع اللوحة", i.cb + " A")}`;
+  else if (i.kind === "mdb") h = `<h3>${i.name}</h3>${row("يغذي", Object.keys(DBS).join("، "))}${row("الحمل الحالي", sumAll().kva.toFixed(1) + " kVA")}<div style="color:var(--muted);font-size:12px">مقاس قاطع MDB غير موجود في الجداول المقروءة.</div>`;
+  else if (i.kind === "col") h = `<h3>${i.name}</h3>${row("المقاس", i.size)}${row("النوع", i.planted ? "عمود مزروع (يبدأ من الأرضي)" : "من القاعدة")}${row("يصل إلى منسوب", "+" + i.top.toFixed(2))}`;
+  else h = `<h3>${i.name}</h3>${i.note ? `<div style="color:var(--muted)">${i.note}</div>` : ""}`;
+  infoB.innerHTML = h; infoEl.style.display = "block"; simEl.style.display = "none";
+}
+
+/* ---------- load simulation ---------- */
+const simEl = document.getElementById("sim");
+let simDB = "MDB";
+function sumCircs(list) {
+  const ph = {R:0, Y:0, B:0}; let kva = 0;
+  list.forEach(c => { if (!c.on) return; const d = c.kva * (DEMAND[c.type] || .8);
+    kva += d; if (c.ph === "3") { ph.R += d/3; ph.Y += d/3; ph.B += d/3; } else ph[c.ph] += d; });
+  const amps = {R:ph.R * 1000 / 230, Y:ph.Y * 1000 / 230, B:ph.B * 1000 / 230};
+  return {kva, amps};
+}
+const sumDB = n => sumCircs(circuits.filter(c => c.db === n));
+const sumAll = () => sumCircs(circuits);
+function renderSim() {
+  const list = simDB === "MDB" ? circuits : circuits.filter(c => c.db === simDB);
+  const s = sumCircs(list);
+  const cb = simDB === "MDB" ? null : DBS[simDB].cb;
+  const maxA = Math.max(s.amps.R, s.amps.Y, s.amps.B);
+  const scale = cb || Math.max(100, maxA * 1.2);
+  const over = cb && maxA > cb;
+  const bar = (p, c) => `<div class="bar"><span>${p}</span><div class="t"><i style="width:${Math.min(100, s.amps[p] / scale * 100)}%;background:${c}"></i></div><b>${s.amps[p].toFixed(1)}A</b></div>`;
+  simEl.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div><div class="sub">محاكاة — الكهرباء</div><h2>شغّل الأحمال</h2></div>
+      <button id="simX" style="border:1px solid var(--line);border-radius:50%;width:34px;height:34px;padding:0">✕</button></div>
+    <select id="simSel">${["MDB", ...Object.keys(DBS)].map(n => `<option value="${n}" ${n === simDB ? "selected" : ""}>${n === "MDB" ? "كل الفيلا (MDB)" : n + " — " + DBS[n].label}</option>`).join("")}</select>
+    <div class="kpis">
+      <div class="kpi"><b>${s.kva.toFixed(1)} kVA</b><span>الحمل الحين (بعد معامل الطلب)</span></div>
+      <div class="kpi"><b class="${over ? "warn" : ""}">${maxA.toFixed(1)}A</b><span>${cb ? "أعلى طور من " + cb + "A" : "أعلى طور (قاطع MDB غير مذكور)"}</span></div>
+    </div>
+    ${over ? `<div class="warn" style="margin-bottom:6px">⚠ الطور تجاوز قاطع اللوحة</div>` : ""}
+    ${bar("R", "var(--R)")}${bar("Y", "var(--Y)")}${bar("B", "var(--B)")}
+    <div class="btns"><button id="allOn">شغّل الكل</button><button id="allOff">طفّ الكل</button></div>
+    ${list.map((c, i) => `<div class="ckt ${c.on ? "on" : ""}"><button data-i="${circuits.indexOf(c)}">${c.on ? "طفّ" : "شغّل"}</button>
+      <span class="dot" style="background:#${PH[c.ph].toString(16).padStart(6, "0")}"></span>
+      <span class="nm">${c.id.split("/")[0]} — ${TYPE_AR[c.type]}<br><small style="color:var(--muted)">${c.rooms.slice(0, 3).join("، ")}${c.rooms.length > 3 ? "…" : ""}</small></span>
+      <span class="ld">${c.cb}A / ${c.kva}</span></div>`).join("")}
+    <div style="color:var(--muted);font-size:11.5px;margin-top:8px">الأحمال (kVA) والقواطع من جداول اللوحات في المخطط الكهربائي E-23. التيار = الحمل ÷ 230 فولت لكل طور، مع معاملات الطلب المذكورة في الجداول.</div>`;
+  simEl.querySelector("#simX").onclick = () => { simEl.style.display = "none"; document.getElementById("bSim").classList.remove("on"); };
+  simEl.querySelector("#simSel").onchange = e => { simDB = e.target.value; renderSim(); };
+  simEl.querySelector("#allOn").onclick = () => { list.forEach(c => setCirc(c, true)); renderSim(); };
+  simEl.querySelector("#allOff").onclick = () => { list.forEach(c => setCirc(c, false)); renderSim(); };
+  simEl.querySelectorAll(".ckt button").forEach(b => b.onclick = () => { const c = circuits[+b.dataset.i]; setCirc(c, !c.on); renderSim(); });
+}
+const dimMats = {};
+function setCirc(c, on) {
+  c.on = on;
+  c.meshes.forEach(m => {
+    if (c.lights.includes(m)) { m.material = on ? bulbOn : bulbOff; return; }
+    if (!m.userData.baseMat) m.userData.baseMat = m.material;
+    const base = m.userData.baseMat;
+    if (on) m.material = base;
+    else m.material = dimMats[base.uuid] || (dimMats[base.uuid] = Object.assign(base.clone(), {emissiveIntensity:.05, transparent:true, opacity:.35}));
+  });
+}
+document.getElementById("bSim").onclick = () => {
+  const open = simEl.style.display !== "block";
+  simEl.style.display = open ? "block" : "none"; infoEl.style.display = "none";
+  document.getElementById("bSim").classList.toggle("on", open);
+  if (open) { if (state.mode !== "elec" && state.mode !== "all") { state.mode = "elec"; refresh(); } renderSim(); }
+};
+
+/* ---------- walk-through (first person) ---------- */
+const walkEl = document.getElementById("walk"), joyEl = document.getElementById("joy"), knob = joyEl.querySelector("i");
+const W = {on:false, x:4.2, y:1.0, feet:LEVELS[1], yaw:0, pitch:0, keys:{}, joy:[0, 0], saved:null};
+const EYE = 1.6, RAD = .22, STEP = .45;
+const lamp = new THREE.PointLight(0xfff1dc, 0, 16, 1.4); scene.add(lamp);
+const SPOTS = [[3.25, 17.9, 0, Math.PI / 2], [4.2, 1.0, 1, 0], [3.8, 17.9, 2, -Math.PI / 2], [3.8, 18.4, 3, Math.PI / 2]];
+const hasFloor = (f, x, y) => FLOORCELLS[f].some(c => inR(c, x, y));
+function surfaces(x, y) {
+  const s = [];
+  for (let f = 0; f < 4; f++) if (hasFloor(f, x, y)) s.push(LEVELS[f]);
+  for (let f = 0; f < 3; f++) { const r = stairRoom(f); if (r && inR([r[1], r[2] - .15, r[3], r[4]], x, y)) s.push(stairRamp(r, f, x, y)); }
+  const cs = ROOMS[0].find(r => r[0] === "درج الفناء");
+  if (inR([cs[1], cs[2], cs[3], cs[4]], x, y)) s.push(LEVELS[0] + Math.min(1, Math.max(0, (cs[4] - .15 - y) / (cs[4] - cs[2] - .3))) * H);
+  return s;
+}
+function groundAt(x, y, feet) {
+  const s = surfaces(x, y).filter(z => z <= feet + STEP);
+  return s.length ? Math.max(...s) : null;
+}
+function blocked(x, y, feet) {
+  const f = floorOf(feet + .1);
+  if (f > 3) return true;
+  for (const w of WALLS[f]) {
+    if (!inR(w.bb, x, y, RAD)) continue;
+    if (feet + .3 > LEVELS[f] + w.h) continue;                       // low parapet below the knees? still blocks
+    if (w.rect) return true;
+    for (const t of w.tris) if (nearTri(t, x, y)) return true;
+  }
+  for (const g of GLASS[f] || []) if (g[4] === "win" && inR([Math.min(g[0], g[2]) - .05, Math.min(g[1], g[3]) - .05, Math.max(g[0], g[2]) + .05, Math.max(g[1], g[3]) + .05], x, y, RAD)) return true;
+  // flight separator on the main stair
+  const r = stairRoom(f), r0 = f > 0 ? stairRoom(f - 1) : null;
+  for (const [s, sf] of [[r, f], [r0, f - 1]]) if (s) { const mid = midOf(s, sf); if (Math.abs(x - mid) < RAD * .6 && y > s[2] + .2 && y < s[4] - 1.1) return true; }
+  const g = groundAt(x, y, feet);
+  return g === null || g < feet - .6;                                 // no floor here: edge of a void / stair well
+}
+function nearTri(t, x, y) {
+  const sgn = (a, b) => (x - b[0]) * (a[1] - b[1]) - (a[0] - b[0]) * (y - b[1]);
+  const d1 = sgn(t[0], t[1]), d2 = sgn(t[1], t[2]), d3 = sgn(t[2], t[0]);
+  if (!((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0))) return true;
+  for (let i = 0; i < 3; i++) {
+    const a = t[i], b = t[(i + 1) % 3], dx = b[0] - a[0], dy = b[1] - a[1];
+    const u = Math.max(0, Math.min(1, ((x - a[0]) * dx + (y - a[1]) * dy) / (dx * dx + dy * dy || 1)));
+    if (Math.hypot(a[0] + u * dx - x, a[1] + u * dy - y) < RAD) return true;
+  }
+  return false;
+}
+function placeCam() {
+  camera.position.copy(P(W.x, W.y, W.feet + EYE));
+  camera.rotation.set(W.pitch, W.yaw, 0, "YXZ");
+  lamp.position.copy(P(W.x, W.y, W.feet + 2.2));
+  const f = floorOf(W.feet + .1);
+  document.getElementById("wFloor").textContent = FLOOR_NAMES[f] + (roomAt(f, W.x, W.y) ? " · " + roomAt(f, W.x, W.y)[0] : "");
+}
+function teleport(i) {
+  const [x, y, f, yaw] = SPOTS[i];
+  Object.assign(W, {x, y, feet:LEVELS[f], yaw, pitch:0}); placeCam();
+}
+function setWalk(on) {
+  W.on = on;
+  document.body.classList.toggle("walking", on);
+  document.getElementById("bWalk").classList.toggle("on", on);
+  walkEl.style.display = on ? "block" : "none";
+  if (on) {
+    W.saved = {pos:camera.position.clone(), target:controls.target.clone(), st:{...state}};
+    Object.assign(state, {focus:"all", explode:false, cut:false, labels:false});
+    controls.enabled = false; camera.fov = 72; camera.near = .05; camera.updateProjectionMatrix();
+    lamp.intensity = state.render ? 1.2 : 5; amb.intensity = state.render ? .1 : .45;
+    simEl.style.display = "none"; infoEl.style.display = "none";
+    refresh(); teleport(1);
+  } else {
+    Object.assign(state, {focus:W.saved.st.focus, explode:W.saved.st.explode, cut:W.saved.st.cut, labels:W.saved.st.labels});
+    camera.position.copy(W.saved.pos); controls.target.copy(W.saved.target);
+    camera.fov = 40; camera.near = .1; camera.updateProjectionMatrix();
+    controls.enabled = true; lamp.intensity = 0; amb.intensity = state.render ? 0 : .25; refresh();
+  }
+}
+document.getElementById("bWalk").onclick = () => setWalk(!W.on);
+document.getElementById("wExit").onclick = () => setWalk(false);
+document.querySelectorAll("#walk [data-f]").forEach(b => b.onclick = () => teleport(+b.dataset.f));
+addEventListener("keydown", e => { if (W.on) { W.keys[e.code] = true; if (e.code === "Escape") setWalk(false); } });
+addEventListener("keyup", e => { W.keys[e.code] = false; });
+// look: drag anywhere on the scene
+let look = null;
+renderer.domElement.addEventListener("pointerdown", e => { if (W.on) look = {id:e.pointerId, x:e.clientX, y:e.clientY}; });
+addEventListener("pointermove", e => {
+  if (!W.on || !look || e.pointerId !== look.id) return;
+  W.yaw -= (e.clientX - look.x) * .005; W.pitch = Math.max(-1.3, Math.min(1.3, W.pitch - (e.clientY - look.y) * .005));
+  look.x = e.clientX; look.y = e.clientY;
+});
+addEventListener("pointerup", e => { if (look && e.pointerId === look.id) look = null; });
+addEventListener("pointercancel", () => look = null);
+// move: on-screen joystick
+let joy = null;
+joyEl.addEventListener("pointerdown", e => { joy = e.pointerId; joyEl.setPointerCapture(e.pointerId); moveJoy(e); e.stopPropagation(); });
+joyEl.addEventListener("pointermove", e => { if (joy === e.pointerId) moveJoy(e); });
+const endJoy = () => { joy = null; W.joy = [0, 0]; knob.style.transform = ""; };
+joyEl.addEventListener("pointerup", endJoy); joyEl.addEventListener("pointercancel", endJoy);
+function moveJoy(e) {
+  const r = joyEl.getBoundingClientRect(), R = r.width / 2;
+  let dx = e.clientX - r.left - R, dy = e.clientY - r.top - R; const d = Math.hypot(dx, dy);
+  if (d > R) { dx *= R / d; dy *= R / d; }
+  knob.style.transform = `translate(${dx}px,${dy}px)`;
+  W.joy = [dx / R, -dy / R];
+}
+let lastT = performance.now();
+function walkStep() {
+  const now = performance.now(), dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
+  if (!W.on) return;
+  const k = W.keys;
+  let fwd = W.joy[1] + ((k.KeyW || k.ArrowUp) ? 1 : 0) - ((k.KeyS || k.ArrowDown) ? 1 : 0);
+  let side = W.joy[0] + ((k.KeyD) ? 1 : 0) - ((k.KeyA) ? 1 : 0);
+  if (k.ArrowLeft) W.yaw += 1.8 * dt; if (k.ArrowRight) W.yaw -= 1.8 * dt;
+  const sp = (k.ShiftLeft || k.ShiftRight ? 3.2 : 1.6) * dt;
+  // plan-space direction: yaw 0 looks toward +y (into the house from the street)
+  const fx = -Math.sin(W.yaw), fy = Math.cos(W.yaw), rx = Math.cos(W.yaw), ry = Math.sin(W.yaw);
+  const dx = (fx * fwd + rx * side) * sp, dy = (fy * fwd + ry * side) * sp;
+  if (dx && !blocked(W.x + dx, W.y, W.feet)) W.x += dx;
+  if (dy && !blocked(W.x, W.y + dy, W.feet)) W.y += dy;
+  const g = groundAt(W.x, W.y, W.feet);
+  if (g !== null) W.feet += (g - W.feet) * Math.min(1, dt * 14);
+  placeCam();
+}
+
+/* =====================================================================
+   RENDER — approved finishes (from the owner's reference renders):
+   terracotta render plaster, rust-bronze mashrabiya screens, golden sandstone
+   at entrance / courtyard / pool, walnut panelling + travertine inside.
+   ===================================================================== */
+const FIN = {
+  terracotta:"#c88a6c", sandstone:"#d8a47a", sandJoint:"#b98660", walnut:"#5b3b28", plaster:"#e6d0bc", ceil:"#e9cdb5",
+  travertine:"#cdb89e", oak:"#8c5e3d", deck:"#d3b896", paver:"#cdb699", gravel:"#dcd9d3", screen:0x5e3a26, frame:0x3a2a21,
+};
+let rnd = 1;
+const rand = () => (rnd = (rnd * 16807) % 2147483647) / 2147483647;
+const shade = (hex, k) => { const c = new THREE.Color(hex); c.offsetHSL(0, 0, k); return "#" + c.getHexString(); };
+function canvasTex(px, paint, alpha) {
+  const c = document.createElement("canvas"); c.width = c.height = px;
+  const g = c.getContext("2d"); rnd = 7; paint(g, px);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  if (!alpha) t.colorSpace = THREE.NoColorSpace;
+  return t;
+}
+function noise(g, px, amp, n, s0 = 1, s1 = 3) {
+  for (let i = 0; i < n; i++) { g.fillStyle = `rgba(${rand() < .5 ? "0,0,0" : "255,255,255"},${amp * rand()})`; const s = s0 + rand() * (s1 - s0); g.fillRect(rand() * px, rand() * px, s, s); }
+}
+function blotches(g, px, base, k, n) {
+  for (let i = 0; i < n; i++) { const r = px * (.05 + rand() * .2), x = rand() * px, y = rand() * px;
+    const gr = g.createRadialGradient(x, y, 0, x, y, r); const c = shade(base, (rand() - .5) * k);
+    gr.addColorStop(0, c + "55"); gr.addColorStop(1, c + "00"); g.fillStyle = gr; g.fillRect(x - r, y - r, 2 * r, 2 * r); }
+}
+const PAINT = {
+  plasterTx: (base, k) => (g, px) => { g.fillStyle = base; g.fillRect(0, 0, px, px); blotches(g, px, base, k, 60); noise(g, px, .06, 22000, 1, 2.2); },
+  sandstone: (g, px) => {               // ashlar, mixed course heights, 2.4 m square
+    const rows = [.25, .125, .25, .125, .125, .125]; let y = 0;
+    rows.forEach(h => { h *= px; let x = -rand() * px * .2;
+      while (x < px) { const w = px * (.18 + rand() * .3); g.fillStyle = shade(FIN.sandstone, (rand() - .5) * .07); g.fillRect(x, y, w, h); g.fillStyle = FIN.sandJoint; g.fillRect(x, y, 2, h); x += w; }
+      g.fillStyle = FIN.sandJoint; g.fillRect(0, y, px, 2); y += h; });
+    noise(g, px, .13, 40000, 1, 2.4);
+  },
+  walnut: (g, px) => {                  // vertical walnut panels 0.6 m, 2.4 m square
+    const n = 4, w = px / n;
+    for (let i = 0; i < n; i++) { g.fillStyle = shade(FIN.walnut, (rand() - .5) * .05); g.fillRect(i * w, 0, w, px);
+      for (let k = 0; k < 40; k++) { g.strokeStyle = shade(FIN.walnut, (rand() - .55) * .12); g.globalAlpha = .4; g.lineWidth = .5 + rand() * 1.6; const x = i * w + rand() * w; g.beginPath(); g.moveTo(x, 0); g.bezierCurveTo(x + (rand() - .5) * 14, px * .33, x + (rand() - .5) * 14, px * .66, x + (rand() - .5) * 8, px); g.stroke(); }
+      g.globalAlpha = 1; g.fillStyle = shade(FIN.walnut, -.12); g.fillRect(i * w, 0, 2, px); }
+  },
+  travertine: (g, px) => {              // 60×120 travertine, 1.2 m square
+    for (let i = 0; i < 2; i++) { g.fillStyle = shade(FIN.travertine, (rand() - .5) * .03); g.fillRect(i * px / 2, 0, px / 2, px); }
+    for (let k = 0; k < 120; k++) { g.fillStyle = shade(FIN.travertine, (rand() - .5) * .08) + "66"; g.fillRect(rand() * px, rand() * px, 8 + rand() * 60, 1 + rand() * 2.5); }
+    noise(g, px, .05, 9000);
+    g.fillStyle = shade(FIN.travertine, -.12); g.fillRect(0, 0, px, 3); g.fillRect(0, 0, 3, px); g.fillRect(px / 2, 0, 3, px);
+  },
+  oak: (g, px) => { const n = 6, w = px / n;
+    for (let i = 0; i < n; i++) { const off = rand() * px; for (const y0 of [off - px, off]) { g.fillStyle = shade(FIN.oak, (rand() - .5) * .07); g.fillRect(i * w, y0, w, px);
+      for (let k = 0; k < 18; k++) { g.strokeStyle = shade(FIN.oak, (rand() - .6) * .12); g.globalAlpha = .35; g.lineWidth = .5 + rand(); const x = i * w + rand() * w; g.beginPath(); g.moveTo(x, y0); g.lineTo(x + (rand() - .5) * 5, y0 + px); g.stroke(); }
+      g.globalAlpha = 1; g.fillStyle = shade(FIN.oak, -.2); g.fillRect(i * w, y0 + px - 2, w, 2); } g.fillStyle = shade(FIN.oak, -.2); g.fillRect(i * w, 0, 1.5, px); } },
+  terrazzo: (base) => (g, px) => { g.fillStyle = base; g.fillRect(0, 0, px, px); blotches(g, px, base, .04, 30);
+    for (let i = 0; i < 9000; i++) { g.fillStyle = shade(base, (rand() - .5) * .3); g.fillRect(rand() * px, rand() * px, 1 + rand() * 2, 1 + rand() * 2); } },
+  slabs: (base) => (g, px) => {         // large 60×120 outdoor slabs, 2.4 m square
+    for (let r = 0; r < 2; r++) for (let i = 0; i < 4; i++) { g.fillStyle = shade(base, (rand() - .5) * .06); g.fillRect(i * px / 4, r * px / 2, px / 4, px / 2); }
+    noise(g, px, .1, 20000); g.fillStyle = shade(base, -.15);
+    for (let r = 0; r < 2; r++) g.fillRect(0, r * px / 2, px, 3); for (let i = 0; i < 4; i++) g.fillRect(i * px / 4, 0, 3, px);
+  },
+  gravel: (g, px) => { g.fillStyle = FIN.gravel; g.fillRect(0, 0, px, px); for (let i = 0; i < 26000; i++) { g.fillStyle = shade(FIN.gravel, (rand() - .6) * .35); const s = 1 + rand() * 3; g.fillRect(rand() * px, rand() * px, s, s * (.6 + rand() * .6)); } },
+  grass: (g, px) => { g.fillStyle = "#6f8f45"; g.fillRect(0, 0, px, px); for (let i = 0; i < 12000; i++) { g.fillStyle = shade("#6f8f45", (rand() - .5) * .22); g.fillRect(rand() * px, rand() * px, 1.5, 3 + rand() * 4); } },
+  screen: (g, px) => {                  // rust mashrabiya: 20 cm cells, triangles / squares, 1.2 m square
+    const n = 6, c = px / n, b = c * .14;
+    g.clearRect(0, 0, px, px); g.fillStyle = "#fff";
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      const x = i * c, y = j * c, t = ((i * 2 + j * 3) % 7) / 7 * .9 + rand() * .1;
+      g.fillRect(x, y, c, b); g.fillRect(x, y, b, c);
+      const ix = x + b, iy = y + b, s = c - b;
+      g.beginPath();
+      if (t < .3) { g.moveTo(ix, iy); g.lineTo(ix + s, iy); g.lineTo(ix, iy + s); }
+      else if (t < .55) { g.moveTo(ix + s, iy); g.lineTo(ix + s, iy + s); g.lineTo(ix, iy + s); }
+      else if (t < .75) { g.moveTo(ix, iy); g.lineTo(ix + s, iy + s); g.lineTo(ix, iy + s); }
+      else if (t < .85) { g.rect(ix + s * .25, iy + s * .25, s * .5, s * .5); }
+      g.fill();
+    }
+  },
+};
+// texture table: [texture, metres per tile, roughness]
+const RT = {};
+function buildTextures() {
+  RT.terracotta = [canvasTex(512, PAINT.plasterTx(FIN.terracotta, .1)), 2.0, .92];
+  RT.plaster = [canvasTex(256, PAINT.plasterTx(FIN.plaster, .05)), 1.5, .95];
+  RT.ceil = [canvasTex(256, PAINT.plasterTx(FIN.ceil, .05)), 1.5, .95];
+  RT.sandstone = [canvasTex(1024, PAINT.sandstone), 2.4, .9];
+  RT.walnut = [canvasTex(512, PAINT.walnut), 2.4, .5];
+  RT.travertine = [canvasTex(1024, PAINT.travertine), 1.2, .35];
+  RT.oak = [canvasTex(512, PAINT.oak), 1.2, .55];
+  RT.deck = [canvasTex(512, PAINT.terrazzo(FIN.deck)), 2.0, .7];
+  RT.paver = [canvasTex(512, PAINT.slabs(FIN.paver)), 2.4, .85];
+  RT.gravel = [canvasTex(512, PAINT.gravel), 1.0, 1];
+  RT.grass = [canvasTex(512, PAINT.grass), 1.0, 1];
+  RT.screen = canvasTex(512, PAINT.screen, true);
+}
+// floor finish per room type
+const FLOOR_OF = {living:"travertine", room:"travertine", stair:"travertine", lift:"travertine", kitchen:"travertine", void:"travertine",
+  wet:"travertine", bed:"oak", open:"paver", pool:"deck", service:"deck", garage:"deck", tank:"deck", roof:"gravel", green:"grass"};
+const DECK_ROOMS = /سطح المسبح|الفناء|ممر خارجي/;
+// zone mask, 5 cm cells per floor: R = exterior face, G = sandstone zone, B = walnut-panelled room
+const maskTex = (() => {
+  const W = 240, Hh = 2500, layers = [0, 1, 2].map(() => { const c = document.createElement("canvas"); c.width = W; c.height = Hh; return c.getContext("2d"); });
+  const fill = (g, f, r, col) => { g.fillStyle = col; g.fillRect(r[1] * 20, f * 500 + r[2] * 20, (r[3] - r[1]) * 20, (r[4] - r[2]) * 20); };
+  const outside = r => ["open", "pool", "tank"].includes(r[5]) || (/منور|الفناء|السطح$|تراس/.test(r[0]) && r[5] !== "living");
+  const sand = (r, f) => f === 0 ? /الفناء|ممر خارجي|المسبح|مسطح أخضر|دورة مياه/.test(r[0]) : f === 1 ? /الفناء|المدخل|مسطح أخضر/.test(r[0]) : false;
+  layers[0].fillStyle = "#fff"; layers[0].fillRect(0, 0, W, Hh);
+  ROOMS.forEach((rooms, f) => {
+    rooms.filter(r => !outside(r)).forEach(r => fill(layers[0], f, r, "#000"));
+    rooms.filter(outside).forEach(r => fill(layers[0], f, r, "#fff"));
+    rooms.filter(r => sand(r, f)).forEach(r => fill(layers[1], f, r, "#fff"));
+    rooms.filter(r => r[5] === "living").forEach(r => fill(layers[2], f, r, "#fff"));
+  });
+  const out = document.createElement("canvas"); out.width = W; out.height = Hh;
+  const og = out.getContext("2d"), img = og.createImageData(W, Hh), d = [0, 1, 2].map(i => layers[i].getImageData(0, 0, W, Hh).data);
+  for (let i = 0; i < W * Hh; i++) { img.data[i*4] = d[0][i*4]; img.data[i*4+1] = d[1][i*4]; img.data[i*4+2] = d[2][i*4]; img.data[i*4+3] = 255; }
+  og.putImageData(img, 0, 0);
+  const t = new THREE.CanvasTexture(out); t.flipY = false; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false;
+  return t;
+})();
+function archMat(topKey) {
+  const m = new THREE.MeshStandardMaterial({color:0xffffff, roughness:.8, envMapIntensity:.35});
+  m.onBeforeCompile = sh => {
+    const top = RT[topKey], u = (k, i) => ({value:RT[k][i]});
+    Object.assign(sh.uniforms, {
+      tTop:{value:top[0]}, sTop:{value:top[1]}, rTop:{value:top[2]},
+      tTer:u("terracotta", 0), tSand:u("sandstone", 0), tWal:u("walnut", 0), tPl:u("plaster", 0), tCeil:u("ceil", 0), tMask:{value:maskTex},
+      lv:{value:new THREE.Vector4(LEVELS[1], LEVELS[2], LEVELS[3], LEVELS[4])},
+    });
+    sh.vertexShader = sh.vertexShader.replace("#include <common>", "#include <common>\nvarying vec3 vWP; varying vec3 vWN;")
+      .replace("#include <worldpos_vertex>", "#include <worldpos_vertex>\nvWP = (modelMatrix * vec4(transformed, 1.0)).xyz; vWN = normalize(mat3(modelMatrix) * objectNormal);");
+    sh.fragmentShader = sh.fragmentShader.replace("#include <common>", `#include <common>
+varying vec3 vWP; varying vec3 vWN;
+uniform sampler2D tTop, tTer, tSand, tWal, tPl, tCeil, tMask; uniform float sTop, rTop; uniform vec4 lv;
+vec3 lin(vec3 c){ return pow(c, vec3(2.2)); }
+vec3 zone(vec3 q){
+  float px = q.x + 6.0, py = 12.5 - q.z, h = q.y;
+  float fi = h < lv.x ? 0. : h < lv.y ? 1. : h < lv.z ? 2. : h < lv.w ? 3. : 4.;
+  if (fi > 3.5 || px <= 0. || px >= 12. || py <= 0. || py >= 25.) return vec3(1., 0., 0.);
+  return texture2D(tMask, vec2(px / 12., (fi + py / 25.) / 5.)).rgb;
+}`)
+      .replace("#include <map_fragment>", `
+vec3 n = normalize(vWN); vec3 col; float rgh;
+vec3 z = zone(vWP + n * .15);
+if (n.y > .5) { col = lin(texture2D(tTop, vWP.xz / sTop).rgb); rgh = rTop; }
+else if (n.y < -.5) {
+  if (z.g > .5) { col = lin(texture2D(tSand, vWP.xz / 2.4).rgb); rgh = .9; }
+  else if (z.r > .5) { col = lin(texture2D(tTer, vWP.xz / 2.0).rgb); rgh = .92; }
+  else { col = lin(texture2D(tCeil, vWP.xz / 1.5).rgb); rgh = .95; }
+} else {
+  vec2 uvw = abs(n.x) > abs(n.z) ? vec2(vWP.z, vWP.y) : vec2(vWP.x, vWP.y);
+  if (z.g > .5)      { col = lin(texture2D(tSand, uvw / 2.4).rgb); rgh = .9; }
+  else if (z.r > .5) { col = lin(texture2D(tTer, uvw / 2.0).rgb); rgh = .92; }
+  else if (z.b > .5) { col = lin(texture2D(tWal, uvw / 2.4).rgb); rgh = .5; }
+  else               { col = lin(texture2D(tPl, uvw / 1.5).rgb); rgh = .95; }
+}
+diffuseColor.rgb *= col;`)
+      .replace("#include <roughnessmap_fragment>", "float roughnessFactor = rgh;");
+  };
+  return m;
+}
+const RM = {floors:{}};
+const floorMat = (rtype, deck) => { const k = deck ? "deck" : FLOOR_OF[rtype] || "travertine"; return RM.floors[k] || (RM.floors[k] = archMat(k)); };
+RM.glass = new THREE.MeshStandardMaterial({color:0x8fa3a6, transparent:true, opacity:.22, roughness:.03, metalness:.5, envMapIntensity:.7, depthWrite:false});
+RM.frame = new THREE.MeshStandardMaterial({color:FIN.frame, roughness:.4, metalness:.7});
+RM.water = new THREE.MeshStandardMaterial({color:0x2fa6b8, transparent:true, opacity:.85, roughness:.04, metalness:.1, envMapIntensity:1.2});
+RM.sand = new THREE.MeshStandardMaterial({color:0xcfb894, roughness:1});
+RM.street = new THREE.MeshStandardMaterial({color:0x45474b, roughness:.9});
+
+// mashrabiya screens (approved façade language) — shown in render mode only
+const SCREENS = [   // [x0,y0,x1,y1, z0 (abs), z1 (abs)] plan metres
+  [5.45, -0.06, 11.8, -0.06, LEVELS[1], LEVELS[1] + 3.3],           // ground: driver room + garage gate
+  [3.1, 2.1, 5.3, 2.1, LEVELS[1], LEVELS[1] + 2.6],                 // entrance door
+  [0.35, -0.06, 2.0, -0.06, LEVELS[2] + .2, LEVELS[2] + 3.4],       // first floor: master terrace (tall screen, left)
+  [6.69, -0.06, 7.79, -0.06, LEVELS[2] + .2, LEVELS[2] + 3.4],      // first floor: right terrace
+  [4.31, 6.4, 4.31, 10.6, LEVELS[3] + .2, LEVELS[3] + 3.4],         // roof floor: bedroom glass toward terrace
+];
+const screenObjs = [];
+{
+  const mat = () => new THREE.MeshStandardMaterial({color:FIN.screen, map:null, alphaTest:.5, side:THREE.DoubleSide, roughness:.55, metalness:.45});
+  RM.screen = mat();
+  const depth = new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking, alphaTest:.5});
+  RM.screenDepth = depth;
+  const mk = (x0, y0, x1, y1, z0, z1, f) => {
+    const len = Math.hypot(x1 - x0, y1 - y0), h = z1 - z0;
+    const g = new THREE.PlaneGeometry(len, h); const uv = g.attributes.uv;
+    for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * len / 1.2, uv.getY(i) * h / 1.2);
+    [-.025, .025].forEach(o => {
+      const m = new THREE.Mesh(g, RM.screen); m.customDepthMaterial = depth; m.castShadow = true;
+      const vert = Math.abs(x1 - x0) < 1e-6, c = P((x0 + x1) / 2 + (vert ? o : 0), (y0 + y1) / 2 + (vert ? 0 : o), (z0 + z1) / 2);
+      m.position.copy(c); if (vert) m.rotation.y = Math.PI / 2;
+      add(m, "arch", f); m.userData.screen = true; screenObjs.push(m);
+    });
+  };
+  SCREENS.forEach(([x0, y0, x1, y1, z0, z1]) => mk(x0, y0, x1, y1, z0, z1, floorOf(z0 + .01)));
+}
+
+// sky + image-based lighting
+const sky = new Sky(); sky.scale.setScalar(450); sky.visible = false; scene.add(sky);
+const envScene = new THREE.Scene(), envSky = new Sky(); envSky.scale.setScalar(450); envScene.add(envSky);
+const pmrem = new THREE.PMREMGenerator(renderer);
+let envRT = null;
+// [label, elevation°, azimuth°, sun colour, turbidity, rayleigh, sun intensity]
+const TIMES = {morning:["الصبح", 30, 50, 0xffe9d0, 2.5, 1.0, 3.0], golden:["العصر", 20, 305, 0xffc58a, 5, 1.8, 3.2], sunset:["الغروب", 7, 290, 0xff9d5c, 8, 2.8, 2.4]};
+function setTime(k) {
+  const [, el, az, col, tur, ray, si] = TIMES[k]; state.rtime = k;
+  const d = new THREE.Vector3().setFromSphericalCoords(1, THREE.MathUtils.degToRad(90 - el), THREE.MathUtils.degToRad(az));
+  [sky, envSky].forEach(s => { const u = s.material.uniforms;
+    u.turbidity.value = tur; u.rayleigh.value = ray; u.mieCoefficient.value = .004; u.mieDirectionalG.value = .8; u.sunPosition.value.copy(d); });
+  if (state.render) {
+    sun.position.copy(d).multiplyScalar(40); sun.color.set(col); sun.intensity = si;
+    if (envRT) envRT.dispose();
+    envRT = pmrem.fromScene(envScene, 0, .1, 600); scene.environment = envRT.texture;
+  }
+  [...document.querySelectorAll("#rTime button")].forEach(b => b.classList.toggle("on", b.dataset.v === k));
+}
+// ambient occlusion only while taking a photo — created on demand and freed right after (saves GPU memory)
+let gtao = null;
+function aoOn() {
+  gtao = new GTAOPass(scene, camera, innerWidth, innerHeight); gtao.blendIntensity = 1;
+  gtao.updateGtaoMaterial({radius:.6, distanceExponent:1.5, thickness:1, scale:1, samples:MOBILE ? 8 : 16});
+  gtao.updatePdMaterial({lumaPhi:10, depthPhi:2, normalPhi:3, radius:6, rings:2, samples:MOBILE ? 8 : 16});
+  composer.insertPass(gtao, 1);
+}
+function aoOff() { if (!gtao) return; composer.removePass(gtao); gtao.dispose(); gtao = null; }
+
+// viewpoints matched to the reference shots: [name, camera xyz, target xyz, fov]
+const VIEWS = [
+  ["الواجهة", [6, -19, 5.5], [6, 4, 5.5], 45],
+  ["زاوية الشارع", [-7, -14, 2.2], [6.5, 6, 6.5], 55],
+  ["من فوق", [8.4, 14.2, 34], [8.4, 14.0, 0], 50],
+  ["الفناء", [11.0, 16.8, -1.9], [5.5, 11.6, -2.0], 70],
+  ["المسبح", [5.1, 10.5, -1.95], [3.0, 1.5, -2.5], 70],
+  ["صالة المعيشة", [11.3, 24.3, -1.9], [6.5, 17.6, -1.6], 72],
+  ["المطبخ", [4.2, 16.85, -1.9], [1.0, 11.5, -2.3], 72],
+  ["صالة الطعام", [5.5, 16.85, 2.1], [0.8, 11.3, 1.8], 72],
+  ["المجلس", [9.9, 7.1, 2.1], [5.4, 10.5, 1.8], 72],
+];
+function setView(i) {
+  const [, c, t, fov] = VIEWS[i];
+  camera.fov = fov; camera.updateProjectionMatrix();
+  camera.position.copy(P(...c)); controls.target.copy(P(...t)); controls.update();
+  [...document.querySelectorAll("#rViews button")].forEach((b, j) => b.classList.toggle("on", j === i));
+}
+function applyRender() {
+  if (!self.__RMready) return;
+  const on = !!state.render;
+  document.body.classList.toggle("rendering", on);
+  document.getElementById("bRender").classList.toggle("on", on);
+  screenObjs.forEach(o => o.visible = on);
+  if (!on) { sky.visible = false; scene.environment = null; renderer.toneMappingExposure = 1; amb.intensity = W.on ? .45 : .25;
+    hemi.color.set(0xdfe8ff); hemi.groundColor.set(0x8a7350); return; }
+  items.forEach(o => {
+    const u = o.userData;
+    if (u.screen) return;
+    if (u.wall && u.roofScreen) { o.material = RM.screen; o.customDepthMaterial = RM.screenDepth; }
+    else if (u.wall) { o.material = RM.walls; o.castShadow = true; }
+    else if (u.slab) { o.material = floorMat(u.rtype, u.deck); o.castShadow = true; }
+    else if (u.glass) o.material = (u.glassMat || o.material) === M.glass ? RM.glass : RM.frame;
+    else if (o.material === M.water) o.material = RM.water;
+    else if (o.material === M.sand) o.material = RM.sand;
+    else if (o.material === M.street) o.material = RM.street;
+  });
+  labels.forEach(l => { if (l.userData.layer !== "dim") l.visible = false; });
+  scene.background = null; scene.fog = null; sky.visible = true;
+  bloom.enabled = false; renderer.clippingPlanes = [];
+  hemi.intensity = .85; hemi.color.set(0xfff0e0); hemi.groundColor.set(0xb88f6a); amb.intensity = W.on ? .1 : 0;
+  sun.intensity = TIMES[state.rtime][6];
+  renderer.toneMappingExposure = .75;
+}
+let savedPR = null;
+function setRender(on) {
+  if (on) {
+    if (!RT.travertine) { buildTextures(); RM.walls = archMat("sandstone"); RM.screen.map = RT.screen; RM.screenDepth.map = RT.screen; RM.screen.needsUpdate = RM.screenDepth.needsUpdate = true; }
+    Object.assign(state, {render:true, mode:"arch", focus:"all", explode:false, cut:false});
+    sun.shadow.mapSize.set(SHADOW, SHADOW); sun.shadow.bias = -.0005; sun.shadow.normalBias = .03;
+    if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; }
+    savedPR = renderer.getPixelRatio(); const pr = Math.min(savedPR, 1.25); renderer.setPixelRatio(pr); composer.setPixelRatio(pr);
+    setTime(state.rtime);
+    if (!W.on) setView(1);
+  } else {
+    state.render = false;
+    sun.position.set(-20, 35, 25); sun.color.set(0xfff1dc);
+    if (savedPR) { renderer.setPixelRatio(savedPR); composer.setPixelRatio(savedPR); }
+    camera.fov = 40; camera.updateProjectionMatrix();
+    items.forEach(o => { if (o.material === RM.water) o.material = M.water; else if (o.material === RM.sand) o.material = M.sand; else if (o.material === RM.street) o.material = M.street;
+      if (o.userData.roofScreen) o.customDepthMaterial = undefined; });
+  }
+  refresh();
+}
+function photo() {
+  const pr = renderer.getPixelRatio(), hi = MOBILE ? 1.5 : Math.min(2.5, Math.max(2, (savedPR || 1) * 1.5));
+  renderer.setPixelRatio(hi); composer.setPixelRatio(hi); aoOn();
+  for (let i = 0; i < 2; i++) composer.render();
+  const url = renderer.domElement.toDataURL("image/jpeg", .92);
+  aoOff(); renderer.setPixelRatio(pr); composer.setPixelRatio(pr);
+  document.getElementById("shotImg").src = url;
+  document.getElementById("shot").style.display = "flex";
+}
+Object.assign(state, {render:false, rtime:"golden"});
+{
+  const v = document.getElementById("rViews");
+  VIEWS.forEach(([n], i) => { const b = document.createElement("button"); b.textContent = n; b.onclick = () => setView(i); v.appendChild(b); });
+  const te = document.getElementById("rTime");
+  Object.entries(TIMES).forEach(([k, t]) => { const b = document.createElement("button"); b.textContent = t[0]; b.dataset.v = k; b.onclick = () => setTime(k); te.appendChild(b); });
+  document.getElementById("bRender").onclick = () => setRender(!state.render);
+  document.getElementById("rExit").onclick = () => setRender(false);
+  document.getElementById("rShot").onclick = photo;
+  document.getElementById("shotX").onclick = () => document.getElementById("shot").style.display = "none";
+  self.__RMready = true;
+}
+
+/* =====================================================================
+   BEFORE / AFTER — architect's DD-02 drawing vs the owner's approved edits
+   ===================================================================== */
+const VARIANTS = {
+  // the architect's slanted courtyard walls (traced from A-108 / A-109)
+  before: {
+    walls: {
+      2: [[[7.992,16.541],[8.097,16.512],[8.291,16.512],[8.097,16.512],[8.291,16.512],[8.291,16.46]],
+          [[7.992,16.541],[8.291,16.541],[8.291,16.512]],
+          [[8.291,16.77],[9.438,16.46],[8.291,16.46]],
+          [[9.438,16.46],[8.291,16.46],[9.99,16.311],[8.291,16.46],[9.99,16.311],[8.841,16.311]],
+          [[8.841,16.311],[9.902,16.023],[9.99,16.023],[9.902,16.023],[9.99,16.023],[9.99,16.0]],
+          [[8.841,16.311],[9.99,16.311],[9.99,16.023]],
+          [[9.69,16.393],[9.839,16.351],[9.99,16.351],[9.839,16.351],[9.99,16.351],[9.99,16.311]],
+          [[9.69,16.393],[9.99,16.393],[9.99,16.351]],
+          [[9.69,16.77],[8.295,16.77],[9.69,16.714],[8.295,16.77],[9.69,16.714],[8.498,16.714]],
+          [[9.69,16.714],[8.498,16.714],[9.69,16.569],[8.498,16.714],[9.69,16.569],[9.033,16.569]]],
+      3: [[[6.32,17.313],[7.475,17.001],[6.32,17.001]],
+          [[7.475,17.001],[6.32,17.001],[10.032,16.309],[6.32,17.001],[10.032,16.309],[8.879,16.309]],
+          [[8.879,16.309],[9.215,16.22],[10.032,16.22],[9.215,16.22],[10.032,16.22],[10.032,15.997]],
+          [[8.879,16.309],[10.032,16.309],[10.032,16.22]],
+          [[10.032,16.39],[9.73,16.39],[10.032,16.309]]],
+    },
+    slabs: {2: [[7.99, 15.98, 9.99, 16.47]], 3: [[6.32, 16.06, 10.03, 16.47]]},
+  },
+  // owner's edit: straight 30 cm walls on the mean line of the slant
+  after: {walls: {2: [[8.29, 16.47, 9.69, 16.77]], 3: [[6.32, 16.47, 9.73, 16.77]]}, slabs: {}},
+};
+VARIANTS.before.walls[2].push([1.5,12.081,1.7,12.603],[1.5,11.006,1.7,11.129],[1.099,10.871,1.821,11.006],[2.674,10.805,2.795,11.006],[1.948,12.803,2.148,16.998]);
+VARIANTS.after.walls[2].push([1.099,10.871,1.297,11.006],[1.297,9.008,1.97,9.158],[2.72,9.008,2.795,9.158],[0.299,12.603,1.299,12.803]);
+const CHANGES = [
+  {title:"جدران الفناء المايلة صارت مستقيمة", where:"الدور الأول + دور السطح، على طرف الفناء",
+   before:"جدار مايل تقريبًا 15° (بطول 3.70 م في السطح)، وفي الدور الأول إسفين سميك فيه فراغ مثلث.",
+   after:"جدار مستقيم 30 سم على متوسط الميلان (16.47–16.77 من محور 1)، وحافة البلاطة اتقصّت على نفس الخط.",
+   view:{cam:[8.2, 13.6, 26], tgt:[8.2, 16.6, 8], mode:"arch"}},
+  {title:"ماسورة شفاط المطبخ 6\"", where:"من مطبخ القبو لين السطح الأعلى",
+   before:"غير موجودة في المخطط.",
+   after:"ماسورة 6\" دائرية مدفونة كاملة وسط البلكة 30 سم، 25 سم يسار منتصف المطبخ، رأسي مستقيم للسطح بدون تكسية. تخترق الجسر المحيطي في 4 سقوف (بالأحمر) وتحتاج اعتماد الإنشائي.",
+   view:{cam:[5.5, 13.75, 15.0], tgt:[0.15, 13.75, 4.0], mode:"str", fov:55}},
+  {title:"تصميم المطبخ — الثلاجة والفريزر خيار أ (معتمد)", where:"مطبخ القبو",
+   before:"المخطط يبين المطبخ فاضي بدون توزيع.",
+   after:"صف كامل على الجدار الغربي (مغسلة، غسالة صحون، إندكشن تحت الشفاط، iCombi Pro XS، ثلاجة وفريزر)، وجزيرة 1.05 × 3.00 م للتحضير والفطور مع 4 كراسي.",
+   view:{cam:[4.15, 11.25, -1.65], tgt:[1.2, 15.3, -2.75], mode:"arch"}},
+  {title:"كراسي الحمامات", where:"كل الحمامات",
+   before:"المخطط يبين مكان الكرسي بدون نوع.",
+   after:"فرنجي معلق على الجدار مباشرة، والإطار والخزان مدفونين داخل الجدار بدون رف، في 7 حمامات (منها دورة مياه المسبح)، وفرنجي أرضي عادي في حمام السائق وحمام الخادمة. كل كرسي في نفس مكانه بمخطط المعماري.",
+   view:{cam:[4.65, 2.55, 6.1], tgt:[6.15, 0.75, 4.75], mode:"arch", fov:70}},
+  {title:"جناح العاملة والغسيل + توسعة صالة الجلوس", where:"الدور الأول، جهة الجدار الغربي",
+   before:"غرفة خادمة 7.78 م²، لوبي 3.86 م²، غرفة غسيل منفصلة 6.92 م²، صالة جلوس 13.85 م².",
+   after:"غسيل في مكان واحد 6.75 م² (غسالتين قدام الباب، والتسفيط والأدراج والكوي بعد المنور)، غرفة عاملة 4.99 م²، الحمام 3.74 م²، وغرفة الغسيل القديمة انضمت للصالة فصارت 21.61 م².",
+   view:{cam:[2.2, 10.6, 15.5], tgt:[2.2, 11.2, 4.45], mode:"arch", fov:60, focus:2, dims:true}},
+  {title:"تصريف الأمطار — تعديل مقترح", where:"كل الأسطح (شغّل زر 🌧 الأمطار)",
+   before:"مخطط الميكانيكا: 4 مواسير تنزل داخل الجدران وتصرّف حر عند حدود الجيران (غرب، شمال، شرق)، وسطح الكراج بدون مصرف.",
+   after:"كل الأسطح للشارع بالجاذبية: السطح الأعلى يصب على السطح الأمامي، وماسورتين Ø110 على الواجهة للرصيف، ومصرف جديد لسطح الكراج، وخط مجمّع على الجدار الشرقي ياخذ الأسطح الخلفية للشارع. الفناء والقبو مثل ما هم على المضختين.",
+   view:{cam:[-12, -19, 25], tgt:[6, 8, 4], mode:"arch", fov:45, rain:true}},
+];
+{
+  const L = LEVELS;
+  Object.entries(VARIANTS).forEach(([v, d]) => {
+    Object.entries(d.walls).forEach(([f, list]) => list.forEach(w => {
+      f = +f; const rect = typeof w[0] === "number";
+      const bb = rect ? w : [Math.min(...w.map(q => q[0])), Math.min(...w.map(q => q[1])), Math.max(...w.map(q => q[0])), Math.max(...w.map(q => q[1]))];
+      const h = wallTop(f, bb);
+      const meshes = rect ? [box(w[0], w[1], L[f], w[2], w[3], L[f] + h, M.wall)]
+        : Array.from({length: w.length / 3}, (_, i) => triPrism(w.slice(i * 3, i * 3 + 3), L[f], h, M.wall));
+      meshes.forEach(m => { m.castShadow = m.receiveShadow = true; Object.assign(m.userData, {wall:true, variant:v}); add(m, "arch", f); });
+    }));
+    Object.entries(d.slabs).forEach(([f, list]) => list.forEach(([x0, y0, x1, y1]) => {
+      f = +f; const s = add(box(x0, y0, L[f] - SLAB, x1, y1, L[f], M.slab), "arch", f);
+      Object.assign(s.userData, {slab:true, solidMat:M.slab, rtype:"open", variant:v}); s.receiveShadow = true;
+    }));
+  });
+}
+state.variant = "after";
+function applyVariant() {
+  if (!self.__CMPready) return;
+  const v = state.variant;
+  items.forEach(o => {
+    const u = o.userData;
+    if (u.variant && u.variant !== v) o.visible = false;
+    if (v === "before" && u.layer === "duct") o.visible = false;      // the exhaust riser is an addition
+  });
+  labels.forEach(l => { if ((v === "before" && l.userData.layer === "duct") || (l.userData.variant && l.userData.variant !== v)) l.visible = false; });
+  document.querySelectorAll("[data-var]").forEach(b => b.classList.toggle("on", b.dataset.var === v));
+}
+function setVariant(v) { state.variant = v; refresh(); }
+function showChange(i) {
+  const c = CHANGES[i].view;
+  if (!state.render) state.mode = c.mode;
+  camera.fov = c.fov || (state.render ? camera.fov : 40); camera.updateProjectionMatrix();
+  state.focus = c.focus !== undefined ? c.focus : "all"; if (c.dims) state.dims = true; if (c.rain) state.rain = true;
+  camera.position.copy(P(...c.cam)); controls.target.copy(P(...c.tgt)); controls.update(); refresh();
+  document.getElementById("cmp").style.display = "none";            // get the list out of the way; ☰ brings it back
+}
+{
+  const el = document.getElementById("cmp");
+  el.querySelector("#cmpList").innerHTML = CHANGES.map((c, i) => `
+    <div class="chg"><b>${i + 1}. ${c.title}</b><div class="w">${c.where}</div>
+      <div><span class="k b">قبل</span>${c.before}</div><div><span class="k a">بعد</span>${c.after}</div>
+      <button data-go="${i}">👁 شوف التعديل</button></div>`).join("");
+  el.querySelectorAll("[data-go]").forEach(b => b.onclick = () => showChange(+b.dataset.go));
+  document.querySelectorAll("[data-var]").forEach(b => b.onclick = () => setVariant(b.dataset.var));
+  const tag = document.getElementById("cmpTag");
+  // compare mode: the toggle pill stays on screen; the list panel can be closed without changing what you see
+  const setCompare = on => { tag.classList.toggle("show", on); document.body.classList.toggle("comparing", on); el.style.display = on ? "block" : "none";
+    document.getElementById("bCmp").classList.toggle("on", on); if (!on) setVariant("after"); };
+  document.getElementById("bCmp").onclick = () => setCompare(!tag.classList.contains("show"));
+  document.getElementById("cmpX").onclick = () => { el.style.display = "none"; };
+  document.getElementById("cmpMenu").onclick = () => { el.style.display = el.style.display === "block" ? "none" : "block"; };
+  document.getElementById("cmpOff").onclick = () => setCompare(false);
+  self.__CMPready = true;
+}
+
+/* =====================================================================
+   KITCHEN PROPOSAL (basement kitchen 0.45–4.40 × 11.00–17.00, floor −3.55)
+   West wall run: sink · dishwasher · induction (under the hood) · iCombi Pro XS · fridge · freezer
+   Centre island: prep + breakfast/dining with 4 stools, facing the courtyard glass.
+   ===================================================================== */
+{
+  const F = LEVELS[0], K = (x0, y0, z0, x1, y1, z1, mat, info) => {
+    const m = box(x0, y0, F + z0, x1, y1, F + z1, mat); m.castShadow = m.receiveShadow = true; m.userData.variant = "after";
+    return add(m, "arch", 0, info);
+  };
+  const mat = (c, r = .6, mt = 0, extra = {}) => new THREE.MeshStandardMaterial(Object.assign({color:c, roughness:r, metalness:mt}, extra));
+  const walnut = mat(0x5b3b28, .55), marble = mat(0xf1ece6, .22), marbleV = mat(0xe9e1da, .25), black = mat(0x111214, .08, .2),
+        steel = mat(0xc9cdd1, .3, .85), dark = mat(0x2a2b2d, .4, .3), glassD = mat(0x1a1d20, .05, .3), plinth = mat(0x2b2018, .8),
+        leather = mat(0x8a4a2f, .6), brass = mat(0xb08a52, .35, .8), lamp = mat(0xfff1d6, .5, 0, {emissive:0xffd9a0, emissiveIntensity:1.2});
+  const X0 = .45, XR = 1.10;                       // run depth 65 cm (counter to 1.12)
+  const info = (name, note) => ({kind:"kitchen", name, note});
+  // --- base run (south → north) -------------------------------------------------
+  const RUN = [
+    [11.05, 11.65, "غسالة صحون 60 سم (مدمجة)", "جنب المغسلة. الأنابيب من نفس نقطة المغسلة."],
+    [11.65, 12.55, "مغسلة 90 سم + حاوية نفايات/فرز", "جهة زجاج المسبح، أقرب نقطة لعمود الماي والصرف."],
+    [12.55, 13.55, "أدراج تحضير 100 سم", "مسطح شغل بين المغسلة والعيون (100 سم)."],
+    [13.55, 14.45, "عيون إندكشن 90 سم + أدراج قدور", "تحت الشفاط مباشرة (الشفاط 90 سم، منتصف المطبخ 14.00)."],
+    [14.45, 14.85, "مسطح 40 سم (فاصل حراري)", "يحقق مسافة 35 سم المطلوبة من راشيونال بين الفرن وأي مصدر حرارة جانبي، ومسطح لتنزيل الصواني الحارة."],
+  ];
+  const SK = [.58, 11.80, 1.00, 12.40], sinkI = info("مغسلة ستانلس (تحت السطح)", "حوض واحد 60 × 42 سم، عمق 20 سم.");
+  RUN.forEach(([y0, y1, n, note]) => {
+    const sink = y0 === 11.65;                    // the sink module is hollowed for the basin
+    K(X0, y0, .10, XR, y1, sink ? .66 : .80, walnut, info(n, note)); K(X0, y0, 0, XR - .06, y1, .10, plinth);
+    if (sink) { K(XR - .04, y0, .66, XR, y1, .80, walnut, info(n, note)); K(X0, y0, .66, XR - .04, SK[1], .80, walnut); K(X0, SK[3], .66, XR - .04, y1, .80, walnut); }
+  });
+  K(X0, 11.05, .80, XR - .03, 14.85, .86, dark);                                    // recessed handle channel under the worktop
+  const top = info("سطح رخام", "عمق 67 سم، ارتفاع 90 سم.");
+  [[X0, 11.05, XR + .02, SK[1]], [X0, SK[3], XR + .02, 14.85], [X0, SK[1], SK[0], SK[3]], [SK[2], SK[1], XR + .02, SK[3]]]
+    .forEach(([a, b, c, d]) => K(a, b, .86, c, d, .90, marble, top));
+  K(X0, 11.05, .90, X0 + .02, 14.85, 1.50, marble, info("ظهر رخام (باك سبلاش)", "من السطح لين الدواليب العلوية، ارتفاع 60 سم."));
+  // sink basin (bottom + 4 walls) + gooseneck tap
+  K(SK[0], SK[1], .68, SK[2], SK[3], .69, steel, sinkI);
+  [[SK[0], SK[1], SK[0] + .012, SK[3]], [SK[2] - .012, SK[1], SK[2], SK[3]], [SK[0], SK[1], SK[2], SK[1] + .012], [SK[0], SK[3] - .012, SK[2], SK[3]]]
+    .forEach(([a, b, c, d]) => K(a, b, .69, c, d, .885, steel, sinkI));
+  const drainM = new THREE.Mesh(new THREE.CylinderGeometry(.045, .045, .006, 20), dark); drainM.position.copy(P(.79, 12.10, F + .694)); drainM.userData.variant = "after"; add(drainM, "arch", 0);
+  const tapI = info("خلاط مطبخ برقبة عالية", "على محور الحوض، بارد وحار.");
+  const tp = (o, x, y, z) => { o.position.copy(P(x, y, F + z)); o.castShadow = true; o.userData.variant = "after"; add(o, "arch", 0, tapI); return o; };
+  tp(new THREE.Mesh(new THREE.CylinderGeometry(.024, .028, .05, 16), brass), .53, 12.10, .925);
+  tp(new THREE.Mesh(new THREE.CylinderGeometry(.013, .013, .30, 12), brass), .53, 12.10, 1.05);
+  tp(new THREE.Mesh(new THREE.TorusGeometry(.09, .013, 10, 20, Math.PI), brass), .62, 12.10, 1.20);
+  tp(new THREE.Mesh(new THREE.CylinderGeometry(.013, .015, .06, 12), brass), .71, 12.10, 1.17);
+  tp(new THREE.Mesh(new THREE.CylinderGeometry(.008, .008, .09, 8), brass), .53, 12.17, .96).rotation.x = Math.PI / 2.6;
+  // cabinet fronts: drawer / door joints
+  const J = (y0, y1, z0, z1) => K(XR, y0, z0, XR + .003, y1, z1, plinth);
+  [11.05, 11.65, 12.55, 13.55, 14.45, 14.85].forEach(y => J(y - .003, y + .003, .10, .80));
+  [[12.55, 13.55], [13.55, 14.45]].forEach(([a, b]) => [.33, .57].forEach(z => J(a + .003, b - .003, z - .003, z + .003)));   // 3 drawers each
+  J(12.097, 12.103, .10, .80);                                                                                             // sink: two doors
+  // induction glass + 4 zones + touch strip
+  K(.53, 13.59, .90, 1.05, 14.41, .906, black, info("عيون إندكشن 90 سم", "تحتاج خط مستقل (تقريبًا 7–11 كيلوواط حسب الموديل)."));
+  const zoneM = new THREE.MeshBasicMaterial({color:0x8a8f96, side:THREE.DoubleSide});
+  [[.68, 13.80, .095], [.68, 14.20, .095], [.90, 13.80, .075], [.90, 14.20, .075]].forEach(([x, y, r]) => {
+    const z = new THREE.Mesh(new THREE.RingGeometry(r - .004, r, 40), zoneM); z.rotation.x = -Math.PI / 2; z.position.copy(P(x, y, F + .9075)); z.userData.variant = "after"; add(z, "arch", 0);
+  });
+  K(1.01, 13.85, .906, 1.035, 14.15, .9075, mat(0xff5a3c, .4, 0, {emissive:0xff3b1f, emissiveIntensity:.6}));
+  // --- iCombi Pro XS 6-2/3 zone (deeper counter 75 cm) -------------------------
+  K(X0, 14.85, .10, 1.20, 15.55, .86, walnut, info("قاعدة الفرن (أدراج صواني GN)", "")); K(X0, 14.85, 0, 1.14, 15.55, .10, plinth);
+  K(X0, 14.85, .86, 1.20, 15.55, .90, marble);
+  const oz = .90, ox0 = .52, ox1 = .52 + .621, oy0 = 14.87, oy1 = 14.87 + .655;   // 655 W × 621 D × 567 H mm
+  const ovInfo = info("Rational iCombi Pro XS 6-2/3", "المقاس 65.5 × 62.1 × 56.7 سم. كهرباء 5.7 كيلوواط 3 فاز، ماء بارد 3/4\" وصرف DN40 خلف الفرن. أعلى رف تقريبًا 1.35 م (أقل من حد 1.60 م).");
+  K(ox0, oy0, oz, ox1, oy1, oz + .567, steel, ovInfo);
+  K(ox1, oy0 + .05, oz + .08, ox1 + .006, oy1 - .17, oz + .52, glassD, ovInfo);          // door glass
+  K(ox1, oy1 - .15, oz + .08, ox1 + .006, oy1 - .03, oz + .52, dark, ovInfo);             // control panel
+  const scr = mat(0x7fd6ff, .3, 0, {emissive:0x2a8fc4, emissiveIntensity:.8});
+  K(ox1 + .006, oy1 - .135, oz + .30, ox1 + .009, oy1 - .045, oz + .48, scr, ovInfo);        // touch display
+  const knob = new THREE.Mesh(new THREE.CylinderGeometry(.028, .028, .02, 24), steel); knob.rotation.z = Math.PI / 2; knob.position.copy(P(ox1 + .016, oy1 - .09, F + oz + .19)); knob.userData.variant = "after"; add(knob, "arch", 0, ovInfo);
+  const oh = new THREE.Mesh(new THREE.CylinderGeometry(.012, .012, .40, 12), steel); oh.position.copy(P(ox1 + .045, oy1 - .21, F + oz + .30)); oh.userData.variant = "after"; add(oh, "arch", 0, ovInfo);   // door handle
+  [.18, .42].forEach(z => K(ox1 + .004, oy1 - .215, oz + z - .01, ox1 + .045, oy1 - .205, oz + z + .01, steel));
+  [[ox0 + .05, oy0 + .05], [ox1 - .05, oy0 + .05], [ox0 + .05, oy1 - .05], [ox1 - .05, oy1 - .05]].forEach(([x, y]) => K(x - .02, y - .02, oz - .0, x + .02, y + .02, oz + .012, dark));
+  K(ox0, oy0, oz + .567, ox1 - .04, oy1, oz + .567 + .33, steel, info("UltraVent Plus XS (مقترح)", "شفاط تكثيف من راشيونال فوق الفرن: يسحب البخار والدخان بدون دكت إضافي. يحتاج طقم تركيب حسب تاريخ تصنيع الفرن."));
+  // filler between oven and fridge
+  K(X0, 15.55, 0, XR, 15.75, 2.40, walnut, info("رف جانبي 20 سم (صواني/بهارات)", "يفصل الفرن عن الثلاجة."));
+  // --- fridge + freezer columns (north end, by the corridor door) --------------
+  K(X0, 15.75, 0, XR, 16.35, 2.40, walnut, info("ثلاجة مدمجة 60 سم", "عمود كامل بواجهة خشب. الباب يفتح جهة الجنوب."));
+  K(X0, 16.35, 0, XR, 16.95, 2.40, walnut, info("فريزر مدمج 60 سم", "في الزاوية، والمفصلة جهة الجدار مع فاصل 5 سم عشان الباب يفتح 90°+ والأدراج تطلع."));
+  K(X0, 16.95, 0, XR, 17.00, 2.40, walnut);
+  [15.755, 16.35, 16.945].forEach(y => K(XR, y - .003, .10, XR + .004, y + .003, 2.40, plinth));   // door split lines
+  [16.33, 16.37].forEach(y => K(XR + .004, y - .008, 1.0, XR + .03, y + .008, 1.6, brass));                    // handles
+  // --- upper cabinets (sink side only; hood + oven zone kept clear) --------------
+  K(X0, 11.05, 1.50, .80, 13.40, 2.30, walnut, info("دواليب علوية", "عمق 35 سم، من 11.05 لين 13.40."));
+  [11.65, 12.25, 12.85].forEach(y => K(.80, y - .003, 1.50, .803, y + .003, 2.30, plinth));       // 4 upper doors
+  K(.50, 11.10, 1.488, .78, 13.35, 1.498, lamp);                                                 // under-cabinet light
+  // --- island: prep + breakfast/dining ----------------------------------------
+  const IX0 = 2.20, IX1 = 3.25, IY0 = 12.30, IY1 = 15.30;
+  K(IX0, IY0 + .04, .10, IX0 + .65, IY1 - .04, .86, walnut, info("منصة التحضير", "أدراج جهة المطبخ، عمق 65 سم."));
+  K(IX0, IY0 + .04, 0, IX0 + .62, IY1 - .04, .10, plinth);
+  K(IX0, IY0, .86, IX1, IY1, .90, marbleV, info("الجزيرة: تحضير + فطور وأكل", "1.05 × 3.00 م، ارتفاع 90 سم. بروز 40 سم جهة الزجاج لـ 4 كراسي بار (جلسة 65 سم)."));
+  [IY0, IY1 - .04].forEach(y => K(IX0, y, 0, IX1, y + .04, .86, marbleV));                 // waterfall ends
+  K(IX0 - .002, IY0 + .04, .80, IX0 + .02, IY1 - .04, .86, dark);                                // handle channel, kitchen side
+  [13.03, 13.80, 14.57].forEach(y => K(IX0 - .003, y - .003, .10, IX0, y + .003, .80, plinth));  // 4 drawer stacks
+  [.33, .57].forEach(z => K(IX0 - .003, IY0 + .04, z - .003, IX0, IY1 - .04, z + .003, plinth));
+  [12.80, 13.50, 14.20, 14.90].forEach(y => {
+    const seat = new THREE.Mesh(new RoundedBoxGeometry(.40, .07, .40, 3, .034), leather); seat.position.copy(P(3.50, y, F + .65));
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(.022, .03, .60, 12), brass); leg.position.copy(P(3.50, y, F + .31));
+    const back = new THREE.Mesh(new RoundedBoxGeometry(.05, .26, .36, 3, .024), leather); back.position.copy(P(3.70, y, F + .83));
+    const foot = new THREE.Mesh(new THREE.CylinderGeometry(.19, .21, .02, 28), brass); foot.position.copy(P(3.50, y, F + .01));
+    const rest = new THREE.Mesh(new THREE.TorusGeometry(.15, .011, 8, 28), brass); rest.rotation.x = Math.PI / 2; rest.position.copy(P(3.50, y, F + .25));
+    [seat, leg, back, foot, rest].forEach(o => { o.castShadow = true; o.userData.variant = "after"; add(o, "arch", 0, info("كرسي بار", "ارتفاع الجلسة 65 سم، وخلفه 70 سم للممر قبل الزجاج.")); });
+  });
+  // pendants over the island
+  [13.30, 14.30].forEach(y => {
+    const sh = new THREE.Mesh(new THREE.CylinderGeometry(.05, .2, .22, 28), lamp); sh.position.copy(P(2.72, y, F + 2.35));
+    const cord = new THREE.Mesh(new THREE.CylinderGeometry(.004, .004, 1.0, 6), dark); cord.position.copy(P(2.72, y, F + 2.95));
+    [sh, cord].forEach(o => { o.userData.variant = "after"; add(o, "arch", 0); });
+  });
+  // labels (kitchen layer: visible in every mode, after-only)
+  [["الثلاجة", .78, 16.05, 2.6], ["الفريزر", .78, 16.65, 2.6], ["iCombi XS", .8, 15.2, 2.0], ["إندكشن", .8, 14.0, 1.15],
+   ["المغسلة", .8, 12.1, 1.25], ["الجزيرة + الفطور", 2.72, 13.8, 1.15]].forEach(([t, x, y, z]) => {
+    const l = label(t, x, y, F + z, "kit", 0); l.userData.variant = "after"; });
+}
+
+/* ---------- WCs (positions from the architect's bathroom layouts, A-106…A-109) ----------
+   [name, floor, wall-face x, wall-face y, direction into the room (dx,dy), type] */
+{
+  const WCS = [
+    ["حمام القبو", 0, .45, 23.53, 1, 0, "hung"],
+    ["دورة مياه المسبح", 0, 7.851, 3.70, -1, 0, "hung"],
+    ["حمام الأرضي", 1, 2.798, 3.32, -1, 0, "hung"],
+    ["حمام السائق", 1, 6.68, 6.054, 0, -1, "floor"],
+    ["حمام غرفة النوم 1", 2, 9.22, 22.692, 0, -1, "hung"],
+    ["حمام الخادمة", 2, 1.55, 5.311, 0, 1, "floor"],
+    ["حمام غرفة النوم 2", 2, 4.89, 11.803, 0, -1, "hung"],
+    ["حمام غرفة النوم الرئيسية", 2, 6.15, .464, 0, 1, "hung"],
+    ["حمام السطح", 3, .30, 11.52, 1, 0, "hung"],
+  ];
+  const ceramic = new THREE.MeshStandardMaterial({color:0xf7f7f4, roughness:.12, metalness:0, side:THREE.DoubleSide});
+  const plate = new THREE.MeshStandardMaterial({color:0x2c2c2e, roughness:.3, metalness:.6});
+  const plate2 = new THREE.MeshStandardMaterial({color:0xd9dde2, roughness:.2, metalness:.9});
+  const oval = (r, h, k, y, z, m) => { const o = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 28), m); o.scale.z = k; o.position.set(0, y, z); return o; };
+  const bx = (w, h, d, y, z, m) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(0, y, z); return o; };
+  WCS.forEach(([name, f, wx, wy, dx, dy, type]) => {
+    const g = new THREE.Group(), hung = type === "hung";
+    const info = hung
+      ? {kind:"wc", name:"فرنجي معلق — " + name, note:"كرسي معلق على الجدار مباشرة. الإطار والخزان مدفونين داخل الجدار بدون أي بروز أو رف، وتظهر لوحة السيفون بس على وجه الجدار. ارتفاع الجلسة 40 سم."}
+      : {kind:"wc", name:"فرنجي أرضي — " + name, note:"كرسي أرضي عادي بخزان ظاهر. ارتفاع الجلسة 40 سم. المكان حسب مخطط المعماري."};
+    const chrome = plate2;
+    // bowl: a turned profile (narrow at the bottom, full at the rim) stretched into an oval
+    const bowl = (pts, z) => { const o = new THREE.Mesh(new THREE.LatheGeometry(pts.map(([r, y]) => new THREE.Vector2(r, y)), 32), ceramic); o.scale.z = 1.45; o.position.set(0, 0, z); return o; };
+    const lid = (y, z) => { const o = oval(.178, .022, 1.45, y, z, ceramic); return o; };
+    const seat = (y, z) => { const o = new THREE.Mesh(new THREE.TorusGeometry(.155, .026, 10, 36), ceramic); o.rotation.x = Math.PI / 2; o.scale.set(1, 1.45, .6); o.position.set(0, y, z); return o; };
+    const btn = (x, y, z) => { const o = new THREE.Mesh(new THREE.CylinderGeometry(.032, .032, .008, 20), chrome); o.rotation.x = Math.PI / 2; o.position.set(x, y, z); return o; };
+    const rb = (w, h, d, y, z, m, r) => { const o = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, r), m); o.position.set(0, y, z); return o; };
+    const parts = hung
+      ? [rb(.25, .165, .014, 1.0, .007, plate, .006), btn(-.055, 1.0, .016), btn(.055, 1.0, .016),
+         bowl([[.0, .20], [.09, .20], [.135, .225], [.172, .30], [.186, .37], [.19, .40]], .285), seat(.405, .285), lid(.428, .285)]
+      : [rb(.40, .36, .17, .60, .095, ceramic, .03), rb(.42, .03, .19, .795, .095, ceramic, .012), btn(0, .812, .095).rotateX(Math.PI / 2),
+         bowl([[.0, 0], [.115, 0], [.125, .03], [.105, .16], [.12, .26], [.175, .35], [.19, .40]], .40), seat(.405, .40), lid(.428, .40)];
+    parts.forEach(p => { p.castShadow = p.receiveShadow = true; p.userData.info = info; g.add(p); });
+    g.position.copy(P(wx, wy, LEVELS[f]));
+    g.rotation.y = Math.atan2(dx, -dy);
+    g.userData.variant = "after";
+    add(g, "arch", f);
+    pickables.push(...parts);
+  });
+}
+
+/* ---------- basement planting (architect's approved beds, sheet A-108 basement) ---------- */
+{
+  const f = 0, L = LEVELS[f];
+  const soil = new THREE.MeshStandardMaterial({color:0x5b4532, roughness:1});
+  const grass = new THREE.MeshStandardMaterial({color:0x5e7f3a, roughness:.95});
+  const curb = new THREE.MeshStandardMaterial({color:0xcdb89e, roughness:.7});
+  const bark = new THREE.MeshStandardMaterial({color:0x6b4f3a, roughness:.9});
+  const prism = (poly, z0, h, mat) => {
+    const sh = new THREE.Shape(poly.map(([x, y]) => new THREE.Vector2(x - 6, y - 12.5)));
+    const g = new THREE.ExtrudeGeometry(sh, {depth:h, bevelEnabled:false}); g.rotateX(-Math.PI / 2); g.translate(0, z0, 0);
+    const m = new THREE.Mesh(g, mat); m.receiveShadow = true; return m;
+  };
+  const bed = (poly, top, name, note) => {
+    const inf = {kind:"plant", name, note};
+    add(prism(poly, L, top - .03, soil), "arch", f, inf);
+    const gm = prism(poly, L + top - .03, .03, grass); add(gm, "arch", f, inf); pickables.push(gm);
+  };
+  // canopy lumps: 3 shared sphere geometries pushed in and out by a smooth noise, normals kept round so they shade softly
+  const lumpG = [0, 1, 2].map(k => {
+    const g = new THREE.IcosahedronGeometry(1, 2), p = g.attributes.position, n = g.attributes.normal, v = new THREE.Vector3();
+    for (let i = 0; i < p.count; i++) {
+      v.fromBufferAttribute(p, i).normalize(); n.setXYZ(i, v.x, v.y, v.z);
+      v.multiplyScalar(1 + .16 * Math.sin(v.x * 3.1 + k * 1.7) * Math.cos(v.y * 2.7 + k) + .11 * Math.sin(v.z * 4.3 + k * 2.3 + v.x * 1.9));
+      p.setXYZ(i, v.x, v.y, v.z);
+    }
+    return g;
+  });
+  const leafM = [0x3f6b2f, 0x4d7a36, 0x5d8a3c, 0x6f9a45].map(c => new THREE.MeshStandardMaterial({color:c, roughness:.9}));
+  let treeN = 0;
+  const tree = (x, y, r, z0, name) => {
+    const inf = {kind:"plant", name, note:"شجرة حسب مكانها في مخطط القبو المعتمد. قطر التاج بالمخطط تقريبًا " + (2 * r).toFixed(1) + " م."};
+    const k = treeN++, ht = Math.min(2.2 + r * 1.2, 4.2), base = L + z0, rnd = i => (Math.sin((k + 1) * 12.9898 + i * 78.233) * 43758.5453) % 1;
+    const limb = (a, b, r0, r1) => {             // tapered trunk / branch between two plan points
+      const A = P(...a), B = P(...b), m = new THREE.Mesh(new THREE.CylinderGeometry(r1, r0, A.distanceTo(B), 9), bark);
+      m.position.copy(A).add(B).multiplyScalar(.5); m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), B.clone().sub(A).normalize());
+      m.castShadow = true; add(m, "arch", f, inf);
+    };
+    const lean = [rnd(1) * .12, rnd(2) * .12], fork = [x + lean[0], y + lean[1], base + ht * .62];
+    limb([x, y, base], fork, .07 + r * .05, .045 + r * .03);
+    const lumps = [[0, 0, .25, .78], [.5, .1, .0, .58], [-.45, .25, .05, .6], [.1, -.5, .0, .56], [-.2, -.25, .45, .5], [.3, .4, .4, .46]];
+    lumps.forEach(([ox, oy, oz, sc], i) => {
+      const c = [x + (ox + rnd(i + 3) * .15) * r, y + (oy + rnd(i + 9) * .15) * r, base + ht + oz * r];
+      if (i && i < 4) limb(fork, [c[0], c[1], c[2] - r * sc * .25], .04 + r * .025, .02);
+      const m = new THREE.Mesh(lumpG[(i + k) % 3], leafM[(i * 2 + k) % 4]);
+      m.scale.set(r * sc, r * sc * .72, r * sc); m.rotation.y = rnd(i + 20) * 6.28; m.position.copy(P(...c));
+      m.castShadow = true; add(m, "arch", f, inf); pickables.push(m);
+    });
+  };
+  // courtyard (-3.40): upper bed against the D14 glass, lower bed between the stepping path and the side stair
+  bed([[5.98, 16.97], [11.45, 16.97], [10.35, 15.35], [9.36, 15.73], [8.43, 15.48], [7.50, 15.29], [5.98, 15.61]], .12,
+      "حوض زراعة — الفناء (علوي)", "حوض زراعة قدام زجاج صالة المعيشة D14، من المخطط المعتمد. منسوب الممر الحجري −3.40.");
+  bed([[8.03, 14.37], [10.26, 14.74], [10.06, 11.02], [8.12, 11.02]], .12,
+      "حوض زراعة — الفناء (سفلي)", "بين الممر الحجري ودرج الفناء المايل، جنب جلسة الطعام الخارجية. من المخطط المعتمد.");
+  [[7.04, 16.01, 1.33], [8.68, 16.23, .65], [10.35, 16.32, .99], [8.62, 13.07, 1.52], [9.61, 13.81, .99], [8.68, 11.64, .65]]
+    .forEach(([x, y, r]) => tree(x, y, r, .12, "شجرة — الفناء"));
+  // Green Area beside the pool deck: raised bed, top −3.20 (35 cm above the deck) — roofed, so no trees
+  bed([[8.15, 4.3], [10.35, 4.3], [10.35, 10.7], [8.15, 10.7]], .35,
+      "المسطح الأخضر — جنب سطح المسبح", "حوض مرفوع 35 سم عن سطح المسبح (منسوب −3.20)، 2.20 × 6.40 م. تحت سقف، فما فيه شجر — زراعة منخفضة بس (حسب المخطط الإنشائي).");
+  add(box(8.15, 4.3, L, 8.27, 10.7, L + .40, curb), "arch", f, {kind:"plant", name:"حافة الحوض", note:"حافة حجر 12 سم، أعلى من التربة 5 سم."});
+}
+
+/* ---------- maid suite + laundry (first floor, owner's edit) ---------- */
+{
+  const f = 2, L = LEVELS[f];
+  const mat = (c, r = .6, mt = 0) => new THREE.MeshStandardMaterial({color:c, roughness:r, metalness:mt});
+  const white = mat(0xf4f4f2, .3), dark = mat(0x2b2c2e, .2, .3), glassD = mat(0x3b4a55, .05, .4), wood = mat(0x8c5e3d, .55),
+        oak = mat(0xb08a62, .6), fabric = mat(0xe9e3d8, .9), blanket = mat(0x9a6b55, .85), counter = mat(0xece7df, .3), line = mat(0x6a5444, .6);
+  const info = (name, note) => ({kind:"maid", name, note});
+  const B = (x0, y0, z0, x1, y1, z1, m, inf) => { const o = box(x0, y0, L + z0, x1, y1, L + z1, m); o.castShadow = o.receiveShadow = true; o.userData.variant = "after"; return add(o, "arch", f, inf); };
+  const R = (x0, y0, z0, x1, y1, z1, m, inf, r) => { const o = rbox(x0, y0, L + z0, x1, y1, L + z1, m, r); o.castShadow = o.receiveShadow = true; o.userData.variant = "after"; return add(o, "arch", f, inf); };
+  const chrome = mat(0xd9dde2, .2, .9), screen = new THREE.MeshStandardMaterial({color:0x7fd6ff, emissive:0x2a8fc4, emissiveIntensity:.7, roughness:.3}), pillow = mat(0xf7f4ee, .95), headb = mat(0xb9a58c, .9);
+  // two washing machines, facing the corridor door
+  [[11.15, "غسالة 1"], [11.75, "غسالة 2"]].forEach(([y0, n]) => {
+    const inf = info(n, "غسالة أمامية 60 × 60 × 85 سم، مقابل باب الممر مباشرة. تحتاج نقطة ماء وصرف وخط كهرباء مستقل.");
+    R(.299, y0 + .01, .02, .899, y0 + .59, .85, white, inf, .025);
+    B(.33, y0 + .04, 0, .87, y0 + .56, .03, dark);                                              // plinth / feet shadow gap
+    const put = (o, x, y, z) => { o.position.copy(P(x, y, L + z)); o.castShadow = true; o.userData.variant = "after"; add(o, "arch", f, inf); return o; };
+    const ring = put(new THREE.Mesh(new THREE.TorusGeometry(.205, .028, 12, 40), chrome), .905, y0 + .30, .42); ring.rotation.y = Math.PI / 2;
+    const glass = put(new THREE.Mesh(new THREE.SphereGeometry(.185, 28, 12, 0, Math.PI * 2, 0, Math.PI / 2), glassD), .90, y0 + .30, .42);
+    glass.rotation.z = -Math.PI / 2; glass.scale.y = .35;                                       // shallow dome bulging towards the room
+    B(.899, y0 + .03, .71, .906, y0 + .57, .83, dark, inf);                                     // control panel
+    const dial = put(new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, .02, 24), chrome), .915, y0 + .30, .77); dial.rotation.z = Math.PI / 2;
+    B(.906, y0 + .40, .745, .909, y0 + .53, .795, screen);                                      // display
+    B(.906, y0 + .06, .74, .910, y0 + .22, .80, white);                                         // detergent drawer
+  });
+  B(.299, 11.15, 1.60, .649, 12.35, 2.30, wood, info("دولاب علوي فوق الغسالات", "عمق 35 سم لمساحيق الغسيل."));
+  // folding counter with drawers + fold-down ironing board, along the skylight wall
+  B(1.297, 9.17, 0, 1.897, 10.358, .86, oak, info("أدراج تحت سطح التسفيط", "ثلاث أدراج بعرض 120 سم."));
+  [.30, .58].forEach(z => B(1.897, 9.20, z - .005, 1.903, 10.33, z + .005, line));
+  B(1.297, 9.158, .86, 1.917, 10.358, .90, counter, info("سطح التسفيط", "120 × 62 سم، ارتفاع 90 سم، تحت شباك المنور (W6)."));
+  B(1.297, 10.37, 0, 1.597, 10.80, 2.10, wood, info("دولاب لوح الكوي", "لوح كوي ينطوي داخل دولاب عرضه 45 سم وعمقه 30 سم. إذا فتحته يطلع في الممر اللي عرضه 90 سم."));
+  // worker's room
+  const bedI = info("سرير مفرد", "90 × 190 سم على الجدار الغربي. الغرفة للنوم بس.");
+  R(.35, 7.06, .12, 1.25, 8.96, .30, wood, bedI, .02);                                         // frame
+  [[.39, 7.10], [1.21, 7.10], [.39, 8.92], [1.21, 8.92]].forEach(([x, y]) => B(x - .025, y - .025, 0, x + .025, y + .025, .12, wood));
+  R(.37, 7.08, .29, 1.23, 8.94, .50, fabric, bedI, .07);                                       // mattress
+  R(.355, 7.07, .40, 1.245, 8.32, .535, blanket, bedI, .05);                                   // blanket, hanging a little over the sides
+  R(.355, 8.24, .50, 1.245, 8.40, .555, fabric, bedI, .025);                                   // folded-back sheet
+  R(.47, 8.50, .48, 1.13, 8.90, .62, pillow, bedI, .07);                                       // pillow
+  R(.33, 8.95, .10, 1.27, 9.006, 1.05, headb, bedI, .025);                                     // upholstered headboard
+  // room labels for the new layout (the old names are tagged "before")
+  labels.filter(l => l.userData.floor === f && ["غسيل وكوي", "لوبي", "غرفة الخادمة", "جلسة"].includes(l.element.textContent)).forEach(l => l.userData.variant = "before");
+  [["غرفة العاملة", .8, 7.45], ["الغسيل والكوي", 2.2, 12.25], ["صالة الجلوس", 3.6, 15.0]].forEach(([t, x, y]) => { const l = label(t, x, y, L + 1.0, "arch", f); l.userData.variant = "after"; l.userData.room = true; });
+  // dimensions (📏 toggle): exact inner-face sizes
+  const red = new THREE.MeshBasicMaterial({color:0xd0302a});
+  const dim = (x0, y0, x1, y1, txt, z = .08) => {
+    const vert = Math.abs(x1 - x0) < 1e-6, t = .012;
+    const segs = vert ? [[x0 - t, y0, x0 + t, y1], [x0 - .08, y0 - t, x0 + .08, y0 + t], [x0 - .08, y1 - t, x0 + .08, y1 + t]]
+                      : [[x0, y0 - t, x1, y0 + t], [x0 - t, y0 - .08, x0 + t, y0 + .08], [x1 - t, y0 - .08, x1 + t, y0 + .08]];
+    segs.forEach(([a, b, c, d]) => { const o = box(a, b, L + z, c, d, L + z + .012, red); o.userData.variant = "after"; add(o, "dim", f); });
+    const l = label(txt, (x0 + x1) / 2, (y0 + y1) / 2, L + z + .05, "dim", f); l.userData.variant = "after"; l.element.classList.add("dimL");
+  };
+  const area = (txt, x, y) => { const l = label(txt, x, y, L + .35, "dim", f); l.userData.variant = "after"; l.element.classList.add("areaL"); };
+  dim(.299, 7.30, 2.795, 7.30, "2.50"); dim(2.0, 7.010, 2.0, 9.008, "2.00"); area("غرفة العاملة 4.99 م²", 1.75, 8.3);
+  dim(.299, 6.10, 2.795, 6.10, "2.50"); dim(2.3, 5.311, 2.3, 6.809, "1.50"); area("حمام العاملة 3.74 م²", 1.3, 5.9);
+  dim(.299, 12.45, 2.795, 12.45, "2.50"); dim(2.55, 11.006, 2.55, 12.603, "1.60"); dim(1.297, 9.65, 2.795, 9.65, "1.50"); dim(2.55, 9.158, 2.55, 11.006, "1.85");
+  dim(1.0, 11.15, 1.0, 12.35, "غسالتين 1.20"); dim(1.897, 10.0, 2.795, 10.0, "ممر 0.90", .95); dim(1.297, 9.158, 1.297, 10.358, "تسفيط 1.20", .95);
+  area("الغسيل والكوي 6.75 م²", 2.0, 11.4);
+  dim(.299, 16.6, 5.45, 16.6, "5.15"); dim(4.9, 12.803, 4.9, 16.998, "4.20"); area("صالة الجلوس 21.61 م² (كانت 13.85)", 2.8, 14.2);
+  dim(2.996, 8.2, 4.196, 8.2, "الممر 1.20");
+}
+
+/* ---------- room dimensions for the whole house (📏 toggle) — inner wall faces from ROOMS ---------- */
+{
+  const red = new THREE.MeshBasicMaterial({color:0xd0302a});
+  const SKIP2 = ["غسيل وكوي", "لوبي", "غرفة الخادمة", "حمام الخادمة", "جلسة"];   // first floor: drawn exactly in the maid-suite block
+  ROOMS.forEach((rooms, f) => rooms.forEach(([name, x0, y0, x1, y1, type]) => {
+    if (type === "void" || (f === 2 && SKIP2.includes(name))) return;
+    const w = x1 - x0, d = y1 - y0; if (Math.min(w, d) < .9) return;
+    const L = LEVELS[f], z = .08, t = .012, ox = Math.min(.3, w / 4), oy = Math.min(.3, d / 4);
+    const seg = (a, b, c, e) => add(box(a, b, L + z, c, e, L + z + .012, red), "dim", f);
+    seg(x0, y0 + oy - t, x1, y0 + oy + t); seg(x0 - t + .001, y0 + oy - .08, x0 + t, y0 + oy + .08); seg(x1 - t, y0 + oy - .08, x1 - .001 + t, y0 + oy + .08);
+    seg(x0 + ox - t, y0, x0 + ox + t, y1); seg(x0 + ox - .08, y0 - t + .001, x0 + ox + .08, y0 + t); seg(x0 + ox - .08, y1 - t, x0 + ox + .08, y1 - .001 + t);
+    const lw = label(w.toFixed(2), (x0 + x1) / 2, y0 + oy, L + z + .05, "dim", f); lw.element.classList.add("dimL");
+    const ld = label(d.toFixed(2), x0 + ox, (y0 + y1) / 2, L + z + .05, "dim", f); ld.element.classList.add("dimL");
+    const la = label(name + "  " + (w * d).toFixed(2) + " م²", (x0 + x1) / 2, (y0 + y1) / 2, L + .35, "dim", f); la.element.classList.add("areaL");
+  }));
+}
+
+/* ---------- loop ---------- */
+addEventListener("resize", () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight); labelR.setSize(innerWidth, innerHeight);
+});
+refresh();
+document.getElementById("loading").remove();
+function frame() {
+  if (W.on) walkStep(); else controls.update();
+  composer.render();
+  labelR.render(scene, camera);
+}
+renderer.setAnimationLoop(frame);
+window.__model = {setVariant, showChange, setRender, photo, setView, setTime, frame, circuits, items, state, refresh, camera, controls, W, setWalk, blocked, groundAt, teleport};
+</script>
